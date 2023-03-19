@@ -15,7 +15,7 @@ public class CampuscrewApplication implements WebMvcConfigurer {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
 				.allowedMethods("*")
-				.allowedOrigins("http://localhost:3300")
+				.allowedOrigins("http://localhost:3000")
 				.allowedHeaders("*")
 				.allowCredentials(false);
 	}
