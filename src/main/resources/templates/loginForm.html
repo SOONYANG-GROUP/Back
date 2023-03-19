@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>로그인 페이지</h1>
+<form action="/login" method="post">
+    <input type="text" name="username" placeholder="Username"/><br>
+    <input type="password" name="password" placeholder="password"/><br>
+    <input type="submit" value="제출"/>
+</form>
+<a href="/oauth2/authorization/google">구글 로그인</a>
+<a href="/oauth2/authorization/naver">네이버 로그인</a>
+<a href="/joinForm">회원가입 하세요</a>
+</body>
+</html>
