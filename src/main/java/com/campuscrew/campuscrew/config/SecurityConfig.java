@@ -11,6 +11,7 @@ import com.campuscrew.campuscrew.oauth2.handler.OAuth2LoginSuccessHandler;
 import com.campuscrew.campuscrew.oauth2.service.CustomOAuth2UserService;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.Filter;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ import org.springframework.web.filter.CorsFilter;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final LoginService loginService;
-    private final CorsFilter corsFilter;
+    private final Filter corsFilter;
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
