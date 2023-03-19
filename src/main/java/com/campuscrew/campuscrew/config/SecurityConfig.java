@@ -53,8 +53,6 @@ public class SecurityConfig {
                 .csrf().disable() // csrf 보안 사용 X
                 .headers().frameOptions().disable()
                 .and()
-                .cors()
-                .and()
 
                 // 세션 사용하지 않으므로 STATELESS로 설정
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -145,19 +143,6 @@ public class SecurityConfig {
         return jwtAuthenticationFilter;
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 
 
 }
