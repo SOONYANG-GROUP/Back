@@ -17,6 +17,6 @@ public class CampuscrewApplication implements WebMvcConfigurer {
 				.allowedMethods("*")
 				.allowedOrigins("*")
 				.allowedHeaders("*")
-				.allowCredentials(true);
+				.allowCredentials(false);
 	}
 }
