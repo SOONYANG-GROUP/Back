@@ -43,10 +43,6 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                 .filter(jwtService::isTokenValid)
                 .orElse(null);
 
-        String accessToken = jwtService.extractAccessToken(request)
-                        .filter(jwtService::isTokenValid)
-                                .orElse(null);
-        log.info("accessToken = {}", accessToken);
         log.info("refreshToken = {}", refreshToken);
         // refreshToken 은 AccessToken 이 유효하다면 보내지 않는다.
         // refreshToken 이 온다면, AccessToken이 만료, DB 에서 이를 확인 하고 일치하면 재발급한다.
