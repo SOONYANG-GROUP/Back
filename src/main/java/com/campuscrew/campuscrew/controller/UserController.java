@@ -26,6 +26,7 @@ public class UserController {
     public String jwtTest() {
         return "jwtTest";
     }
+
     @GetMapping("/test/authentication")
     public Authentication authentication(Authentication authentication) {
         log.info("authentication = {}", authentication);

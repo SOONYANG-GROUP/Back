@@ -126,7 +126,8 @@ public class JwtService {
     public boolean isTokenValid(String token) {
         try {
             JWT.require(Algorithm.HMAC512(secretKey))
-                    .build().verify(token);
+                    .build()
+                    .verify(token);
             return true;
         } catch (Exception e) {
             log.error("유효하지 않은 토큰. {}", e.getMessage());
