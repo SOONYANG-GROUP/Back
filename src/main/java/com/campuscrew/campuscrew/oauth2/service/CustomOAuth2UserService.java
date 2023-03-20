@@ -39,7 +39,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
         log.info("userNameAttributeName = {}", userNameAttributeName);
 
-        Map<String, Object> attributes = oAuth2User.getAttributes();
+        Map<String, Object> attributes = oAuth2User.getAttributes(); // naver, google 등에서 조회한 정보들
         for (Map.Entry<String, Object> stringObjectEntry : attributes.entrySet()) {
             log.info("key = {}, value = {}", stringObjectEntry.getKey(), stringObjectEntry.getValue());
         }

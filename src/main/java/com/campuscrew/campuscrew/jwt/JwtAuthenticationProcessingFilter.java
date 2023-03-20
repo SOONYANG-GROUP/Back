@@ -32,6 +32,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        log.info("request.getRequestURI() = {}", request.getRequestURI());
         if (request.getRequestURI().equals(NO_CHECK_URL)) {
             filterChain.doFilter(request, response);
             return;
@@ -54,7 +55,6 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if(refreshToken == null) {
             checkAccessTokenAndAuthentication(request, response, filterChain);
         }
-
     }
     // refreshToken이 유효하지 않으면 AccessToken을 검사.
     // 1. 유효하다면, 인증 객체가 담긴 상태로 다음 필터로 넘어간다. >> 인증 성공
@@ -98,7 +98,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         userRepository.findByRefreshToken(refreshToken)
                 .ifPresent(user -> {
                     String reIssuedRefreshToken = reIssueRefreshToken(user);
-                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getEmail()), reIssuedRefreshToken);
+                    jwtService.sendAccessAndRefreshToken(response,
+                            jwtService.createAccessToken(user.getEmail()),
+                            reIssuedRefreshToken);
                 });
     }
     // 재발행한 RefreshToken을 user정보에 업데이트
