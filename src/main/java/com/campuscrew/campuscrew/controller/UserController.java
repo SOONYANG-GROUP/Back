@@ -16,7 +16,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public String join(UserJoin userJoin) throws Exception {
+    public String join(@RequestBody
+                           UserJoin userJoin) throws Exception {
         userService.signUp(userJoin);
         return "회원가입 성공";
     }

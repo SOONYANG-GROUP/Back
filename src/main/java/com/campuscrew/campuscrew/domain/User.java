@@ -45,8 +45,6 @@ public class User {
 
     private String refreshToken;
 
-
-
     public void passwordEncode(PasswordEncoder passwordEncoder) {
         this.password =passwordEncoder.encode(this.password);
     }

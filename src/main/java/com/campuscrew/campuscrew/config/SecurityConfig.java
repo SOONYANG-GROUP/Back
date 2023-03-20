@@ -74,6 +74,7 @@ public class SecurityConfig {
                 .and()
                 //== 소셜 로그인 설정 ==//
                 .oauth2Login()
+                .defaultSuccessUrl("http://localhost:3000")
                 .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
                 .failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
                 .userInfoEndpoint().userService(customOAuth2UserService); // customUserService 설정
