@@ -32,8 +32,8 @@ public class UserController {
         return authentication;
     }
 
-    @GetMapping("/test/session")
-    public String jwtSession(Authentication authentication) {
-
-    }
+//    @GetMapping("/test/session")
+//    public String jwtSession(Authentication authentication) {
+//
+//    }
 }
