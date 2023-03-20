@@ -72,7 +72,4 @@ public class OAuth2Attributes {
                 .role(Role.GUEST)
                 .build();
     }
-
-
-
 }

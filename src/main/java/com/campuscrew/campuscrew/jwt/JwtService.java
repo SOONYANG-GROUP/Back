@@ -35,10 +35,10 @@ public class JwtService {
     @Value("${jwt.refresh.header}")
     private String refreshHeader;
 
-    private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
+    public static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
-    private static final String EMAIL_CLAIM = "email";
-    private static final String BEARER = "Bearer ";
+    public static final String EMAIL_CLAIM = "email";
+    public static final String BEARER = "Bearer ";
 
     private final UserRepository userRepository;
 
@@ -71,6 +71,8 @@ public class JwtService {
         response.setStatus(HttpServletResponse.SC_OK);
         setAccessTokenHeader(response, accessToken);
         setRefreshHeader(response, refreshToken);
+        log.info("accessToken = {}", accessToken);
+        log.info("refreshToken = {}", refreshToken);
         log.info("Access Token, Refresh Token 헤더 설정 ok");
     }
 
@@ -114,7 +116,10 @@ public class JwtService {
     public void updateRefreshToken(String email, String refreshToken) {
         userRepository.findByEmail(email)
                 .ifPresentOrElse(
-                        user -> user.updateRefreshToken(refreshToken),
+                        user -> {
+                            user.updateRefreshToken(refreshToken);
+                            userRepository.saveAndFlush(user);
+                        },
                         () -> new Exception("일치하는 회원이 없습니다."));
     }
 

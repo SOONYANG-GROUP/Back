@@ -19,15 +19,14 @@ import java.io.IOException;
 public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtService jwtService;
     private final UserRepository userRepository;
-
     @Value("${jwt.access.expiration}")
     private String accessTokenExpiration;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String email = extractUsername(authentication);
-        String accessToken = jwtService.createAccessToken(email);
-        String refreshToken = jwtService.createRefreshToken();
+        String accessToken = JwtService.BEARER + jwtService.createAccessToken(email);
+        String refreshToken = JwtService.BEARER + jwtService.createRefreshToken();
 
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         userRepository.findByEmail(email)
