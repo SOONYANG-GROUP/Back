@@ -1,5 +1,6 @@
 package com.campuscrew.campuscrew.config;
 
+import com.campuscrew.campuscrew.filter.CustomAuthenticationEntryPoint;
 import com.campuscrew.campuscrew.jwt.JwtAuthenticationProcessingFilter;
 import com.campuscrew.campuscrew.jwt.JwtService;
 import com.campuscrew.campuscrew.login.filter.CustomJsonUsernamePasswordAuthenticationFilter;
@@ -61,7 +62,6 @@ public class SecurityConfig {
                 // 세션 사용하지 않으므로 STATELESS로 설정
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-
                 //== URL별 권한 관리 옵션 ==//
                 .authorizeHttpRequests()
                 // 아이콘, css, js 관련
@@ -72,6 +72,8 @@ public class SecurityConfig {
                 .requestMatchers("/board/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
                 .anyRequest().authenticated()// 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+                .and()
+                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
                 //== 소셜 로그인 설정 ==//
                 .oauth2Login()
