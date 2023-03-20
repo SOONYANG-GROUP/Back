@@ -18,7 +18,7 @@ public class Board {
     @Column(nullable = false)
     private String title;
 
-    @Column()
+    @Column
     private String content;
 
     @OneToMany
@@ -32,5 +32,6 @@ public class Board {
     private LocalDateTime createdDateTime;
 
     private LocalDateTime startWithDate;
+
 
 }

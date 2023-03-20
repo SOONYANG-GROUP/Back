@@ -31,4 +31,9 @@ public class UserController {
         log.info("authentication = {}", authentication);
         return authentication;
     }
+
+    @GetMapping("/test/session")
+    public String jwtSession(Authentication authentication) {
+
+    }
 }
