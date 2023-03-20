@@ -1,12 +1,13 @@
 package com.campuscrew.campuscrew.domain;
 
-import com.campuscrew.campuscrew.dto.UserJoin;
-import com.nimbusds.openid.connect.sdk.claims.UserInfo;
+import com.campuscrew.campuscrew.domain.board.Board;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -32,6 +33,9 @@ public class User {
     private String nickname;
 
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Board> boards = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Role role;
