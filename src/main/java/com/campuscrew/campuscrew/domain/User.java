@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.domain;
 
 import com.campuscrew.campuscrew.domain.board.Board;
+import com.campuscrew.campuscrew.domain.board.JoinedUser;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,8 +35,11 @@ public class User {
 
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Board> boards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<JoinedUser> joinedUsers = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -48,6 +52,11 @@ public class User {
     private String socialId;
 
     private String refreshToken;
+
+    public void addBoard(Board board) {
+        this.boards.add(board);
+        board.addUser(this);
+    }
 
     public void passwordEncode(PasswordEncoder passwordEncoder) {
         this.password =passwordEncoder.encode(this.password);
