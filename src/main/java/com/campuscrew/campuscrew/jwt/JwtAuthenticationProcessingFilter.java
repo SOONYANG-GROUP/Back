@@ -31,6 +31,11 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("request.getRequestURI() = {}", request.getRequestURI());
+        String accessToken = jwtService.extractAccessToken(request)
+                        .filter(jwtService::isTokenValid).orElse(null);
+
+        log.info("accessToken = {}", accessToken);
+
 //        if (request.getRequestURI().equals(NO_CHECK_URL)) {
 //            filterChain.doFilter(request, response);
 //            return;
