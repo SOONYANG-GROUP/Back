@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.controller;
 
 import com.campuscrew.campuscrew.dto.UserJoin;
+import com.campuscrew.campuscrew.dto.UserJoinSuccessDto;
 import com.campuscrew.campuscrew.service.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,14 +13,19 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
-
     private final UserService userService;
 
-    @PostMapping("/join")
-    public String join(@RequestBody
+    @PostMapping(value = "/join", consumes = "application/json")
+    public UserJoinSuccessDto join(@RequestBody
                            UserJoin userJoin) throws Exception {
+        log.info("userJoin = {}", userJoin);
         userService.signUp(userJoin);
-        return "회원가입 성공";
+        return UserJoinSuccessDto.builder()
+                .age(userJoin.getAge())
+                .nickname(userJoin.getNickname())
+                .name(userJoin.getName())
+                .email(userJoin.getEmail())
+                .build();
     }
 
     @PostMapping("/jwt-test")
@@ -32,7 +38,6 @@ public class UserController {
         log.info("authentication = {}", authentication);
         return authentication;
     }
-
 //    @GetMapping("/test/session")
 //    public String jwtSession(Authentication authentication) {
 //

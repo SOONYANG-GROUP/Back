@@ -71,13 +71,13 @@ public class SecurityConfig {
                 .requestMatchers("/main/**").permitAll()
                 .requestMatchers("/board/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()// 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
                 //== 소셜 로그인 설정 ==//
                 .oauth2Login()
-                .defaultSuccessUrl("http://localhost:3000")
                 .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
                 .failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
                 .userInfoEndpoint().userService(customOAuth2UserService); // customUserService 설정
