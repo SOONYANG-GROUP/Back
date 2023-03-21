@@ -32,9 +32,10 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("request.getRequestURI() = {}", request.getRequestURI());
         String accessToken = jwtService.extractAccessToken(request)
-                        .filter(jwtService::isTokenValid).orElse(null);
-
-        log.info("accessToken = {}", accessToken);
+                        .filter(jwtService::isTokenValid)
+                .orElse(null);
+        log.info("header에 accessToken이 있나? = {}", jwtService.extractAccessToken(request).orElse(null));
+        log.info("accessToken이 유효한가? = {}", accessToken); // 유효하지 않으면 null 반환
 
 //        if (request.getRequestURI().equals(NO_CHECK_URL)) {
 //            filterChain.doFilter(request, response);
