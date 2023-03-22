@@ -38,6 +38,8 @@ public class JwtService {
     public static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
     public static final String EMAIL_CLAIM = "email";
+
+    public static final String NICKNAME_CLAIM = "nickname";
     public static final String BEARER = "Bearer ";
 
     private final UserRepository userRepository;
@@ -50,6 +52,7 @@ public class JwtService {
                 .withSubject(ACCESS_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + + accessTokenExpirationPeriod)) // 토큰 생성
                 .withClaim(EMAIL_CLAIM, email) // payload에 담기는 내용
+
                 .sign(Algorithm.HMAC512(secretKey));
     }
     // refreshToken : accessToken의 재발급을 위한 token, client에 저장되지 않아야 하는 것
