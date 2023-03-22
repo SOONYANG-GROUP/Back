@@ -26,13 +26,13 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final UserRepository userRepository;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        String redirectUrl = request.getParameter("redirectUrl");// ?redirectUrl=?
         log.info("OAuth2 성공");
-
+        log.info("redirectUrl = {}", redirectUrl);
         String attribute = Optional.ofNullable((String)request
                         .getAttribute("redirect-url"))
                 .orElse("/");
         log.info("attribute = {}", attribute);
-        String redirectURI = null;
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
             String accessToken = "Bearer " + jwtService.createAccessToken(oAuth2User.getEmail());
@@ -64,14 +64,13 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
-        response.sendRedirect(makeRedirectUri(accessToken, refreshToken));
+        response.sendRedirect(makeRedirectUri(accessToken, refreshToken, null));
     }
 
 
-    private String makeRedirectUri(String accessToken, String refreshToken) {
-        return UriComponentsBuilder.fromUriString("http://localhost:3000/login")
-                .queryParam("accessToken", accessToken)
-                .queryParam("refreshToken", refreshToken)
+    private String makeRedirectUri(String accessToken, String refreshToken, String redirectUrl) {
+        return UriComponentsBuilder.fromUriString("http://localhost:3000")
+                .path(redirectUrl)
                 .encode(StandardCharsets.UTF_8)
                 .toUriString();
     }
