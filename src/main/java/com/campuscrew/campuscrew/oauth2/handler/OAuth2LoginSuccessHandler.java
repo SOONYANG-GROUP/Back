@@ -70,7 +70,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     }
 
     private String makeRedirectUri(String accessToken, String refreshToken, String redirectUrl) {
-        return UriComponentsBuilder.fromUriString("http://localhost:3000/")
+        return UriComponentsBuilder.fromUriString("http://localhost:3000/login")
                 .path(redirectUrl)
                 .queryParam("accessToken", accessToken)
                 .queryParam("refreshToken", refreshToken)
