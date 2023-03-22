@@ -53,7 +53,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private void loginAsGuest(HttpServletResponse response, String accessToken) throws IOException {
         response.addHeader(jwtService.getAccessHeader(), accessToken);
         jwtService.sendAccessAndRefreshToken(response, accessToken, null);
-        response.sendRedirect(makeRedirectUri(accessToken, null));
     }
 
     private void loginAsUser(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
@@ -66,8 +65,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
 
-
-        response.sendRedirect(makeRedirectUri(accessToken, refreshToken));
     }
 
 
