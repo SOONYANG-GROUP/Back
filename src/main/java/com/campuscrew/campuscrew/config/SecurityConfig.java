@@ -43,6 +43,8 @@ import java.util.Arrays;
 @EnableMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+
     private final LoginService loginService;
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -147,7 +149,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
-        JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(userRepository, jwtService);
+        JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(userRepository, jwtService, objectMapper);
         return jwtAuthenticationFilter;
     }
 

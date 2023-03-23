@@ -20,3 +20,5 @@ public class OAuth2LoginFailureHandler implements AuthenticationFailureHandler{
         log.info("소셜 로그인에 실패, {}", exception.getMessage());
     }
 }
+
+//eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTY3OTU0ODIzMCwiZW1haWwiOiJkNzY2MTgzNC02N2I0LTQ4YTItYTRhOS0xMzc3NWQzZmNmOGJAZ29vZ2xlLmNvbSJ9.vLFUL6HR1_-GWTe8kwcRulfCvfMJOgzoTkN9ZFAhKK8-1b0t0zPP72sd6S9p0tJIVUe1EEEjcp1Cdw76bhEAmw

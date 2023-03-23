@@ -1,8 +1,10 @@
 package com.campuscrew.campuscrew.jwt;
 
 import com.campuscrew.campuscrew.domain.User;
+import com.campuscrew.campuscrew.dto.TokenDto;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import com.campuscrew.campuscrew.util.PasswordUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +28,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     private static final String NO_CHECK_URL = "/login";
     private final UserRepository userRepository;
     private final JwtService jwtService;
+
+    private final ObjectMapper objectMapper;
+
     private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
 
     @Override
@@ -37,15 +42,15 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         log.info("header에 accessToken이 있나? = {}", jwtService.extractAccessToken(request).orElse(null));
         log.info("accessToken이 유효한가? = {}", accessToken); // 유효하지 않으면 null 반환
 
-//        if (request.getRequestURI().equals(NO_CHECK_URL)) {
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
+        //        if (request.getRequestURI().equals(NO_CHECK_URL)) {
+        //            filterChain.doFilter(request, response);
+        //            return;
+        //        }
         // 사용자 요청 헤더에서 RefreshToken 추출
         // -> RefreshToken이 없거나 유효하지 않다면(DB에 저장된 RefreshToken과 다르다면) null을 반환
         // 사용자의 요청 헤더에 RefreshToken이 있는 경우는, AccessToken이 만료되어 요청한 경우밖에 없다.
         // 따라서, 위의 경우를 제외하면 추출한 refreshToken은 모두 null
-        String refreshToken = jwtService.extractRefreshToken(request)
+        String refreshToken =  jwtService.extractRefreshToken(request)
                 .filter(jwtService::isTokenValid)
                 .orElse(null);
 
@@ -105,9 +110,16 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                 .ifPresent(user -> {
                     log.info("user = {}", user.getEmail());
                     String reIssuedRefreshToken = reIssueRefreshToken(user);
+                    String accessToken = jwtService.createAccessToken(user.getEmail());
                     jwtService.sendAccessAndRefreshToken(response,
-                            jwtService.createAccessToken(user.getEmail()),
+                            accessToken,
                             reIssuedRefreshToken);
+                    try {
+                        String jsonbody = objectMapper.writeValueAsString(new TokenDto(accessToken, reIssuedRefreshToken));
+                        response.getWriter().write(jsonbody);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 });
     }
     // 재발행한 RefreshToken을 user정보에 업데이트
@@ -118,4 +130,6 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         userRepository.saveAndFlush(user);
         return reIssuedRefreshToken;
     }
+
+
 }

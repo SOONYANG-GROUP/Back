@@ -1,9 +1,11 @@
 package com.campuscrew.campuscrew.oauth2.handler;
 
 import com.campuscrew.campuscrew.domain.Role;
+import com.campuscrew.campuscrew.dto.TokenDto;
 import com.campuscrew.campuscrew.jwt.JwtService;
 import com.campuscrew.campuscrew.oauth2.CustomOAuth2User;
 import com.campuscrew.campuscrew.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +26,7 @@ import java.util.Optional;
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String redirectUrl = Optional
@@ -69,6 +72,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken.replace(JwtService.BEARER, ""));
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         log.info("updateRefreshToken");
+        response.getWriter().write(objectMapper.writeValueAsString(new TokenDto(accessToken, refreshToken)));
         response.sendRedirect(makeRedirectUri(accessToken, refreshToken, null));
     }
 

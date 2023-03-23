@@ -1,5 +1,7 @@
 package com.campuscrew.campuscrew.filter;
 
+import com.campuscrew.campuscrew.dto.TokenDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,6 +16,10 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.info("request.url = {}", request.getRequestURI());
+        TokenDto tokenDto = new TokenDto(request.getHeader("Authorization"), request.getHeader("Authorizationrefresh"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        String s = objectMapper.writeValueAsString(tokenDto);
+        response.getWriter().write(s);
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
     }
 }
