@@ -1,7 +1,7 @@
 package com.campuscrew.campuscrew.service;
 
-import com.campuscrew.campuscrew.domain.Role;
-import com.campuscrew.campuscrew.domain.User;
+import com.campuscrew.campuscrew.domain.user.Role;
+import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.UserJoin;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

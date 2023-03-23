@@ -1,6 +1,6 @@
 package com.campuscrew.campuscrew.domain.board;
 
-import com.campuscrew.campuscrew.domain.User;
+import com.campuscrew.campuscrew.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Board {
+public class Project {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,16 +29,14 @@ public class Board {
     @ManyToOne(fetch = LAZY)
     private User user;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "project")
     private List<JoinedUser> joinedUsers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "project")
+    private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(fetch = LAZY)
+    @OneToMany(mappedBy = "project")
     private List<Reference> references = new ArrayList<>();
-
-    public void addUser(User user) {
-        this.user = user;
-    }
 
     private LocalDateTime updatedDateTime;
 

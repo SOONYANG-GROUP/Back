@@ -1,8 +1,8 @@
 package com.campuscrew.campuscrew.oauth2;
 
-import com.campuscrew.campuscrew.domain.Role;
-import com.campuscrew.campuscrew.domain.SocialType;
-import com.campuscrew.campuscrew.domain.User;
+import com.campuscrew.campuscrew.domain.user.Role;
+import com.campuscrew.campuscrew.domain.user.SocialType;
+import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.oauth2.userinfo.GoogleOAuth2UserInfo;
 import com.campuscrew.campuscrew.oauth2.userinfo.NaverOAuth2UserInfo;
 import com.campuscrew.campuscrew.oauth2.userinfo.OAuth2UserInfo;

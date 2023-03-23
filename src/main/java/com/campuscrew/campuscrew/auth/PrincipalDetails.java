@@ -1,6 +1,6 @@
 package com.campuscrew.campuscrew.auth;
 
-import com.campuscrew.campuscrew.domain.User;
+import com.campuscrew.campuscrew.domain.user.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,6 +1,6 @@
-package com.campuscrew.campuscrew.domain;
+package com.campuscrew.campuscrew.domain.user;
 
-import com.campuscrew.campuscrew.domain.board.Board;
+import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.domain.board.JoinedUser;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,8 +35,13 @@ public class User {
 
     private String name;
 
+    private String socialId;
+
+    private String refreshToken;
+
+
     @OneToMany(mappedBy = "user")
-    private List<Board> boards = new ArrayList<>();
+    private List<Project> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<JoinedUser> joinedUsers = new ArrayList<>();
@@ -49,17 +54,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
-    private String socialId;
 
-    private String refreshToken;
-
-    public void addBoard(Board board) {
-        this.boards.add(board);
-        board.addUser(this);
+    public void addBoard(Project project) {
+        this.projects.add(project);
+        project.addUser(this);
     }
 
     public void passwordEncode(PasswordEncoder passwordEncoder) {
-        this.password =passwordEncoder.encode(this.password);
+        this.password = passwordEncoder.encode(this.password);
     }
 
     public void authorizeUser() {

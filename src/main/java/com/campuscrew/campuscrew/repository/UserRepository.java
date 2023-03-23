@@ -1,7 +1,7 @@
 package com.campuscrew.campuscrew.repository;
 
-import com.campuscrew.campuscrew.domain.SocialType;
-import com.campuscrew.campuscrew.domain.User;
+import com.campuscrew.campuscrew.domain.user.SocialType;
+import com.campuscrew.campuscrew.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

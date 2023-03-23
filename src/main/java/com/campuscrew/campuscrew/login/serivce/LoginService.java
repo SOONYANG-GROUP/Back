@@ -1,6 +1,6 @@
 package com.campuscrew.campuscrew.login.serivce;
 
-import com.campuscrew.campuscrew.domain.User;
+import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

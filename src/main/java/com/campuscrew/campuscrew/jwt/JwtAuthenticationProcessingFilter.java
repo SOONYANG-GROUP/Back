@@ -1,6 +1,6 @@
 package com.campuscrew.campuscrew.jwt;
 
-import com.campuscrew.campuscrew.domain.User;
+import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.TokenDto;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import com.campuscrew.campuscrew.util.PasswordUtil;

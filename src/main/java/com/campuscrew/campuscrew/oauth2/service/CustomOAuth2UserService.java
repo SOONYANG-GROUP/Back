@@ -1,7 +1,7 @@
 package com.campuscrew.campuscrew.oauth2.service;
 
-import com.campuscrew.campuscrew.domain.SocialType;
-import com.campuscrew.campuscrew.domain.User;
+import com.campuscrew.campuscrew.domain.user.SocialType;
+import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.oauth2.CustomOAuth2User;
 import com.campuscrew.campuscrew.oauth2.OAuth2Attributes;
 import com.campuscrew.campuscrew.repository.UserRepository;

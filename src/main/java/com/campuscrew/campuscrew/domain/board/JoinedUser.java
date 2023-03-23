@@ -1,12 +1,8 @@
 package com.campuscrew.campuscrew.domain.board;
 
-import com.campuscrew.campuscrew.domain.User;
-import com.campuscrew.campuscrew.repository.UserRepository;
+import com.campuscrew.campuscrew.domain.user.User;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -21,7 +17,10 @@ public class JoinedUser {
 
     @ManyToOne
     @JoinColumn(name = "board_id")
-    private Board board;
+    private Project project;
+
+    @Enumerated(EnumType.STRING)
+    private JoinUserStatus status;
 
     private String field;
 
@@ -30,5 +29,7 @@ public class JoinedUser {
     private Integer maxRecruits;
 
     private Integer recruits;
+
+
 
 }

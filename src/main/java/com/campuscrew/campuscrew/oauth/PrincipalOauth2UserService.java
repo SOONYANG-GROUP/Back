@@ -1,8 +1,8 @@
 //package com.campuscrew.campuscrew.oauth;
 //
 //import com.campuscrew.campuscrew.auth.PrincipalDetails;
-//import com.campuscrew.campuscrew.domain.Role;
-//import com.campuscrew.campuscrew.domain.User;
+//import com.campuscrew.campuscrew.domain.user.Role;
+//import com.campuscrew.campuscrew.domain.user.User;
 //import com.campuscrew.campuscrew.oauth.userinfo.GoogleUserInfo;
 //import com.campuscrew.campuscrew.oauth.userinfo.NaverUserInfo;
 //import com.campuscrew.campuscrew.oauth.userinfo.UserInfo;

@@ -1,6 +1,6 @@
 package com.campuscrew.campuscrew.oauth2;
 
-import com.campuscrew.campuscrew.domain.Role;
+import com.campuscrew.campuscrew.domain.user.Role;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;

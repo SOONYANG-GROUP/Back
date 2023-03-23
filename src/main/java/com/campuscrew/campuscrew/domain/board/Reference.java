@@ -14,7 +14,6 @@ public class Reference {
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Board board;
-
+    private Project project;
 
 }
