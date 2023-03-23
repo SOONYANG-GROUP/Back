@@ -100,8 +100,10 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     // 1. refreshToken 이 존재 한다면, 해당 토큰을 가지고 있는 user 정보를 조회한다. 있다면 2번
     // 2. 이 user 에게 새로운 accessToken 과 refreshToken 을 발급
     private void checkRefreshTokenAndIssueAccessToken(HttpServletResponse response, String refreshToken) {
-        userRepository.findByRefreshToken(refreshToken)
+        log.info("checkRefreshToken = {}", refreshToken);
+        userRepository.findByRefreshToken(refreshToken) // 1 refreshToken으로 못찾는다.
                 .ifPresent(user -> {
+                    log.info("user = {}", user.getEmail());
                     String reIssuedRefreshToken = reIssueRefreshToken(user);
                     jwtService.sendAccessAndRefreshToken(response,
                             jwtService.createAccessToken(user.getEmail()),
@@ -112,6 +114,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     private String reIssueRefreshToken(User user) {
         String reIssuedRefreshToken = jwtService.createRefreshToken();
         user.updateRefreshToken(reIssuedRefreshToken);
+        log.info("reIssueToken = {}", reIssuedRefreshToken);
         userRepository.saveAndFlush(user);
         return reIssuedRefreshToken;
     }

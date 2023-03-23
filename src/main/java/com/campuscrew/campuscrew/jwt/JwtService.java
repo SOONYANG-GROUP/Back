@@ -52,7 +52,6 @@ public class JwtService {
                 .withSubject(ACCESS_TOKEN_SUBJECT)
                 .withExpiresAt(new Date(now.getTime() + + accessTokenExpirationPeriod)) // 토큰 생성
                 .withClaim(EMAIL_CLAIM, email) // payload에 담기는 내용
-
                 .sign(Algorithm.HMAC512(secretKey));
     }
     // refreshToken : accessToken의 재발급을 위한 token, client에 저장되지 않아야 하는 것
@@ -71,9 +70,9 @@ public class JwtService {
     }
 
     public void sendAccessAndRefreshToken(HttpServletResponse response, String accessToken, String refreshToken) {
-        response.setStatus(HttpServletResponse.SC_OK);
         setAccessTokenHeader(response, accessToken);
         setRefreshHeader(response, refreshToken);
+        response.setStatus(HttpServletResponse.SC_OK);
         log.info("accessToken = {}", accessToken);
         log.info("refreshToken = {}", refreshToken);
         log.info("Access Token, Refresh Token 헤더 설정 ok");
@@ -120,6 +119,7 @@ public class JwtService {
         userRepository.findByEmail(email)
                 .ifPresentOrElse(
                         user -> {
+                            log.info("update refresh Token = {}", refreshToken);
                             user.updateRefreshToken(refreshToken);
                             userRepository.saveAndFlush(user);
                         },

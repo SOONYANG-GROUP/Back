@@ -37,14 +37,18 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                 .orElse("/");
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
+            log.info("Email = {}", oAuth2User.getEmail());
             String accessToken = "Bearer " + jwtService.createAccessToken(oAuth2User.getEmail());
+            String refreshToken = "Bearer "  + jwtService.createRefreshToken();
+
             log.info("accessToken = {}", accessToken);
+            log.info("refreshToken = {}", refreshToken);
             if(oAuth2User.getRole() == Role.GUEST) {
                 loginAsGuest(response, accessToken);
                 // 회원가입 폼으로 들어가던가, 아니면
             } else {
                 log.info("기존 가입 user = {}", oAuth2User.getRole().name());
-                loginAsUser(response, oAuth2User);
+                loginAsUser(response, oAuth2User, accessToken, refreshToken);
             // 기존에 가입이 되어있다면, redirect
             }
         } catch(Exception e) {
@@ -57,19 +61,19 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         jwtService.sendAccessAndRefreshToken(response, accessToken, null);
     }
 
-    private void loginAsUser(HttpServletResponse response, CustomOAuth2User oAuth2User) throws IOException {
-        String accessToken = "Bearer " + jwtService.createAccessToken(oAuth2User.getEmail());
-        String refreshToken = "Bearer "  + jwtService.createRefreshToken();
+    private void loginAsUser(HttpServletResponse response, CustomOAuth2User oAuth2User, String accessToken, String refreshToken) throws IOException {
 
         response.addHeader(jwtService.getAccessHeader(), accessToken);
         response.addHeader(jwtService.getRefreshHeader(), refreshToken);
-
+        log.info("sendAccessToken");
+        jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken.replace(JwtService.BEARER, ""));
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
-        jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
+        log.info("updateRefreshToken");
         response.sendRedirect(makeRedirectUri(accessToken, refreshToken, null));
     }
 
     private String makeRedirectUri(String accessToken, String refreshToken, String redirectUrl) {
+        log.info("redirect : refreshToken = {}", refreshToken);
         return UriComponentsBuilder.fromUriString("http://localhost:3000/login")
                 .path(redirectUrl)
                 .queryParam("accessToken", accessToken)

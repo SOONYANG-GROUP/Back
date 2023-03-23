@@ -163,12 +163,13 @@ public class SecurityConfig {
         configuration.setAllowCredentials(true);
         // setAllowedHeaders is important! Without it, OPTIONS preflight request
         // will fail with 403 Invalid CORS request
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "AuthorizationRefresh"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type", "Authorizationrefresh"));
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
-
+//    Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTY3OTUzMTYwMywiZW1haWwiOiIwNzgzNWNhNC1jMWM3LTRmNDgtYjBhOC0zMGFhMzgzNWJhMjVAZ29vZ2xlLmNvbSJ9.PiOl1EGL7_kFkgniWJLMfjqJ_cm7Kd7DkSvhUo5D7VCMk9DbgIIVKIouSkhLZ1HB26SM1PWR2J-kCQZb8-rKAg
+//    Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTY3OTUzMTYwMywiZW1haWwiOiIwNzgzNWNhNC1jMWM3LTRmNDgtYjBhOC0zMGFhMzgzNWJhMjVAZ29vZ2xlLmNvbSJ9.PiOl1EGL7_kFkgniWJLMfjqJ_cm7Kd7DkSvhUo5D7VCMk9DbgIIVKIouSkhLZ1HB26SM1PWR2J-kCQZb8-rKAg
 
 }
