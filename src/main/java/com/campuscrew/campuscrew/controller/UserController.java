@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,7 +31,9 @@ public class UserController {
     }
 
     @PostMapping("/jwt-test")
-    public String jwtTest() {
+    public String jwtTest(@AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        System.out.println(email);
         return "jwtTest";
     }
 
