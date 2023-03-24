@@ -19,6 +19,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         TokenDto tokenDto = new TokenDto(request.getHeader("Authorization"), request.getHeader("Authorizationrefresh"));
         ObjectMapper objectMapper = new ObjectMapper();
         String s = objectMapper.writeValueAsString(tokenDto);
+        log.info(authException.getMessage());
         response.getWriter().write(s);
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
     }
