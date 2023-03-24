@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/board")
+@RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectController {
     private final BoardService boardService;
@@ -23,6 +23,7 @@ public class ProjectController {
                            @AuthenticationPrincipal UserDetails userDetails,
                            HttpServletResponse response) {
         String email = userDetails.getUsername();
+        log.info("email = {}", email);
         boardService.addProject(email, addProjectDto);
         System.out.println();
         return null;

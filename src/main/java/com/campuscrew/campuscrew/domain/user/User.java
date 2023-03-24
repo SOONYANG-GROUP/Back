@@ -55,10 +55,10 @@ public class User {
     private SocialType socialType;
 
 
-    public void addBoard(Project project) {
-        this.projects.add(project);
-        project.addUser(this);
-    }
+//    public void addBoard(Project project) {
+//        this.projects.add(project);
+//        project.addUser(this);
+//    }
 
     public void passwordEncode(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);

@@ -3,7 +3,6 @@ package com.campuscrew.campuscrew.controller;
 import com.campuscrew.campuscrew.dto.UserJoin;
 import com.campuscrew.campuscrew.dto.UserJoinSuccessDto;
 import com.campuscrew.campuscrew.service.UserService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -42,8 +41,5 @@ public class UserController {
         log.info("authentication = {}", authentication);
         return authentication;
     }
-//    @GetMapping("/test/session")
-//    public String jwtSession(Authentication authentication) {
-//
-//    }
+
 }

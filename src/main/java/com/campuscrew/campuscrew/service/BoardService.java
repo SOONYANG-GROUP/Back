@@ -1,5 +1,7 @@
 package com.campuscrew.campuscrew.service;
 
+import com.campuscrew.campuscrew.controller.exception.RequiredLoginStateException;
+import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.repository.ProjectRepository;
 import com.campuscrew.campuscrew.repository.UserRepository;
@@ -17,7 +19,8 @@ public class BoardService {
     private final UserRepository userRepository;
     // addProject email을 통해 회원을 조회 하고
     public void addProject(String email, AddProjectDto addProjectDto) {
-        userRepository.findByEmail(email);
+        User findUser = userRepository.findByEmail(email)
+                .orElseThrow(()-> new RequiredLoginStateException("로그인이 필요 합니다."));
 
     }
 }
