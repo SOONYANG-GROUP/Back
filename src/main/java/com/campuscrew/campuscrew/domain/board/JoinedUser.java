@@ -30,6 +30,4 @@ public class JoinedUser {
 
     private Integer recruits;
 
-
-
 }
