@@ -40,8 +40,8 @@ public class User {
 
     private String refreshToken;
 
-    @OneToMany(mappedBy = "user")
-    private List<Project> projects = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    private List<Project> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<JoinedUser> joinedUsers = new ArrayList<>();

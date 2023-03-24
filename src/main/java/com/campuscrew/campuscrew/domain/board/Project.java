@@ -40,12 +40,14 @@ public class Project {
 //    @ManyToOne(fetch = LAZY)
 //    @JoinColumn(name = "user_id")
 //    private User user;     user -- joinuser --
+//
+    //1. 연관 관계를 고려해보자. ex) 모든 user 가 project 에 대해 직접적으로 알아야 할 필요가 있을까?
+    //2. JoinedUser 라는 mapping 테이블에서 이를 관리하면 될 것인데
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Recruit> recruits = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<JoinedUser> joinedUsers = new ArrayList<>(); //
-
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<Recruit> recruits = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Reference> references = new ArrayList<>();

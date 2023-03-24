@@ -46,7 +46,7 @@ public class QReference extends EntityPathBase<Reference> {
 
     public QReference(Class<? extends Reference> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.project = inits.isInitialized("project") ? new QProject(forProperty("project"), inits.get("project")) : null;
+        this.project = inits.isInitialized("project") ? new QProject(forProperty("project")) : null;
     }
 
 }

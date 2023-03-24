@@ -22,7 +22,7 @@ public class QComment extends EntityPathBase<Comment> {
 
     public static final QComment comment = new QComment("comment");
 
-    public final ListPath<Comment, QComment> comments = this.<Comment, QComment>createList("comments", Comment.class, QComment.class, PathInits.DIRECT2);
+    public final ListPath<SubComment, QSubComment> comments = this.<SubComment, QSubComment>createList("comments", SubComment.class, QSubComment.class, PathInits.DIRECT2);
 
     public final StringPath content = createString("content");
 
@@ -52,7 +52,7 @@ public class QComment extends EntityPathBase<Comment> {
 
     public QComment(Class<? extends Comment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.project = inits.isInitialized("project") ? new QProject(forProperty("project"), inits.get("project")) : null;
+        this.project = inits.isInitialized("project") ? new QProject(forProperty("project")) : null;
         this.user = inits.isInitialized("user") ? new com.campuscrew.campuscrew.domain.user.QUser(forProperty("user")) : null;
     }
 

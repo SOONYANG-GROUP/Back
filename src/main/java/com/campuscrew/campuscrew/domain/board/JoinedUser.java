@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+@Table(name = "JOINUSERS")
 public class JoinedUser {
     @Id
     @Column(name = "joined_user_id")

@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -8,13 +9,17 @@ spring:
     allow-circular-references: true
   jpa:
     hibernate:
-      ddl-auto: update #create update none
+
+      ddl-auto: validate #create update none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        dialect: org.hibernate.dialect.MySQLDialect
   config:
     import: application-oauth.yml
-
 
 jwt:
   secretKey: asdasdasdasdasdadadadadadadadadadadadafafafafasfasfasfasfafafafs

@@ -36,8 +36,6 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath password = createString("password");
 
-    public final ListPath<com.campuscrew.campuscrew.domain.board.Project, com.campuscrew.campuscrew.domain.board.QProject> projects = this.<com.campuscrew.campuscrew.domain.board.Project, com.campuscrew.campuscrew.domain.board.QProject>createList("projects", com.campuscrew.campuscrew.domain.board.Project.class, com.campuscrew.campuscrew.domain.board.QProject.class, PathInits.DIRECT2);
-
     public final StringPath refreshToken = createString("refreshToken");
 
     public final EnumPath<Role> role = createEnum("role", Role.class);
@@ -45,6 +43,8 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath socialId = createString("socialId");
 
     public final EnumPath<SocialType> socialType = createEnum("socialType", SocialType.class);
+
+    public final ListPath<com.campuscrew.campuscrew.domain.board.SubComment, com.campuscrew.campuscrew.domain.board.QSubComment> subComments = this.<com.campuscrew.campuscrew.domain.board.SubComment, com.campuscrew.campuscrew.domain.board.QSubComment>createList("subComments", com.campuscrew.campuscrew.domain.board.SubComment.class, com.campuscrew.campuscrew.domain.board.QSubComment.class, PathInits.DIRECT2);
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));
