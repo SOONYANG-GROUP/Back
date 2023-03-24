@@ -2,6 +2,7 @@ package com.campuscrew.campuscrew.domain.user;
 
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.domain.board.JoinedUser;
+import com.campuscrew.campuscrew.domain.board.SubComment;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,12 +40,14 @@ public class User {
 
     private String refreshToken;
 
-
     @OneToMany(mappedBy = "user")
     private List<Project> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<JoinedUser> joinedUsers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<SubComment> subComments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Role role;

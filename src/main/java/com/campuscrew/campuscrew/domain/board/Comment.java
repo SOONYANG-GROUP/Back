@@ -17,7 +17,7 @@ public class Comment {
     private Project project;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Comment> comments = new ArrayList<>();
+    private List<SubComment> comments = new ArrayList<>();
 
     private String content;
 
@@ -25,11 +25,9 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-//    private String
 // comment >>
 // board
 // 사원, 관리자, >> 여러명 관리
 // 계층
-//
 }
 

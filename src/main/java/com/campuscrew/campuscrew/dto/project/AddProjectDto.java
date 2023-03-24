@@ -1,14 +1,15 @@
 package com.campuscrew.campuscrew.dto.project;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.campuscrew.campuscrew.domain.board.Recruit;
+import lombok.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@Builder
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddProjectDto {
@@ -16,6 +17,12 @@ public class AddProjectDto {
     private String description;
     private String openChatUrl;
     private String voiceChatUrl;
-    private List<RequiredUserDto> fields;
+    private List<RecruitUserDto> recruitUserDto;
     private List<ReferenceDto> references;
+
+    public List<Recruit> dtoToRecruit() {
+        return this.recruitUserDto.stream()
+                .map(Recruit::makeRecruit)
+                .collect(Collectors.toList());
+    }
 }
