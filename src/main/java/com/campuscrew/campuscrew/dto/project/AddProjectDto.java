@@ -17,5 +17,5 @@ public class AddProjectDto {
     private String openChatUrl;
     private String voiceChatUrl;
     private List<RequiredUserDto> fields;
-    private List<ReferenceDto> referenceDtos;
+    private List<ReferenceDto> references;
 }
