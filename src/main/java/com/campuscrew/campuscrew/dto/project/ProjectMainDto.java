@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProjectMainDto {
     private Long id;
     private LocalDateTime createDate;
@@ -20,8 +19,19 @@ public class ProjectMainDto {
     private String description; // project
     private List<RecruitUserDto> recruitUsers; // project - recruit
     private List<ReferenceDto> references; // project - reference
+
+    public ProjectMainDto(Long id, LocalDateTime createDate, String title, String description, List<RecruitUserDto> recruitUsers, List<ReferenceDto> references) {
+        this.id = id;
+        this.createDate = createDate;
+        this.title = title;
+        this.description = description;
+        this.recruitUsers = recruitUsers;
+        this.references = references;
+    }
+
     // dto -> domain, domain -> dto;
     // Domainconverter
+
     public static ProjectMainDto getProjectMain(Project project) {
         ProjectMainDto dto = new ProjectMainDto();
         dto.setId(project.getId());

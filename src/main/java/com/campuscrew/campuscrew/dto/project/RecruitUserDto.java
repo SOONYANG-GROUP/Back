@@ -12,12 +12,19 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class RecruitUserDto {
     private String field;
     private String detailField;
     private Integer maxRecruit;
     private Integer currentRecruit;
+
+    public RecruitUserDto(String field, String detailField, Integer maxRecruit, Integer currentRecruit) {
+        this.field = field;
+        this.detailField = detailField;
+        this.maxRecruit = maxRecruit;
+        this.currentRecruit = currentRecruit;
+    }
+
     public static List<RecruitUserDto> recruitsToDto(List<Recruit> recruits) {
         return recruits.stream()
                 .map(RecruitUserDto::recruitUserDto)

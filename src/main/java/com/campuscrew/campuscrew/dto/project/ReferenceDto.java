@@ -13,10 +13,12 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class ReferenceDto implements Serializable {
     private String url;
+
+    public ReferenceDto(String url) {
+        this.url = url;
+    }
 
     public static List<ReferenceDto> referencesToDto(List<Reference> references) {
         return references.stream()
