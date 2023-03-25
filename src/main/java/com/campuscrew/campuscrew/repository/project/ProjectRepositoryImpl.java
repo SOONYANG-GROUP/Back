@@ -39,12 +39,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 project.title, project.description
                                 , list(Projections.bean(RecruitUserDto.class,
                                                 recruit.field, recruit.detailField,
-                                                recruit.maxRecruit, recruit.currentRecruit)
-                                                .as("recruitUsers"),
-                                        list(Projections.bean(ReferenceDto.class, reference.url)
-                                                .as("references"))))))
-                .get(id);
-
+                                                recruit.maxRecruit, recruit.currentRecruit)),
+                                        list(Projections.bean(ReferenceDto.class, reference.url))
+                        ))).get(id);
         return projectMainDto;
     }
 }
