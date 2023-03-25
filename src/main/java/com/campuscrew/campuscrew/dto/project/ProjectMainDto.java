@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.dto.project;
 
 import com.campuscrew.campuscrew.domain.board.Project;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,22 +13,16 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProjectMainDto {
+    private List<RecruitUserDto> RecruitUserDtos; // project - recruit
+    private List<ReferenceDto> ReferenceDtos; // project - reference
     private Long id;
-    private LocalDateTime createDate;
+    private LocalDateTime createDateTime;
     private String title;
     private String description; // project
-    private List<RecruitUserDto> recruitUsers; // project - recruit
-    private List<ReferenceDto> references; // project - reference
 
-    public ProjectMainDto(Long id, LocalDateTime createDate, String title, String description, List<RecruitUserDto> recruitUsers, List<ReferenceDto> references) {
-        this.id = id;
-        this.createDate = createDate;
-        this.title = title;
-        this.description = description;
-        this.recruitUsers = recruitUsers;
-        this.references = references;
-    }
+
 
     // dto -> domain, domain -> dto;
     // Domainconverter
@@ -37,9 +32,9 @@ public class ProjectMainDto {
         dto.setId(project.getId());
         dto.setTitle(project.getTitle());
         dto.setDescription(project.getDescription());
-        dto.setCreateDate(project.getCreatedDateTime());
-        dto.setRecruitUsers(RecruitUserDto.recruitsToDto(project.getRecruits()));
-        dto.setReferences(ReferenceDto.referencesToDto(project.getReferences()));
+        dto.setCreateDateTime(project.getCreatedDateTime());
+        dto.setRecruitUserDtos(RecruitUserDto.recruitsToDto(project.getRecruits()));
+        dto.setReferenceDtos(ReferenceDto.referencesToDto(project.getReferences()));
         return dto;
     }
 }
