@@ -35,7 +35,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .where(project.id.eq(id))
                 .transform(groupBy(project.id).as(
                         Projections.constructor(ProjectMainDto.class,
-                                project.id, project.createdDateTime, project.title, project.description
+                                project.id, project.createdDateTime.as("createDate"), project.title, project.description
                                 , list(Projections.constructor(RecruitUserDto.class,
                                                 recruit.field, recruit.detailField,
                                                 recruit.maxRecruit, recruit.currentRecruit),
