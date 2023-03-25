@@ -30,6 +30,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     public ProjectMainDto fetchMainPage(Long id) {
         ProjectMainDto projectMainDto = queryFactory
                 .select(project)
+                .from(project)
                 .join(project.recruits, recruit)
                 .join(project.references, reference)
                 .where(project.id.eq(id))
