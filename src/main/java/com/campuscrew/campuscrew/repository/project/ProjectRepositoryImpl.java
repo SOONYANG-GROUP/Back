@@ -38,8 +38,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 project.id, project.createdDateTime.as("createDate"), project.title, project.description
                                 , list(Projections.constructor(RecruitUserDto.class,
                                                 recruit.field, recruit.detailField,
-                                                recruit.maxRecruit, recruit.currentRecruit),
-                                        list(Projections.constructor(ReferenceDto.class, reference.url))))))
+                                                recruit.maxRecruit, recruit.currentRecruit).as("recruitUsers"),
+                                        list(Projections.constructor(ReferenceDto.class, reference.url)
+                                                .as("references"))))))
                 .get(id);
 
         return projectMainDto;
