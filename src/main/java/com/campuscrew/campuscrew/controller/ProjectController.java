@@ -36,6 +36,7 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public ProjectMainDto mainPage(@PathVariable Long id) {
+        log.info("id = {}", id);
         return projectService.getMainPage(id);
     }
 

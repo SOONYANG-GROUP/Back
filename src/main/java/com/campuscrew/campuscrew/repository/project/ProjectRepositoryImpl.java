@@ -31,7 +31,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
     @Override
     public ProjectMainDto fetchMainPage(Long id) {
-        ProjectMainDto transform = queryFactory
+        List<ProjectMainDto> transform = queryFactory
                 .select(project)
                 .from(project)
                 .leftJoin(project.recruits, recruit)
@@ -43,8 +43,10 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                         recruit.detailField,
                                         recruit.maxRecruit, recruit.currentRecruit)),
                                 list(Projections.constructor(ReferenceDto.class, reference.url)),
-                                project.id, project.createdDateTime, project.title, project.description)))
-                .get(0);
-        return transform;
+                                project.id, project.createdDateTime, project.title, project.description)));
+        for (ProjectMainDto projectMainDto : transform) {
+            System.out.println(projectMainDto);
+        }
+        return transform.get(0);
     }
 }
