@@ -34,13 +34,13 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .join(project.references, reference)
                 .where(project.id.eq(id))
                 .transform(groupBy(project.id).as(
-                        Projections.bean(ProjectMainDto.class,
+                        Projections.constructor(ProjectMainDto.class,
                                 project.id, project.createdDateTime.as("createDate"),
                                 project.title, project.description
-                                , list(Projections.bean(RecruitUserDto.class,
+                                , list(Projections.constructor(RecruitUserDto.class,
                                                 recruit.field, recruit.detailField,
                                                 recruit.maxRecruit, recruit.currentRecruit)),
-                                        list(Projections.bean(ReferenceDto.class, reference.url))
+                                        list(Projections.constructor(ReferenceDto.class, reference.url))
                         ))).get(id);
         return projectMainDto;
     }
