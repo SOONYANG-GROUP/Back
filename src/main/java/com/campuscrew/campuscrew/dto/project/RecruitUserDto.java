@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 public class RecruitUserDto {
     private String field;
     private String detailField;
-    private Integer totalNum;
-
+    private Integer maxRecruit;
+    private Integer currentRecruit;
     public static List<RecruitUserDto> recruitsToDto(List<Recruit> recruits) {
         return recruits.stream()
                 .map(RecruitUserDto::recruitUserDto)
@@ -26,6 +26,7 @@ public class RecruitUserDto {
 
     private static RecruitUserDto recruitUserDto(Recruit recruit) {
         return new RecruitUserDto(recruit.getField(),
-                recruit.getDetailField(), recruit.getMaxRecruit());
+                recruit.getDetailField(), recruit.getMaxRecruit(),
+                recruit.getCurrentRecruit());
     }
 }

@@ -37,7 +37,7 @@ public class Recruit {
         recruit.setField(dto.getField());
         recruit.setDetailField(dto.getDetailField());
         recruit.setCurrentRecruit(0);
-        recruit.setMaxRecruit(dto.getTotalNum());
+        recruit.setMaxRecruit(dto.getMaxRecruit());
         return recruit;
     }
 }

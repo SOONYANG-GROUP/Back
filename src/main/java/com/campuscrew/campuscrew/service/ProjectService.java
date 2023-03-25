@@ -7,7 +7,7 @@ import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.ParticipatedUsersRepository;
-import com.campuscrew.campuscrew.repository.ProjectRepository;
+import com.campuscrew.campuscrew.repository.project.ProjectRepository;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,10 +45,9 @@ public class ProjectService {
     }
 
     // 1. MainPage 정보를 가져 온다.
-    // 2. 필요한 정보는
-    public ProjectMainDto projectMainDto() {
-        return null;
+    // 2. 필요한 정보
+
+    public ProjectMainDto getMainPage(Long id) {
+        return projectRepository.fetchMainPage(id);
     }
-
-
 }

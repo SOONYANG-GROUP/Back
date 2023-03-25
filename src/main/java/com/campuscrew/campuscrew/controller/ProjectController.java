@@ -2,6 +2,7 @@ package com.campuscrew.campuscrew.controller;
 
 import com.campuscrew.campuscrew.FrontServerAttr;
 import com.campuscrew.campuscrew.domain.board.Project;
+import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.service.ProjectService;
@@ -32,9 +33,10 @@ public class ProjectController {
         return "redirect:http://localhost:3000/projects/{id}";
     }
 
+
     @GetMapping("/projects/{id}")
     public ProjectMainDto mainPage(@PathVariable Long id) {
-        return null;
+        return projectService.getMainPage(id);
     }
 
 //

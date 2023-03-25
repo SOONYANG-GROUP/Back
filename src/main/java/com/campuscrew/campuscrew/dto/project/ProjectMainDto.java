@@ -17,9 +17,9 @@ public class ProjectMainDto {
     private Long id;
     private LocalDateTime createDate;
     private String title;
-    private String description;
-    private List<RecruitUserDto> recruitUsers;
-    private List<ReferenceDto> references;
+    private String description; // project
+    private List<RecruitUserDto> recruitUsers; // project - recruit
+    private List<ReferenceDto> references; // project - reference
     // dto -> domain, domain -> dto;
     // Domainconverter
     public static ProjectMainDto getProjectMain(Project project) {
