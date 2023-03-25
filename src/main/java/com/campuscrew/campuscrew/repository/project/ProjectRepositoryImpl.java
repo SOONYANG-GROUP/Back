@@ -31,11 +31,11 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
     @Override
     public ProjectMainDto fetchMainPage(Long id) {
-        List<ProjectMainDto> transform = queryFactory
+        ProjectMainDto transform = queryFactory
                 .select(project)
                 .from(project)
-                .join(project.recruits, recruit)
-                .join(project.references, reference)
+                .leftJoin(project.recruits, recruit)
+                .leftJoin(project.references, reference)
                 .where(project.id.eq(id))
                 .transform(groupBy(project.id).list(
                         Projections.constructor(ProjectMainDto.class,
@@ -43,11 +43,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                         recruit.detailField,
                                         recruit.maxRecruit, recruit.currentRecruit)),
                                 list(Projections.constructor(ReferenceDto.class, reference.url)),
-                                project.id, project.createdDateTime, project.title, project.description)));
-
-        for (ProjectMainDto projectMainDto : transform) {
-            System.out.println(projectMainDto);
-        }
-        return null;
+                                project.id, project.createdDateTime, project.title, project.description)))
+                .get(0);
+        return transform;
     }
 }
