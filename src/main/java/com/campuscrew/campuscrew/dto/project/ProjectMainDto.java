@@ -25,17 +25,14 @@ public class ProjectMainDto implements Serializable {
     private List<ReferenceDto> ReferenceDtos; // project - reference
     private Long id;
 
-
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createDateTime;
+
     private String title;
+
     private String description; // project
 
-
-
-    // dto -> domain, domain -> dto;
-    // Domainconverter
 
     public static ProjectMainDto getProjectMain(Project project) {
         ProjectMainDto dto = new ProjectMainDto();

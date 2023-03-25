@@ -37,6 +37,9 @@ public class Project {
 
     private String voiceChatUrl;
 
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus status;
+
 //    @ManyToOne(fetch = LAZY)
 //    @JoinColumn(name = "user_id")
 //    private User user;     user -- joinuser --
@@ -55,19 +58,24 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
-    private LocalDateTime updatedDateTime;
+    private LocalDateTime startWithDate;
+
+    private LocalDateTime endDate;
+
+    private LocalDateTime recruitmentDate;
 
     private LocalDateTime createdDateTime;
 
-    private LocalDateTime startWithDate;
 
     public static Project createProject(AddProjectDto dto) {
         Project project = new Project();
         project.setTitle(dto.getTitle());
+        project.setStatus(ProjectStatus.READY);
         project.setDescription(dto.getDescription());
         project.setOpenChatUrl(dto.getOpenChatUrl());
         project.setVoiceChatUrl(dto.getVoiceChatUrl());
         project.setCreatedDateTime(LocalDateTime.now());
+        project.setRecruitmentDate(LocalDateTime.parse("2020-10-10"));
         project.addRecruits(dto.dtoToRecruit()); // recruit List
         return project;
     }
@@ -78,7 +86,7 @@ public class Project {
             recruit.setProject(this);
         }
     }
-//
+
 //    private void addJoinUser(JoinedUser joinedUser) {
 //        this.joinedUsers.add(joinedUser);
 //        joinedUser.setProject(this);

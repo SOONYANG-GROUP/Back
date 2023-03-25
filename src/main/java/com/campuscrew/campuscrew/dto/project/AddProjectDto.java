@@ -17,6 +17,7 @@ public class AddProjectDto {
     private String description;
     private String openChatUrl;
     private String voiceChatUrl;
+    private String recruitmentDate;
     private List<RecruitUserDto> recruitUserDto;
     private List<ReferenceDto> references;
 

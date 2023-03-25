@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ProjectController {
     private final ProjectService projectService;
     @PostMapping("/add")
-    public String addProject(@RequestBody AddProjectDto addProjectDto,
+    public Long addProject(@RequestBody AddProjectDto addProjectDto,
                                      @AuthenticationPrincipal UserDetails userDetails,
                                      HttpServletResponse response, RedirectAttributes redirectAttributes) {
         String email = userDetails.getUsername();
@@ -30,7 +30,7 @@ public class ProjectController {
         ProjectMainDto projectMainDto = ProjectMainDto.getProjectMain(project);
         redirectAttributes.addAttribute("id", projectMainDto.getId());
 
-        return "redirect:http://localhost:3000/projects/{id}";
+        return project.getId();
     }
 
 

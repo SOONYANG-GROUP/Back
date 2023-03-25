@@ -26,11 +26,15 @@ public class QProject extends EntityPathBase<Project> {
 
     public final StringPath description = createString("description");
 
+    public final DateTimePath<java.time.LocalDateTime> endDate = createDateTime("endDate", java.time.LocalDateTime.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath openChatUrl = createString("openChatUrl");
 
     public final ListPath<ParticipatedUsers, QParticipatedUsers> participatedUsers = this.<ParticipatedUsers, QParticipatedUsers>createList("participatedUsers", ParticipatedUsers.class, QParticipatedUsers.class, PathInits.DIRECT2);
+
+    public final DateTimePath<java.time.LocalDateTime> recruitmentDate = createDateTime("recruitmentDate", java.time.LocalDateTime.class);
 
     public final ListPath<Recruit, QRecruit> recruits = this.<Recruit, QRecruit>createList("recruits", Recruit.class, QRecruit.class, PathInits.DIRECT2);
 
@@ -38,9 +42,9 @@ public class QProject extends EntityPathBase<Project> {
 
     public final DateTimePath<java.time.LocalDateTime> startWithDate = createDateTime("startWithDate", java.time.LocalDateTime.class);
 
-    public final StringPath title = createString("title");
+    public final EnumPath<ProjectStatus> status = createEnum("status", ProjectStatus.class);
 
-    public final DateTimePath<java.time.LocalDateTime> updatedDateTime = createDateTime("updatedDateTime", java.time.LocalDateTime.class);
+    public final StringPath title = createString("title");
 
     public final StringPath voiceChatUrl = createString("voiceChatUrl");
 

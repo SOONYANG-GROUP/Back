@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.TimeZone;
 
 public class TestJwt {
 
@@ -24,5 +28,11 @@ public class TestJwt {
                 .toUriString();
 
         System.out.println(s);
+    }
+
+    @Test
+    void create() {
+        SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm:ss a z");
+        format.setTimeZone(TimeZone.getTimeZone("GMT"));
     }
 }
