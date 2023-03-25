@@ -23,7 +23,7 @@ import static jakarta.persistence.FetchType.LAZY;
 public class Project {
 
     @Id
-    @Column
+    @Column(name = "project_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -47,7 +47,7 @@ public class Project {
     private List<Recruit> recruits = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<JoinedUser> joinedUsers = new ArrayList<>(); //
+    private List<ParticipatedUsers> participatedUsers = new ArrayList<>(); //
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Reference> references = new ArrayList<>();
@@ -61,14 +61,14 @@ public class Project {
 
     private LocalDateTime startWithDate;
 
-    public static Project createProject(JoinedUser joinedUser, AddProjectDto dto) {
+    public static Project createProject(AddProjectDto dto) {
         Project project = new Project();
+        project.setTitle(dto.getTitle());
         project.setDescription(dto.getDescription());
         project.setOpenChatUrl(dto.getOpenChatUrl());
         project.setVoiceChatUrl(dto.getVoiceChatUrl());
         project.setCreatedDateTime(LocalDateTime.now());
         project.addRecruits(dto.dtoToRecruit()); // recruit List
-        project.addJoinUser(joinedUser);
         return project;
     }
 
@@ -78,10 +78,10 @@ public class Project {
             recruit.setProject(this);
         }
     }
-
-    private void addJoinUser(JoinedUser joinedUser) {
-        this.joinedUsers.add(joinedUser);
-        joinedUser.setProject(this);
-    }
+//
+//    private void addJoinUser(JoinedUser joinedUser) {
+//        this.joinedUsers.add(joinedUser);
+//        joinedUser.setProject(this);
+//    }
 
 }

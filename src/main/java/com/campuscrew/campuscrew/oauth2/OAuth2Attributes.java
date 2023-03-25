@@ -69,7 +69,7 @@ public class OAuth2Attributes {
                 .createDate(LocalDateTime.now())
                 .email(email)
                 .nickname(oauth2UserInfo.getNickname())
-                .role(Role.GUEST)
+                .role(Role.USER)
                 .build();
     }
 }

@@ -1,7 +1,6 @@
 package com.campuscrew.campuscrew.domain.user;
 
-import com.campuscrew.campuscrew.domain.board.Project;
-import com.campuscrew.campuscrew.domain.board.JoinedUser;
+import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;
 import com.campuscrew.campuscrew.domain.board.SubComment;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,12 +17,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "USERS")
+@Table(name = "users")
 @ToString(of = {"email", "socialId"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "users_id")
     private Long id;
 
     private Integer age;
@@ -40,13 +39,13 @@ public class User {
 
     private String refreshToken;
 
-//    @OneToMany(mappedBy = "user")
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<Project> projects = new ArrayList<>();
+//
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<ParticipatedUsers> joinedUsers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<JoinedUser> joinedUsers = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<SubComment> subComments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

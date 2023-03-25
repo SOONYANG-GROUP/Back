@@ -28,9 +28,9 @@ public class QProject extends EntityPathBase<Project> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final ListPath<JoinedUser, QJoinedUser> joinedUsers = this.<JoinedUser, QJoinedUser>createList("joinedUsers", JoinedUser.class, QJoinedUser.class, PathInits.DIRECT2);
-
     public final StringPath openChatUrl = createString("openChatUrl");
+
+    public final ListPath<ParticipatedUsers, QParticipatedUsers> participatedUsers = this.<ParticipatedUsers, QParticipatedUsers>createList("participatedUsers", ParticipatedUsers.class, QParticipatedUsers.class, PathInits.DIRECT2);
 
     public final ListPath<Recruit, QRecruit> recruits = this.<Recruit, QRecruit>createList("recruits", Recruit.class, QRecruit.class, PathInits.DIRECT2);
 

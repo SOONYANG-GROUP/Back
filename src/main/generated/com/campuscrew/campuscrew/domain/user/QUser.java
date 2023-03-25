@@ -28,7 +28,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final ListPath<com.campuscrew.campuscrew.domain.board.JoinedUser, com.campuscrew.campuscrew.domain.board.QJoinedUser> joinedUsers = this.<com.campuscrew.campuscrew.domain.board.JoinedUser, com.campuscrew.campuscrew.domain.board.QJoinedUser>createList("joinedUsers", com.campuscrew.campuscrew.domain.board.JoinedUser.class, com.campuscrew.campuscrew.domain.board.QJoinedUser.class, PathInits.DIRECT2);
+    public final ListPath<com.campuscrew.campuscrew.domain.board.ParticipatedUsers, com.campuscrew.campuscrew.domain.board.QParticipatedUsers> joinedUsers = this.<com.campuscrew.campuscrew.domain.board.ParticipatedUsers, com.campuscrew.campuscrew.domain.board.QParticipatedUsers>createList("joinedUsers", com.campuscrew.campuscrew.domain.board.ParticipatedUsers.class, com.campuscrew.campuscrew.domain.board.QParticipatedUsers.class, PathInits.DIRECT2);
 
     public final StringPath name = createString("name");
 

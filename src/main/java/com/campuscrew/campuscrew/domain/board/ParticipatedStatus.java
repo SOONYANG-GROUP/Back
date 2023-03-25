@@ -1,5 +1,5 @@
 package com.campuscrew.campuscrew.domain.board;
 
-public enum JoinUserStatus {
+public enum ParticipatedStatus {
     MANAGER, MEMBER;
 }

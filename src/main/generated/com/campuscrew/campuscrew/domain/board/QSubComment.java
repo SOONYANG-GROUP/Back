@@ -20,11 +20,13 @@ public class QSubComment extends EntityPathBase<SubComment> {
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QSubComment subComment = new QSubComment("subComment");
+    public static final QSubComment subComment1 = new QSubComment("subComment1");
 
     public final QComment comment;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    public final StringPath subComment = createString("subComment");
 
     public final com.campuscrew.campuscrew.domain.user.QUser user;
 
