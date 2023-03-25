@@ -2,7 +2,9 @@ package com.campuscrew.campuscrew.dto.project;
 
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +25,8 @@ public class ProjectMainDto implements Serializable {
     private List<ReferenceDto> ReferenceDtos; // project - reference
     private Long id;
 
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createDateTime;
     private String title;
