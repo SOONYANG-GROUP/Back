@@ -33,7 +33,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .join(project.recruits, recruit)
                 .join(project.references, reference)
                 .where(project.id.eq(id))
-                .transform(groupBy(project.id).as(
+                .transform(groupBy(project.id).list(
                         Projections.constructor(ProjectMainDto.class,
                                 project.id, project.createdDateTime.as("createDate"),
                                 project.title, project.description
@@ -41,7 +41,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                                 recruit.field, recruit.detailField,
                                                 recruit.maxRecruit, recruit.currentRecruit)),
                                         list(Projections.constructor(ReferenceDto.class, reference.url))
-                        ))).get(id);
+                        ))).get(0);
         return projectMainDto;
     }
 }
