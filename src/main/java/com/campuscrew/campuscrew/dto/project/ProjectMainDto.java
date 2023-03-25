@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectMainDto {
+public class ProjectMainDto implements Serializable {
     private List<RecruitUserDto> RecruitUserDtos; // project - recruit
     private List<ReferenceDto> ReferenceDtos; // project - reference
     private Long id;

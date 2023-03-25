@@ -8,6 +8,7 @@ import com.campuscrew.campuscrew.dto.project.RecruitUserDto;
 import com.campuscrew.campuscrew.dto.project.ReferenceDto;
 import com.querydsl.core.ResultTransformer;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
@@ -26,8 +27,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     public ProjectRepositoryImpl(EntityManager em) {
-        this.queryFactory = new JPAQueryFactory(em);
-    }
+        this.queryFactory = new JPAQueryFactory(JPQLTemplates.DEFAULT, em);
+    };
 
     @Override
     public ProjectMainDto fetchMainPage(Long id) {
