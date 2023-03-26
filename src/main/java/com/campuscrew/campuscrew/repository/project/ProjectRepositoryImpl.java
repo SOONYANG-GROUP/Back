@@ -97,7 +97,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .where(comment1.project.id.eq(id))
                 .transform(groupBy(project.id).list(
                         Projections.constructor(CommentPageDto.class,
-                                GroupBy.list(Projections.constructor(CommentDto.class, user.name,
+                                GroupBy.list(Projections.constructor(CommentDto.class,
+                                        comment1.id,
+                                        user.name,
                                         comment1.createTime.as("createDate"),
                                         comment1.comment)))));
         return createDate.get(0);

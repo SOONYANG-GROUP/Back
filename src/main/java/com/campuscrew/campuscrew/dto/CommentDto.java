@@ -17,6 +17,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class CommentDto {
+
+    private Long commentId;
+
     private String name;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
