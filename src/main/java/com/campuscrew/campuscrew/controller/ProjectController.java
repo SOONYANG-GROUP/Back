@@ -30,8 +30,6 @@ public class ProjectController {
         log.info("email = {}", email);
         Project project = projectService.addProject(email, addProjectDto);
         ProjectMainDto projectMainDto = ProjectMainDto.getProjectMain(project);
-        redirectAttributes.addAttribute("id", projectMainDto.getId());
-
         return project.getId();
     }
 
@@ -45,6 +43,11 @@ public class ProjectController {
     @GetMapping
     public HomeDto homePage() {
         return projectService.getHomePage();
+    }
+
+    @PostMapping("/{id}/comment")
+    public String addComment(@PathVariable Long id) {
+
     }
 //
 //    private String BuildRedirectFrontUrl(String) {

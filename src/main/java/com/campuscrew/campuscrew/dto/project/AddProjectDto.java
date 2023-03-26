@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
 public class AddProjectDto {
     private String title;
     private String description;
+    private String recruitmentDate;
     private String openChatUrl;
     private String voiceChatUrl;
-    private String recruitmentDate;
     private List<RecruitUserDto> recruitUserDto;
     private List<ReferenceDto> references;
 

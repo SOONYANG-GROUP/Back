@@ -9,7 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +77,8 @@ public class Project {
         project.setOpenChatUrl(dto.getOpenChatUrl());
         project.setVoiceChatUrl(dto.getVoiceChatUrl());
         project.setCreatedDateTime(LocalDateTime.now());
-        project.setRecruitmentDate(LocalDateTime.parse("2020-10-10"));
+        project.setRecruitmentDate(LocalDateTime.of(LocalDate.parse(dto.getRecruitmentDate()),
+                LocalTime.now()));
         project.addRecruits(dto.dtoToRecruit()); // recruit List
         return project;
     }
