@@ -3,6 +3,7 @@ package com.campuscrew.campuscrew.controller;
 import com.campuscrew.campuscrew.domain.board.Comment;
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.dto.AddCommentDto;
+import com.campuscrew.campuscrew.dto.AddSubCommentDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
@@ -57,9 +58,9 @@ public class ProjectController {
     public String addSubComment(@PathVariable Long id,
                                 @RequestParam Long commentId,
                                 @AuthenticationPrincipal UserDetails userDetails,
-                                @RequestBody SubCommentDto subCommentDto) {
+                                @RequestBody AddSubCommentDto addSubCommentDto) {
         String email = userDetails.getUsername();
-        projectService.addSubComment(commentId, email, subCommentDto.getSubComment());
+        projectService.addSubComment(commentId, email, addSubCommentDto.getSubComment());
         return "ok";
     }
 
