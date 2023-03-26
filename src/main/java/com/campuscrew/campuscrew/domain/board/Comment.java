@@ -41,7 +41,8 @@ public class Comment {
         added.setComment(comment);
         added.setCreateTime(LocalDateTime.now());
         added.addProject(project);
-        return null;
+        added.addUser(user);
+        return added;
     }
 
     private void addUser(User user) {

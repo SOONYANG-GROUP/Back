@@ -8,6 +8,8 @@ import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.ParticipatedUsersRepository;
+import com.campuscrew.campuscrew.repository.project.CommentPageDto;
+import com.campuscrew.campuscrew.repository.project.CommentRepository;
 import com.campuscrew.campuscrew.repository.project.ProjectRepository;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import com.campuscrew.campuscrew.service.exception.UserNotFoundException;
@@ -24,6 +26,7 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final ParticipatedUsersRepository participatedUserRepository;
+    private final CommentRepository commentRepository;
 
     // addProject email을 통해 회원을 조회 하고
     public Project addProject(String email, AddProjectDto addProjectDto) {
@@ -44,15 +47,16 @@ public class ProjectService {
         return project;
     }
     // 회원 가입 되어 있는 유저
-    public String addComment(String email, Long projectId, String comment) {
+    public Comment addComment(String email, Long projectId, String comment) {
         User findUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("가입 되어 있지 않은 유지 입니다."));
 
         Project project = projectRepository.findById(projectId)
                 .orElse(null);
 
-        Comment added = new Comment();
-        return null;
+        Comment added = Comment.createComment(findUser, comment, project);
+        commentRepository.save(added);
+        return added;
     }
 
     // 1. MainPage 정보를 가져 온다.
@@ -67,5 +71,10 @@ public class ProjectService {
         // 날짜 순서
         HomeDto homeDto = projectRepository.fetchCardSortByCreatedDate();
         return homeDto;
+    }
+    // project id에 해당하는 모든 댓글을 가져온다.
+    // 그에 해당하는 모든 회원 정보를 조회하고 dto로 가져온다.
+    public CommentPageDto getCommentPage(Long id) {
+        return projectRepository.fetchCommentPage(id);
     }
 }

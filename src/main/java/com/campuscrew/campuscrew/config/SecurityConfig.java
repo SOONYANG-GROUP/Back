@@ -75,7 +75,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/","/css/**","/images/**","/js/**", "/favicon.ico/**" ,"/h2-console/**").permitAll()
                 .requestMatchers("/join/**").permitAll() // 회원가입 접근 가능
                 .requestMatchers("/main/**").permitAll()
-                .requestMatchers("/board/**").permitAll()
+                .requestMatchers("/projects/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().permitAll()// 위의 경로 이외에는 모두 인증된 사용자만 접근 가능

@@ -1,10 +1,11 @@
 package com.campuscrew.campuscrew.controller;
 
+import com.campuscrew.campuscrew.domain.board.Comment;
 import com.campuscrew.campuscrew.domain.board.Project;
-import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
+import com.campuscrew.campuscrew.repository.project.CommentPageDto;
 import com.campuscrew.campuscrew.service.ProjectService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -47,14 +46,13 @@ public class ProjectController {
                              @RequestBody String comment,
                              @AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
-        projectService.addComment(email, id, comment);
-        return null;
+        Comment comment1 = projectService.addComment(email, id, comment);
+        return "ok";
     }
 
     @GetMapping("/{id}/comment")
-    public String getComment(@PathVariable Long id) {
-
-        return null;
+    public CommentPageDto getComment(@PathVariable Long id) {
+        return projectService.getCommentPage(id);
     }
 
     @GetMapping

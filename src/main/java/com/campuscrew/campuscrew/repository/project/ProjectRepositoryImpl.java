@@ -1,12 +1,11 @@
 package com.campuscrew.campuscrew.repository.project;
 
 import com.campuscrew.campuscrew.domain.board.ProjectStatus;
-import com.campuscrew.campuscrew.domain.board.QParticipatedUsers;
+import com.campuscrew.campuscrew.domain.board.QComment;
 import com.campuscrew.campuscrew.dto.CountDto;
 import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.*;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLTemplates;
@@ -14,11 +13,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import static com.campuscrew.campuscrew.domain.board.QParticipatedUsers.participatedUsers;
+import static com.campuscrew.campuscrew.domain.board.QComment.comment1;
 import static com.campuscrew.campuscrew.domain.user.QUser.user;
 import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.campuscrew.campuscrew.domain.board.QProject.project;
@@ -50,7 +47,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
         for (ProjectMainDto projectMainDto : transform) {
             System.out.println("projectMainDto = " + projectMainDto);
         }
-        return null;
+        return transform.get(0);
     }
 
     @Override
@@ -72,6 +69,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .select(user.count())
                 .from(user)
                 .fetchOne();
+
         List<CountDto> collect = queryFactory.select(project.projectStatus, project.count())
                 .from(project)
                 .groupBy(project.projectStatus)
@@ -85,5 +83,16 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .collect(toList());
 
         return new HomeDto(homeCardDtos, userCount, collect);
+    }
+
+    @Override
+    public CommentPageDto fetchCommentPage(Long id) {
+//        queryFactory.select(comment1)
+//                .from(comment1)
+//                .leftJoin(comment1.user, user)
+//                .leftJoin(comment1.project, project)
+//                .where(comment1.project.id.eq(id))
+//                .transform(groupBy())
+        return null;
     }
 }
