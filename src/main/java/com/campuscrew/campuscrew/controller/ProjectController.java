@@ -2,6 +2,7 @@ package com.campuscrew.campuscrew.controller;
 
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.dto.HomeCardDto;
+import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.service.ProjectService;
@@ -42,7 +43,7 @@ public class ProjectController {
     }
 
     @GetMapping
-    public List<HomeCardDto> homePage() {
+    public HomeDto homePage() {
         return projectService.getHomePage();
     }
 //

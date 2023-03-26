@@ -11,5 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class HomeDto {
     private List<HomeCardDto> homeCardDtos;
-    private CountDto countDto;
+    private Long countUser;
+    private List<CountDto> countDto;
 }

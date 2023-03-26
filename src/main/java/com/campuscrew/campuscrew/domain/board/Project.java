@@ -38,7 +38,7 @@ public class Project {
     private String voiceChatUrl;
 
     @Enumerated(EnumType.STRING)
-    private ProjectStatus status;
+    private ProjectStatus projectStatus;
 
 //    @ManyToOne(fetch = LAZY)
 //    @JoinColumn(name = "user_id")
@@ -70,7 +70,7 @@ public class Project {
     public static Project createProject(AddProjectDto dto) {
         Project project = new Project();
         project.setTitle(dto.getTitle());
-        project.setStatus(ProjectStatus.READY);
+        project.setProjectStatus(ProjectStatus.READY);
         project.setDescription(dto.getDescription());
         project.setOpenChatUrl(dto.getOpenChatUrl());
         project.setVoiceChatUrl(dto.getVoiceChatUrl());

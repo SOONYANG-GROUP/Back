@@ -1,6 +1,9 @@
 package com.campuscrew.campuscrew.repository.project;
 
+import com.campuscrew.campuscrew.domain.board.ProjectStatus;
+import com.campuscrew.campuscrew.dto.CountDto;
 import com.campuscrew.campuscrew.dto.HomeCardDto;
+import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.dto.project.RecruitUserDto;
 import com.campuscrew.campuscrew.dto.project.ReferenceDto;
@@ -11,6 +14,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.campuscrew.campuscrew.domain.user.QUser.user;
 import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.campuscrew.campuscrew.domain.board.QProject.project;
@@ -47,7 +52,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     }
 
     @Override
-    public List<HomeCardDto> fetchCardSortByCreatedDate() {
+    public HomeDto fetchCardSortByCreatedDate() {
         List<HomeCardDto> homeCardDtos = queryFactory.select(project, user)
                 .from(project)
                 .leftJoin(project.recruits, recruit)
@@ -56,9 +61,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .limit(6)
                 .transform(groupBy(project.id).list(
                         Projections.constructor(HomeCardDto.class,
-                                project.id, project.title,
+                                project.id, project.title, project.createdDateTime,
                                 project.recruitmentDate,
-                                project.status, list(Projections.constructor(RecruitUserDto.class, recruit.field,
+                                project.projectStatus, list(Projections.constructor(RecruitUserDto.class, recruit.field,
                                         recruit.detailField,
                                         recruit.maxRecruit, recruit.currentRecruit)
                                 )
@@ -66,14 +71,16 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
         Long userCount = queryFactory.select(user.count())
                 .from(user)
                 .fetchOne();
-        List<Tuple> fetch = queryFactory.select(project.status, project.count())
+        List<CountDto> collect = queryFactory.select(project.projectStatus, project.count())
                 .from(project)
-                .groupBy(project.status)
-                .fetch();
-        for (Tuple tuple : fetch) {
-            System.out.println(tuple.get(project.status));
-            System.out.println(tuple.get(project.count()));
-        }
-        return homeCardDtos;
+                .groupBy(project.projectStatus)
+                .fetch()
+                .stream()
+                .map(tuple -> {
+                    ProjectStatus projectStatus = tuple.get(project.projectStatus);
+                    Long projectCount = tuple.get(project.count());
+                    return new CountDto(projectStatus, projectCount);
+                }).collect(Collectors.toList());
+        return new HomeDto(homeCardDtos, userCount, collect);
     }
 }

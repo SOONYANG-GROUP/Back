@@ -5,6 +5,7 @@ import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.HomeCardDto;
+import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.ParticipatedUsersRepository;
@@ -54,9 +55,9 @@ public class ProjectService {
         return projectRepository.fetchMainPage(id);
     }
 
-    public List<HomeCardDto> getHomePage() {
+    public HomeDto getHomePage() {
         // 날짜 순서
-        List<HomeCardDto> homeCardDtos = projectRepository.fetchCardSortByCreatedDate();
-        return homeCardDtos;
+        HomeDto homeDto = projectRepository.fetchCardSortByCreatedDate();
+        return homeDto;
     }
 }

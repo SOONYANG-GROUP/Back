@@ -26,6 +26,10 @@ public class HomeCardDto implements Serializable {
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime createdDateTime;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime recruitmentDate;
 
     private ProjectStatus status;
