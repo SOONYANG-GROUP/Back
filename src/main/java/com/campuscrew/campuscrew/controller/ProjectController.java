@@ -7,6 +7,7 @@ import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.project.CommentPageDto;
+import com.campuscrew.campuscrew.repository.project.SubCommentDto;
 import com.campuscrew.campuscrew.service.ProjectService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,8 @@ public class ProjectController {
                              @RequestBody AddCommentDto addCommentDto,
                              @AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
-        Comment comment1 = projectService.addComment(email, id, addCommentDto.getComment());
+        Comment comment1 = projectService.addComment(email,
+                id, addCommentDto.getComment());
         return "ok";
     }
 
@@ -55,9 +57,9 @@ public class ProjectController {
     public String addSubComment(@PathVariable Long id,
                                 @RequestParam Long commentId,
                                 @AuthenticationPrincipal UserDetails userDetails,
-                                @RequestBody AddCommentDto addCommentDto) {
+                                @RequestBody SubCommentDto subCommentDto) {
         String email = userDetails.getUsername();
-        projectService.addSubComment(commentId, email, addCommentDto.getComment());
+        projectService.addSubComment(commentId, email, subCommentDto.getSubComment());
         return "ok";
     }
 
