@@ -57,6 +57,6 @@ public class ProjectService {
     public List<HomeCardDto> getHomePage() {
         // 날짜 순서
         List<HomeCardDto> homeCardDtos = projectRepository.fetchCardSortByCreatedDate();
-        return null;
+        return homeCardDtos;
     }
 }
