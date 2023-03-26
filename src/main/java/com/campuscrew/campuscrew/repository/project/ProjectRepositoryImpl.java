@@ -38,9 +38,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
         List<ProjectMainDto> transform = queryFactory
                 .select(project)
                 .from(project)
-                .leftJoin(project.recruits, recruit)
-                .leftJoin(project.references, reference)
-                .where(project.id.eq(id))
+                .leftJoin(recruit).on(recruit.project.id.eq(id))
+                .leftJoin(reference).on(recruit.project.id.eq(id))
                 .transform(groupBy(project.id).list(
                         Projections.constructor(ProjectMainDto.class,
                                 list(Projections.bean(RecruitUserDto.class, recruit.field,
@@ -56,7 +55,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     public HomeDto fetchCardSortByCreatedDate() {
         List<HomeCardDto> homeCardDtos = queryFactory.select(project, user)
                 .from(project)
-                .leftJoin(project.user)
                 .leftJoin(project.recruits, recruit)
                 .orderBy(project.createdDateTime.desc())
                 .transform(groupBy(project.id).list(
