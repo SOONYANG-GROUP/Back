@@ -2,6 +2,7 @@ package com.campuscrew.campuscrew.controller;
 
 import com.campuscrew.campuscrew.domain.board.Comment;
 import com.campuscrew.campuscrew.domain.board.Project;
+import com.campuscrew.campuscrew.dto.CommentDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
@@ -43,10 +44,10 @@ public class ProjectController {
 
     @PostMapping("/{id}/comment")
     public String addComment(@PathVariable Long id,
-                             @RequestBody String comment,
+                             @RequestBody CommentDto commentDto,
                              @AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
-        Comment comment1 = projectService.addComment(email, id, comment);
+        Comment comment1 = projectService.addComment(email, id, commentDto.getComment());
         return "ok";
     }
 

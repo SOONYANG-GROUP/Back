@@ -29,7 +29,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
     public ProjectRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(JPQLTemplates.DEFAULT, em);
-    };
+    }
 
     @Override
     public ProjectMainDto fetchMainPage(Long id) {
