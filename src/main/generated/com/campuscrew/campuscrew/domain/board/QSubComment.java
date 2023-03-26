@@ -24,6 +24,8 @@ public class QSubComment extends EntityPathBase<SubComment> {
 
     public final QComment comment;
 
+    public final DateTimePath<java.time.LocalDateTime> createTime = createDateTime("createTime", java.time.LocalDateTime.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath subComment = createString("subComment");

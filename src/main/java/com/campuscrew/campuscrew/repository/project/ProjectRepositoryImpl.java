@@ -104,17 +104,17 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                         user.name,
                                         comment1.createTime.as("createDate"),
                                         comment1.comment)))));
-        return createDate.get(0);
+        return Optional.of(createDate.get(0)).orElse(null);
     }
 
     @Override
     public List<SubCommentDto> fetchSubComment(Long commentId) {
-//        queryFactory.selectFrom(subComment1)
-//                .leftJoin(subComment1.comment, comment1)
-//                .where(comment1.id.eq(commentId))
-//                .transform();
-        return null;
+        return queryFactory.selectFrom(subComment1)
+                .leftJoin(subComment1.user, user)
+                .leftJoin(subComment1.comment, comment1)
+                .where(comment1.id.eq(commentId))
+                .transform(groupBy(comment1.id).list(Projections.constructor(SubCommentDto.class,
+                        subComment1.id, user.name, subComment1.createTime, subComment1.subComment
+                )));
     }
-
-
 }

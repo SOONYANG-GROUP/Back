@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Setter
@@ -30,10 +33,13 @@ public class SubComment {
 
     private String subComment;
 
+    private LocalDateTime createTime;
+
 
     public static SubComment makeSubComment(User user, Comment findComment, String comment) {
         SubComment subComment1 = new SubComment();
         subComment1.setSubComment(comment);
+        subComment1.setCreateTime(LocalDateTime.now());
         findComment.addSubComment(subComment1);
         subComment1.addUser(user);
         return subComment1;
