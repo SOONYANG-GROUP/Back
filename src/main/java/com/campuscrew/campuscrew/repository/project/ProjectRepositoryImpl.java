@@ -2,6 +2,8 @@ package com.campuscrew.campuscrew.repository.project;
 
 import com.campuscrew.campuscrew.domain.board.ProjectStatus;
 import com.campuscrew.campuscrew.domain.board.QComment;
+import com.campuscrew.campuscrew.domain.board.QSubComment;
+import com.campuscrew.campuscrew.dto.CommentDto;
 import com.campuscrew.campuscrew.dto.CountDto;
 import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.campuscrew.campuscrew.domain.board.QComment.comment1;
+import static com.campuscrew.campuscrew.domain.board.QSubComment.subComment1;
 import static com.campuscrew.campuscrew.domain.user.QUser.user;
 import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.campuscrew.campuscrew.domain.board.QProject.project;
@@ -87,12 +90,16 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
     @Override
     public CommentPageDto fetchCommentPage(Long id) {
-//        queryFactory.select(comment1)
-//                .from(comment1)
-//                .leftJoin(comment1.user, user)
-//                .leftJoin(comment1.project, project)
-//                .where(comment1.project.id.eq(id))
-//                .transform(groupBy())
-        return null;
+        List<CommentPageDto> createDate = queryFactory.select(comment1)
+                .from(comment1)
+                .leftJoin(comment1.user, user)
+                .leftJoin(comment1.project, project)
+                .where(comment1.project.id.eq(id))
+                .transform(groupBy(project.id).list(
+                        Projections.constructor(CommentPageDto.class,
+                                GroupBy.list(Projections.constructor(CommentDto.class, user.name,
+                                        comment1.createTime.as("createDate"),
+                                        comment1.comment)))));
+        return createDate.get(0);
     }
 }

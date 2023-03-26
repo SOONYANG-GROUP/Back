@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew;
 
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
+import com.campuscrew.campuscrew.repository.project.CommentPageDto;
 import com.campuscrew.campuscrew.repository.project.ProjectRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ class CampuscrewApplicationTests {
 
 	@Test
 	void test() {
-		ProjectMainDto projectMainDto = projectRepository.fetchMainPage(1L);
+		CommentPageDto commentPageDto = projectRepository.fetchCommentPage(1L);
+		System.out.println("commentPageDto = " + commentPageDto);
 	}
 
 	@Test
