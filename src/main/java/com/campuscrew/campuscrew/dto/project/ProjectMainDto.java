@@ -6,12 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,11 +15,22 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProjectMainDto implements Serializable {
-    private List<RecruitUserDto> RecruitUserDtos; // project - recruit
-    private List<ReferenceDto> ReferenceDtos; // project - reference
+    private List<RecruitUserDto> recruitUserDtos; // project - recruit
+    private List<ReferenceDto> referenceDtos; // project - reference
     private Long id;
+
+    @Override
+    public String toString() {
+        return "ProjectMainDto{" +
+                "recruitUserDtos=" + recruitUserDtos +
+                ", referenceDtos=" + referenceDtos +
+                ", id=" + id +
+                ", createDateTime=" + createDateTime +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -33,6 +40,15 @@ public class ProjectMainDto implements Serializable {
 
     private String description; // project
 
+    @QueryProjection
+    public ProjectMainDto(List<RecruitUserDto> recruitUserDtos, List<ReferenceDto> referenceDtos, Long id, LocalDateTime createDateTime, String title, String description) {
+        this.recruitUserDtos = recruitUserDtos;
+        this.referenceDtos = referenceDtos;
+        this.id = id;
+        this.createDateTime = createDateTime;
+        this.title = title;
+        this.description = description;
+    }
 
     public static ProjectMainDto getProjectMain(Project project) {
         ProjectMainDto dto = new ProjectMainDto();

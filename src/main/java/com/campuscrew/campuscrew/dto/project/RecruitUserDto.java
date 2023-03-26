@@ -1,10 +1,8 @@
 package com.campuscrew.campuscrew.dto.project;
 
 import com.campuscrew.campuscrew.domain.board.Recruit;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.querydsl.core.annotations.QueryProjection;
+import lombok.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +10,7 @@ import java.util.stream.Collectors;
 @Setter
 @Getter
 @NoArgsConstructor
+@ToString(of = {"field", "detailField", "maxRecruit", "currentRecruit"})
 public class RecruitUserDto {
     private String field;
     private String detailField;

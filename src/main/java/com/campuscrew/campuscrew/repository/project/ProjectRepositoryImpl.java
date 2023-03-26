@@ -5,16 +5,16 @@ import com.campuscrew.campuscrew.domain.board.QParticipatedUsers;
 import com.campuscrew.campuscrew.dto.CountDto;
 import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
-import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
-import com.campuscrew.campuscrew.dto.project.RecruitUserDto;
-import com.campuscrew.campuscrew.dto.project.ReferenceDto;
+import com.campuscrew.campuscrew.dto.project.*;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,6 +25,7 @@ import static com.campuscrew.campuscrew.domain.board.QProject.project;
 import static com.campuscrew.campuscrew.domain.board.QRecruit.recruit;
 import static com.campuscrew.campuscrew.domain.board.QReference.reference;
 import static com.querydsl.core.types.Projections.list;
+import static java.util.stream.Collectors.toList;
 
 public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     private final JPAQueryFactory queryFactory;
@@ -38,31 +39,32 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
         List<ProjectMainDto> transform = queryFactory
                 .select(project)
                 .from(project)
-                .leftJoin(recruit).on(recruit.project.id.eq(id))
-                .leftJoin(reference).on(recruit.project.id.eq(id))
-                .transform(groupBy(project.id).list(
-                        Projections.constructor(ProjectMainDto.class,
-                                list(Projections.bean(RecruitUserDto.class, recruit.field,
-                                        recruit.detailField,
-                                        recruit.maxRecruit, recruit.currentRecruit)),
-                                list(Projections.bean(ReferenceDto.class, reference.url)),
-                                project.id, project.createdDateTime, project.title, project.description)));
-
-        return transform.get(0);
+                .leftJoin(recruit).on(recruit.project.id.eq(project.id))
+                .leftJoin(reference).on(reference.project.id.eq(project.id))
+                .where(project.id.eq(id))
+                .transform(groupBy(project.id).list(Projections.constructor(ProjectMainDto.class,
+                        GroupBy.list(Projections.constructor(RecruitUserDto.class,
+                                recruit.field, recruit.detailField, recruit.maxRecruit, recruit.currentRecruit)),
+                        GroupBy.list(Projections.constructor(ReferenceDto.class, reference.url)),
+                        project.id, project.createdDateTime, project.title, project.description)));
+        for (ProjectMainDto projectMainDto : transform) {
+            System.out.println("projectMainDto = " + projectMainDto);
+        }
+        return null;
     }
 
     @Override
     public HomeDto fetchCardSortByCreatedDate() {
         List<HomeCardDto> homeCardDtos = queryFactory.select(project, user)
                 .from(project)
-                .leftJoin(project.recruits, recruit)
+                .leftJoin(recruit).on(recruit.project.id.eq(project.id))
                 .orderBy(project.createdDateTime.desc())
                 .transform(groupBy(project.id).list(
                         Projections.constructor(HomeCardDto.class,
                                 project.id, project.title, project.createdDateTime,
                                 project.recruitmentDate,
                                 project.projectStatus,
-                                list(Projections.constructor(RecruitUserDto.class,
+                                GroupBy.list(Projections.constructor(RecruitUserDto.class,
                                         recruit.field,
                                         recruit.detailField,
                                         recruit.maxRecruit, recruit.currentRecruit)))));
@@ -80,7 +82,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                     Long projectCount = tuple.get(project.count());
                     return new CountDto(Optional.of(projectStatus.name())
                             .orElse(null), projectCount);})
-                .collect(Collectors.toList());
+                .collect(toList());
 
         return new HomeDto(homeCardDtos, userCount, collect);
     }
