@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 
-@Entity()
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubComment {

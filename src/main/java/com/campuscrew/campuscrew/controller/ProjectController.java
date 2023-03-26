@@ -43,7 +43,17 @@ public class ProjectController {
 
 
     @PostMapping("/{id}/comment")
-    public String addComment(@PathVariable Long id) {
+    public String addComment(@PathVariable Long id,
+                             @RequestBody String comment,
+                             @AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        projectService.addComment(email, id, comment);
+        return null;
+    }
+
+    @GetMapping("/{id}/comment")
+    public String getComment(@PathVariable Long id) {
+
         return null;
     }
 

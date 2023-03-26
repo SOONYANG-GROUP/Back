@@ -1,5 +1,6 @@
 package com.campuscrew.campuscrew.domain.user;
 
+import com.campuscrew.campuscrew.domain.board.Comment;
 import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.domain.board.SubComment;
@@ -46,13 +47,15 @@ public class User {
 
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<Project> projects = new ArrayList<>();
-//
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ParticipatedUsers> joinedUsers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<SubComment> subComments = new ArrayList<>();

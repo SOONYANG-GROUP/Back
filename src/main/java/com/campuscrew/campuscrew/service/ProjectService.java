@@ -1,22 +1,20 @@
 package com.campuscrew.campuscrew.service;
 
 import com.campuscrew.campuscrew.controller.exception.RequiredLoginStateException;
-import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;
+import com.campuscrew.campuscrew.domain.board.Comment;
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.domain.user.User;
-import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.ParticipatedUsersRepository;
 import com.campuscrew.campuscrew.repository.project.ProjectRepository;
 import com.campuscrew.campuscrew.repository.UserRepository;
+import com.campuscrew.campuscrew.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +42,17 @@ public class ProjectService {
         // 2-2 현재 프로젝트에 참여한 member 들은 자신들이 했던 작업 목록을 작성 할 수 있어야 한다.
         // 이러한 이유로 매핑 테이블을 작성
         return project;
+    }
+    // 회원 가입 되어 있는 유저
+    public String addComment(String email, Long projectId, String comment) {
+        User findUser = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("가입 되어 있지 않은 유지 입니다."));
+
+        Project project = projectRepository.findById(projectId)
+                .orElse(null);
+
+        Comment added = new Comment();
+        return null;
     }
 
     // 1. MainPage 정보를 가져 온다.

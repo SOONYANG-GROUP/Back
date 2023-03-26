@@ -19,20 +19,39 @@ public class Comment {
     @Column(name ="comment_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "comment",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private List<SubComment> comments = new ArrayList<>();
 
-    private String content;
+    private String comment;
 
     private LocalDateTime createTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_id")
-    private User user;
+    public static Comment createComment(User user, String comment, Project project) {
+        Comment added = new Comment();
+        added.setComment(comment);
+        added.setCreateTime(LocalDateTime.now());
+        added.addProject(project);
+        return null;
+    }
 
+    private void addUser(User user) {
+        this.user = user;
+        user.getComments().add(this);
+    }
+
+    private void addProject(Project project) {
+        this.project = project;
+        project.getComments().add(this);
+    }
 }
 

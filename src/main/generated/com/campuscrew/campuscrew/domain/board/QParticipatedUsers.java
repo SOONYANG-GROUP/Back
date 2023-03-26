@@ -48,7 +48,7 @@ public class QParticipatedUsers extends EntityPathBase<ParticipatedUsers> {
 
     public QParticipatedUsers(Class<? extends ParticipatedUsers> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.project = inits.isInitialized("project") ? new QProject(forProperty("project")) : null;
+        this.project = inits.isInitialized("project") ? new QProject(forProperty("project"), inits.get("project")) : null;
         this.user = inits.isInitialized("user") ? new com.campuscrew.campuscrew.domain.user.QUser(forProperty("user")) : null;
     }
 
