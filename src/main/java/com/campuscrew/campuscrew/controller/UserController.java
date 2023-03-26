@@ -1,5 +1,6 @@
 package com.campuscrew.campuscrew.controller;
 
+import com.campuscrew.campuscrew.dto.ProfileDto;
 import com.campuscrew.campuscrew.dto.UserJoin;
 import com.campuscrew.campuscrew.dto.UserJoinSuccessDto;
 import com.campuscrew.campuscrew.service.UserService;
@@ -29,17 +30,12 @@ public class UserController {
                 .build();
     }
 
-    @PostMapping("/jwt-test")
-    public String jwtTest(@AuthenticationPrincipal UserDetails userDetails) {
-        String email = userDetails.getUsername();
-        System.out.println(email);
-        return "jwtTest";
-    }
 
-    @GetMapping("/test/authentication")
-    public Authentication authentication(Authentication authentication) {
-        log.info("authentication = {}", authentication);
-        return authentication;
+    @GetMapping("/profile")
+    public ProfileDto getProfile(@AuthenticationPrincipal
+                                     UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        return userService.profile(email);
     }
 
 }

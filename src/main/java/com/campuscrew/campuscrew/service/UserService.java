@@ -2,6 +2,7 @@ package com.campuscrew.campuscrew.service;
 
 import com.campuscrew.campuscrew.domain.user.Role;
 import com.campuscrew.campuscrew.domain.user.User;
+import com.campuscrew.campuscrew.dto.ProfileDto;
 import com.campuscrew.campuscrew.dto.UserJoin;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,14 @@ public class UserService {
         userRepository.save(user);
 
         return user;
+    }
+
+    public ProfileDto profile(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> new ProfileDto(user.getName(), user.getNickname(),
+                        user.getSelfIntroduction(), user.getShortIntroduction()))
+                .orElse(null);
+
     }
 
 }

@@ -35,6 +35,10 @@ public class User {
 
     private String name;
 
+    private String selfIntroduction;
+
+    private String shortIntroduction;
+
     private String socialId;
 
     private String refreshToken;
