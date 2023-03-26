@@ -7,11 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CountDto {
-    @JsonSerialize(using = EnumSerializer.class)
-    private ProjectStatus status;
+public class CountDto implements Serializable {
+    private String status;
     private Long count;
 }

@@ -79,7 +79,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .map(tuple -> {
                     ProjectStatus projectStatus = tuple.get(project.projectStatus);
                     Long projectCount = tuple.get(project.count());
-                    return new CountDto(projectStatus, projectCount);
+                    return new CountDto(projectStatus.name(), projectCount);
                 }).collect(Collectors.toList());
         return new HomeDto(homeCardDtos, userCount, collect);
     }
