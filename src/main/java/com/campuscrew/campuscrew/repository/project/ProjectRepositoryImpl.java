@@ -71,7 +71,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .groupBy(project.status)
                 .fetch();
         for (Tuple tuple : fetch) {
-            System.out.println("tuple = " + tuple);
+            System.out.println(tuple.get(project.status));
+            System.out.println(tuple.get(project.count()));
         }
         return homeCardDtos;
     }
