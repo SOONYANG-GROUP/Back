@@ -106,7 +106,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                         user.name,
                                         comment1.createTime.as("createDate"),
                                         comment1.comment)))));
-        return Optional.of(createDate.get(0)).orElse(null);
+        return createDate.stream()
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
