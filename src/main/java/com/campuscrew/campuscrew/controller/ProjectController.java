@@ -51,6 +51,16 @@ public class ProjectController {
         return "ok";
     }
 
+    @PostMapping("/{id}/subcomment")
+    public String addSubComment(@PathVariable Long id,
+                                @RequestParam Long commentId,
+                                @AuthenticationPrincipal UserDetails userDetails,
+                                @RequestBody AddCommentDto addCommentDto) {
+        String email = userDetails.getUsername();
+        projectService.addSubComment(commentId, email, addCommentDto.getComment());
+        return "ok";
+    }
+
     @GetMapping("/{id}/comment")
     public CommentPageDto getComment(@PathVariable Long id) {
         return projectService.getCommentPage(id);

@@ -50,7 +50,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
         for (ProjectMainDto projectMainDto : transform) {
             System.out.println("projectMainDto = " + projectMainDto);
         }
-        return transform.get(0);
+        return Optional.of(transform.get(0)).orElse(null);
     }
 
     @Override
@@ -82,7 +82,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                     ProjectStatus projectStatus = tuple.get(project.projectStatus);
                     Long projectCount = tuple.get(project.count());
                     return new CountDto(Optional.of(projectStatus.name())
-                            .orElse(null), projectCount);})
+                            .orElse(null), projectCount);
+                })
                 .collect(toList());
 
         return new HomeDto(homeCardDtos, userCount, collect);
@@ -97,6 +98,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .where(comment1.project.id.eq(id))
                 .transform(groupBy(project.id).list(
                         Projections.constructor(CommentPageDto.class,
+                                comment1.subCommentCount,
                                 GroupBy.list(Projections.constructor(CommentDto.class,
                                         comment1.id,
                                         user.name,
@@ -104,4 +106,15 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                         comment1.comment)))));
         return createDate.get(0);
     }
+
+    @Override
+    public List<SubCommentDto> fetchSubComment(Long commentId) {
+//        queryFactory.selectFrom(subComment1)
+//                .leftJoin(subComment1.comment, comment1)
+//                .where(comment1.id.eq(commentId))
+//                .transform();
+        return null;
+    }
+
+
 }

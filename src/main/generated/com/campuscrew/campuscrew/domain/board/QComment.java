@@ -24,13 +24,15 @@ public class QComment extends EntityPathBase<Comment> {
 
     public final StringPath comment = createString("comment");
 
-    public final ListPath<SubComment, QSubComment> comments = this.<SubComment, QSubComment>createList("comments", SubComment.class, QSubComment.class, PathInits.DIRECT2);
-
     public final DateTimePath<java.time.LocalDateTime> createTime = createDateTime("createTime", java.time.LocalDateTime.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final QProject project;
+
+    public final NumberPath<Integer> subCommentCount = createNumber("subCommentCount", Integer.class);
+
+    public final ListPath<SubComment, QSubComment> subComments = this.<SubComment, QSubComment>createList("subComments", SubComment.class, QSubComment.class, PathInits.DIRECT2);
 
     public final com.campuscrew.campuscrew.domain.user.QUser user;
 

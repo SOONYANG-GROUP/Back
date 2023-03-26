@@ -3,6 +3,7 @@ package com.campuscrew.campuscrew.service;
 import com.campuscrew.campuscrew.controller.exception.RequiredLoginStateException;
 import com.campuscrew.campuscrew.domain.board.Comment;
 import com.campuscrew.campuscrew.domain.board.Project;
+import com.campuscrew.campuscrew.domain.board.SubComment;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
@@ -12,6 +13,7 @@ import com.campuscrew.campuscrew.repository.project.CommentPageDto;
 import com.campuscrew.campuscrew.repository.project.CommentRepository;
 import com.campuscrew.campuscrew.repository.project.ProjectRepository;
 import com.campuscrew.campuscrew.repository.UserRepository;
+import com.campuscrew.campuscrew.repository.project.SubCommentRepository;
 import com.campuscrew.campuscrew.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +29,7 @@ public class ProjectService {
     private final UserRepository userRepository;
     private final ParticipatedUsersRepository participatedUserRepository;
     private final CommentRepository commentRepository;
-
+    private final SubCommentRepository subCommentRepository;
     // addProject email을 통해 회원을 조회 하고
     public Project addProject(String email, AddProjectDto addProjectDto) {
         // 1.필요 유저 정보를 조회한다.
@@ -76,5 +78,17 @@ public class ProjectService {
     // 그에 해당하는 모든 회원 정보를 조회하고 dto로 가져온다.
     public CommentPageDto getCommentPage(Long id) {
         return projectRepository.fetchCommentPage(id);
+    }
+
+    public void addSubComment(Long commentId, String email, String comment) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("로그인 후 사용 가능 합니다."));
+
+        Comment findComment = commentRepository.findById(commentId)
+                .orElse(null);
+
+        SubComment subComment = SubComment.makeSubComment(user, findComment, comment);
+
+        subCommentRepository.save(subComment);
     }
 }

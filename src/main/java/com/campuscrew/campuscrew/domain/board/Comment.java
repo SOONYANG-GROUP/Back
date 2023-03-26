@@ -30,14 +30,17 @@ public class Comment {
     @OneToMany(mappedBy = "comment",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<SubComment> comments = new ArrayList<>();
+    private List<SubComment> subComments = new ArrayList<>();
 
     private String comment;
 
     private LocalDateTime createTime;
 
+    private Integer subCommentCount;
+
     public static Comment createComment(User user, String comment, Project project) {
         Comment added = new Comment();
+        added.setSubCommentCount(0);
         added.setComment(comment);
         added.setCreateTime(LocalDateTime.now());
         added.addProject(project);
@@ -53,6 +56,12 @@ public class Comment {
     private void addProject(Project project) {
         this.project = project;
         project.getComments().add(this);
+    }
+
+    public void addSubComment(SubComment subComment) {
+        this.subCommentCount++;
+        this.subComments.add(subComment);
+        subComment.setComment(this);
     }
 }
 
