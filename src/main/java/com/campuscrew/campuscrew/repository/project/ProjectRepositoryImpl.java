@@ -50,7 +50,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
         for (ProjectMainDto projectMainDto : transform) {
             System.out.println("projectMainDto = " + projectMainDto);
         }
-        return Optional.of(transform.get(0)).orElse(null);
+        return transform.stream()
+                .filter(projectMainDto -> projectMainDto.getId() == id)
+                .findFirst().orElse(null);
     }
 
     @Override
