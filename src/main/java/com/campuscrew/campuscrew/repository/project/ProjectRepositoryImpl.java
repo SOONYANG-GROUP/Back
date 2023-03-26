@@ -14,6 +14,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.campuscrew.campuscrew.domain.user.QUser.user;
@@ -79,7 +80,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .map(tuple -> {
                     ProjectStatus projectStatus = tuple.get(project.projectStatus);
                     Long projectCount = tuple.get(project.count());
-                    return new CountDto(projectStatus.name(), projectCount);
+                    return new CountDto(Optional.of(projectStatus.name()).orElse(null), projectCount);
                 }).collect(Collectors.toList());
         return new HomeDto(homeCardDtos, userCount, collect);
     }
