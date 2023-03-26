@@ -18,6 +18,8 @@ public class QProject extends EntityPathBase<Project> {
 
     private static final long serialVersionUID = 1613771284L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QProject project = new QProject("project");
 
     public final ListPath<Comment, QComment> comments = this.<Comment, QComment>createList("comments", Comment.class, QComment.class, PathInits.DIRECT2);
@@ -46,18 +48,29 @@ public class QProject extends EntityPathBase<Project> {
 
     public final StringPath title = createString("title");
 
+    public final com.campuscrew.campuscrew.domain.user.QUser user;
+
     public final StringPath voiceChatUrl = createString("voiceChatUrl");
 
     public QProject(String variable) {
-        super(Project.class, forVariable(variable));
+        this(Project.class, forVariable(variable), INITS);
     }
 
     public QProject(Path<? extends Project> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QProject(PathMetadata metadata) {
-        super(Project.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QProject(PathMetadata metadata, PathInits inits) {
+        this(Project.class, metadata, inits);
+    }
+
+    public QProject(Class<? extends Project> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.user = inits.isInitialized("user") ? new com.campuscrew.campuscrew.domain.user.QUser(forProperty("user")) : null;
     }
 
 }

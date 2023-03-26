@@ -40,15 +40,18 @@ public class ProjectController {
         return projectService.getMainPage(id);
     }
 
-    @GetMapping
-    public HomeDto homePage() {
-        return projectService.getHomePage();
-    }
+
 
     @PostMapping("/{id}/comment")
     public String addComment(@PathVariable Long id) {
         return null;
     }
+
+    @GetMapping
+    public HomeDto homePage() {
+        return projectService.getHomePage();
+    }
+
 //
 //    private String BuildRedirectFrontUrl(String) {
 //        StringBuilder builder = new StringBuilder();

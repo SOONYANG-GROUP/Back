@@ -35,11 +35,9 @@ public class ProjectService {
                 .orElseThrow(()-> new RequiredLoginStateException("로그인이 필요 합니다."));
 
 
-        Project project = Project.createProject(addProjectDto); //
+        Project project = Project.createProject(findUser, addProjectDto); //
         projectRepository.save(project);
 
-        ParticipatedUsers participatedUsers = ParticipatedUsers.createAsManager(findUser, project);
-        participatedUserRepository.saveAndFlush(participatedUsers);
         // 2.현재 project에 관한 권한을 가져야 한다.
         // 2-1 project 를 모집하는 유저는 해당 project 게시글에 대한 권한을 통해
         // joinedUser 에 대해서 조회를 해야 할 수 있어야 한다.
@@ -51,6 +49,7 @@ public class ProjectService {
     // 1. MainPage 정보를 가져 온다.
     // 2. 필요한 정보
 
+    // 1. 현재 로그인 한 회원 일 경우, 참여 여부도 조회 가능 해야한다.
     public ProjectMainDto getMainPage(Long id) {
         return projectRepository.fetchMainPage(id);
     }

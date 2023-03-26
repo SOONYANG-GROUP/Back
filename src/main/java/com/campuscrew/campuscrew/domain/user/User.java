@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.domain.user;
 
 import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;
+import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.domain.board.SubComment;
 import jakarta.persistence.*;
 import lombok.*;
@@ -46,6 +47,10 @@ public class User {
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    private List<Project> projects = new ArrayList<>();
 //
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Project> projects = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ParticipatedUsers> joinedUsers = new ArrayList<>();
 
@@ -76,5 +81,10 @@ public class User {
 
     public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public void addProject(Project project) {
+        project.setUser(this);
+        this.projects.add(project);
     }
 }

@@ -28,13 +28,6 @@ public class ParticipatedUsers {
     @Enumerated(EnumType.STRING)
     private ParticipatedStatus status;
 
-    public static ParticipatedUsers createAsManager(User findUser, Project project) {
-        ParticipatedUsers defaultJoinedUser = getDefaultJoinedUser();
-        defaultJoinedUser.setStatus(ParticipatedStatus.MANAGER);
-        defaultJoinedUser.participateProject(findUser, project);
-        return defaultJoinedUser;
-    }
-
     private static ParticipatedUsers getDefaultJoinedUser() {
         ParticipatedUsers participatedUsers = new ParticipatedUsers();
         return participatedUsers;

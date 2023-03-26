@@ -36,9 +36,15 @@ public class QUser extends EntityPathBase<User> {
 
     public final StringPath password = createString("password");
 
+    public final ListPath<com.campuscrew.campuscrew.domain.board.Project, com.campuscrew.campuscrew.domain.board.QProject> projects = this.<com.campuscrew.campuscrew.domain.board.Project, com.campuscrew.campuscrew.domain.board.QProject>createList("projects", com.campuscrew.campuscrew.domain.board.Project.class, com.campuscrew.campuscrew.domain.board.QProject.class, PathInits.DIRECT2);
+
     public final StringPath refreshToken = createString("refreshToken");
 
     public final EnumPath<Role> role = createEnum("role", Role.class);
+
+    public final StringPath selfIntroduction = createString("selfIntroduction");
+
+    public final StringPath shortIntroduction = createString("shortIntroduction");
 
     public final StringPath socialId = createString("socialId");
 

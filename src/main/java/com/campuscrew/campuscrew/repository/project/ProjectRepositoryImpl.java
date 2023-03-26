@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.repository.project;
 
 import com.campuscrew.campuscrew.domain.board.ProjectStatus;
+import com.campuscrew.campuscrew.domain.board.QParticipatedUsers;
 import com.campuscrew.campuscrew.dto.CountDto;
 import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.campuscrew.campuscrew.domain.board.QParticipatedUsers.participatedUsers;
 import static com.campuscrew.campuscrew.domain.user.QUser.user;
 import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.campuscrew.campuscrew.domain.board.QProject.project;
@@ -46,9 +48,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                         recruit.maxRecruit, recruit.currentRecruit)),
                                 list(Projections.constructor(ReferenceDto.class, reference.url)),
                                 project.id, project.createdDateTime, project.title, project.description)));
-        for (ProjectMainDto projectMainDto : transform) {
-            System.out.println(projectMainDto);
-        }
+
         return transform.get(0);
     }
 
@@ -64,12 +64,13 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                         Projections.constructor(HomeCardDto.class,
                                 project.id, project.title, project.createdDateTime,
                                 project.recruitmentDate,
-                                project.projectStatus, list(Projections.constructor(RecruitUserDto.class, recruit.field,
+                                project.projectStatus,
+                                list(Projections.constructor(RecruitUserDto.class,
+                                        recruit.field,
                                         recruit.detailField,
-                                        recruit.maxRecruit, recruit.currentRecruit)
-                                )
-                        )));
-        Long userCount = queryFactory.select(user.count())
+                                        recruit.maxRecruit, recruit.currentRecruit)))));
+        Long userCount = queryFactory
+                .select(user.count())
                 .from(user)
                 .fetchOne();
         List<CountDto> collect = queryFactory.select(project.projectStatus, project.count())
@@ -81,8 +82,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                     ProjectStatus projectStatus = tuple.get(project.projectStatus);
                     Long projectCount = tuple.get(project.count());
                     return new CountDto(Optional.of(projectStatus.name())
-                            .orElse(null), projectCount);
-                }).collect(Collectors.toList());
+                            .orElse(null), projectCount);})
+                .collect(Collectors.toList());
+
         return new HomeDto(homeCardDtos, userCount, collect);
     }
 }

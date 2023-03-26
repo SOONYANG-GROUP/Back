@@ -2,7 +2,6 @@ package com.campuscrew.campuscrew.domain.board;
 
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
-import com.campuscrew.campuscrew.dto.project.RecruitUserDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,6 +47,11 @@ public class Project {
 //
     //1. 연관 관계를 고려해보자. ex) 모든 user 가 project 에 대해 직접적으로 알아야 할 필요가 있을까?
     //2. JoinedUser 라는 mapping 테이블에서 이를 관리하면 될 것인데
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Recruit> recruits = new ArrayList<>();
 
@@ -69,8 +73,9 @@ public class Project {
     private LocalDateTime createdDateTime;
 
 
-    public static Project createProject(AddProjectDto dto) {
+    public static Project createProject(User findUser, AddProjectDto dto) {
         Project project = new Project();
+        findUser.addProject(project);
         project.setTitle(dto.getTitle());
         project.setProjectStatus(ProjectStatus.READY);
         project.setDescription(dto.getDescription());
@@ -96,3 +101,11 @@ public class Project {
 //    }
 
 }
+/*
+    1. 조회가 됨.
+    2. 팀원, 매니저 >> participatedUser 테이블에서 관리
+    3. 팀원란을 클릭, 이 프로젝트에 대해 참여를 안했다.
+    4. user 정보를 조회 현재 세션으로 로그인 되어 있는 유저
+    5. 로그인 했을 때 자기가 작성한 프로젝트 확인 가능
+
+ */
