@@ -1,8 +1,7 @@
 package com.campuscrew.campuscrew.controller;
 
-import com.campuscrew.campuscrew.FrontServerAttr;
 import com.campuscrew.campuscrew.domain.board.Project;
-import com.campuscrew.campuscrew.dto.HomeDto;
+import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.service.ProjectService;
@@ -13,6 +12,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -40,6 +41,10 @@ public class ProjectController {
         return projectService.getMainPage(id);
     }
 
+    @GetMapping
+    public List<HomeCardDto> homePage() {
+        return projectService.getHomePage();
+    }
 //
 //    private String BuildRedirectFrontUrl(String) {
 //        StringBuilder builder = new StringBuilder();

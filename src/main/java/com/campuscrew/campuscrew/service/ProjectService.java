@@ -4,6 +4,7 @@ import com.campuscrew.campuscrew.controller.exception.RequiredLoginStateExceptio
 import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.domain.user.User;
+import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.ParticipatedUsersRepository;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -49,5 +52,11 @@ public class ProjectService {
 
     public ProjectMainDto getMainPage(Long id) {
         return projectRepository.fetchMainPage(id);
+    }
+
+    public List<HomeCardDto> getHomePage() {
+        // 날짜 순서
+        List<HomeCardDto> homeCardDtos = projectRepository.fetchCardSortByCreatedDate();
+        return null;
     }
 }

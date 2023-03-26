@@ -1,15 +1,10 @@
 package com.campuscrew.campuscrew.repository.project;
 
-import com.campuscrew.campuscrew.domain.board.QParticipatedUsers;
-import com.campuscrew.campuscrew.domain.board.QProject;
-import com.campuscrew.campuscrew.domain.board.QRecruit;
-import com.campuscrew.campuscrew.domain.board.QReference;
-import com.campuscrew.campuscrew.domain.user.QUser;
-import com.campuscrew.campuscrew.dto.HomeDto;
+import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.dto.project.RecruitUserDto;
 import com.campuscrew.campuscrew.dto.project.ReferenceDto;
-import com.querydsl.core.ResultTransformer;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -52,21 +47,32 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     }
 
     @Override
-    public HomeDto fetchHomePage() {
-        queryFactory.select(project, user)
+    public List<HomeCardDto> fetchCardSortByCreatedDate() {
+        List<HomeCardDto> homeCardDtos = queryFactory.select(project, user)
                 .from(project)
-                .leftJoin(user).on()
-                .join(project.recruits, recruit)
+                .leftJoin(project.recruits, recruit)
                 .orderBy(project.createdDateTime.desc())
                 .offset(1)
                 .limit(6)
                 .transform(groupBy(project.id).list(
-                        Projections.constructor(HomeDto.class,
+                        Projections.constructor(HomeCardDto.class,
                                 project.id, project.title,
-                                project.recruitmentDate, recruit.detailField,
-                                recruit.currentRecruit, recruit.maxRecruit,
-                                project.status)));
-
-        return null;
+                                project.recruitmentDate,
+                                project.status, list(Projections.constructor(RecruitUserDto.class, recruit.field,
+                                        recruit.detailField,
+                                        recruit.maxRecruit, recruit.currentRecruit)
+                                )
+                        )));
+        Long userCount = queryFactory.select(user.count())
+                .from(user)
+                .fetchOne();
+        List<Tuple> fetch = queryFactory.select(project.status, project.count())
+                .from(project)
+                .groupBy(project.status)
+                .fetch();
+        for (Tuple tuple : fetch) {
+            System.out.println("tuple = " + tuple);
+        }
+        return homeCardDtos;
     }
 }
