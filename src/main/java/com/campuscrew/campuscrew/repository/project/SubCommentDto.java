@@ -13,15 +13,11 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class SubCommentDto {
-
     private Long subCommentId;
-
     private String name;
-
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate createDate;
-
     private String subComment;
 
     public SubCommentDto(Long subCommentId, String name, LocalDate createDate, String subComment) {
