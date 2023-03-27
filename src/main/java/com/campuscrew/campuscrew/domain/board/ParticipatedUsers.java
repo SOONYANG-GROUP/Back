@@ -28,6 +28,10 @@ public class ParticipatedUsers {
     @Enumerated(EnumType.STRING)
     private ParticipatedStatus status;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recruit_id")
+    private Recruit recruit;
+
     public static ParticipatedUsers makeParticipatedUserAsManager(User user, Project project) {
         ParticipatedUsers participatedUsers = new ParticipatedUsers();
         participatedUsers.setStatus(ParticipatedStatus.MANAGER);

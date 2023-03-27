@@ -2,10 +2,7 @@ package com.campuscrew.campuscrew.controller;
 
 import com.campuscrew.campuscrew.domain.board.Comment;
 import com.campuscrew.campuscrew.domain.board.Project;
-import com.campuscrew.campuscrew.dto.AddCommentDto;
-import com.campuscrew.campuscrew.dto.AddSubCommentDto;
-import com.campuscrew.campuscrew.dto.HomeDto;
-import com.campuscrew.campuscrew.dto.ManagerPageDto;
+import com.campuscrew.campuscrew.dto.*;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.project.CommentPageDto;
@@ -92,9 +89,10 @@ public class ProjectController {
 
     @PostMapping("/{id}/join")
     public String applyProject(@PathVariable Long id,
+                              @RequestBody ApplyingFieldDto applyingFieldDto,
                               @AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
-        projectService.applyProject(id, email);
+        projectService.applyProject(id, email, applyingFieldDto.getDetailField());
         return "ok";
     }
 

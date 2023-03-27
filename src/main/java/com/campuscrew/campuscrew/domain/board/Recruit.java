@@ -2,16 +2,14 @@ package com.campuscrew.campuscrew.domain.board;
 
 import com.campuscrew.campuscrew.dto.project.RecruitUserDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(of = {"id", "field", "detailField", "currentRecruit", "maxRecruit"})
 public class Recruit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

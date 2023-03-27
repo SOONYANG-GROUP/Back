@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
 import java.util.TimeZone;
 
 public class TestJwt {
-
     @Test
     void objectMapper() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         String s = objectMapper.writeValueAsString(new TokenDto("a", "b"));
         System.out.println(s);
     }
+
     @Test
     void test() {
         String s = UriComponentsBuilder.fromUriString("http://localhost:3000")

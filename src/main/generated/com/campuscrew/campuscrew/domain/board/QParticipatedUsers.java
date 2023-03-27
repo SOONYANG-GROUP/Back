@@ -26,6 +26,8 @@ public class QParticipatedUsers extends EntityPathBase<ParticipatedUsers> {
 
     public final QProject project;
 
+    public final QRecruit recruit;
+
     public final EnumPath<ParticipatedStatus> status = createEnum("status", ParticipatedStatus.class);
 
     public final com.campuscrew.campuscrew.domain.user.QUser user;
@@ -49,6 +51,7 @@ public class QParticipatedUsers extends EntityPathBase<ParticipatedUsers> {
     public QParticipatedUsers(Class<? extends ParticipatedUsers> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.project = inits.isInitialized("project") ? new QProject(forProperty("project"), inits.get("project")) : null;
+        this.recruit = inits.isInitialized("recruit") ? new QRecruit(forProperty("recruit"), inits.get("recruit")) : null;
         this.user = inits.isInitialized("user") ? new com.campuscrew.campuscrew.domain.user.QUser(forProperty("user")) : null;
     }
 

@@ -1,7 +1,9 @@
 package com.campuscrew.campuscrew.login.handler;
 
+import com.campuscrew.campuscrew.dto.TokenDto;
 import com.campuscrew.campuscrew.jwt.JwtService;
 import com.campuscrew.campuscrew.repository.UserRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JwtService jwtService;
+    private final ObjectMapper objectMapper;
     private final UserRepository userRepository;
     @Value("${jwt.access.expiration}")
     private String accessTokenExpiration;
@@ -39,7 +42,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         log.info("로그인 성공. 이메일: {}", email);
         log.info("로그인 성공. AccessToken : {}", accessToken);
         log.info("발급된 AccessToken 만료 기간 : {}", accessTokenExpiration);
-        response.sendRedirect(makeRedirectUri(accessToken, refreshToken, null));
+        response.getWriter().write(objectMapper.writeValueAsString(new TokenDto(accessToken, refreshToken)));
     }
 
     private String extractUsername(Authentication authentication) {
@@ -47,14 +50,14 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         return userDetails.getUsername();
     }
 
-
-    private String makeRedirectUri(String accessToken, String refreshToken, String redirectUrl) {
-        log.info("redirect : refreshToken = {}", refreshToken);
-        return UriComponentsBuilder.fromUriString("http://localhost:8080/exlogin")
-                .queryParam("accessToken", accessToken)
-                .queryParam("refreshToken", refreshToken)
-                .encode(StandardCharsets.UTF_8)
-                .toUriString();
-    }
+//
+//    private String makeRedirectUri(String accessToken, String refreshToken, String redirectUrl) {
+//        log.info("redirect : refreshToken = {}", refreshToken);
+//        return UriComponentsBuilder.fromUriString("http://localhost:8080/exlogin")
+//                .queryParam("accessToken", accessToken)
+//                .queryParam("refreshToken", refreshToken)
+//                .encode(StandardCharsets.UTF_8)
+//                .toUriString();
+//    }
 
 }
