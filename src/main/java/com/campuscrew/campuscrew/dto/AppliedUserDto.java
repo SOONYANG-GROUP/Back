@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppliedUserDto {
+    private String detailField;
     private Long userId;
     private String name;
 }
