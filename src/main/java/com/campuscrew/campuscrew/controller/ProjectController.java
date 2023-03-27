@@ -90,7 +90,6 @@ public class ProjectController {
         return projectService.getHomePage();
     }
 
-
     @PostMapping("/{id}/join")
     public String applyProject(@PathVariable Long id,
                               @AuthenticationPrincipal UserDetails userDetails) {
