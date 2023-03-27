@@ -15,6 +15,7 @@ import com.campuscrew.campuscrew.repository.project.CommentRepository;
 import com.campuscrew.campuscrew.repository.project.ProjectRepository;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import com.campuscrew.campuscrew.repository.project.SubCommentRepository;
+import com.campuscrew.campuscrew.service.exception.AlreadyAppliedProject;
 import com.campuscrew.campuscrew.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +81,18 @@ public class ProjectService {
     }
     // project id에 해당하는 모든 댓글을 가져온다.
     // 그에 해당하는 모든 회원 정보를 조회하고 dto로 가져온다.
+
+
+    // 관리자가 요청에 대해서 거절 했을 때
+    public void rejectApply() {
+
+    }
+    // 관리자가 요청에 대해서 승인 했을 때
+    public void acceptApply() {
+
+    }
+
+
     public CommentPageDto getCommentPage(Long id) {
         return projectRepository.fetchCommentPage(id);
     }
@@ -106,11 +119,19 @@ public class ProjectService {
         Project project = projectRepository
                 .findByIdWithRecruits(projectId)
                 .orElse(null);
+
+        if (participatedUserRepository
+                .findByUsersIdAndProjectId(user.getId(), projectId)
+                .isPresent()) {
+            throw new AlreadyAppliedProject("이미 지원한 신청인 입니다.");
+        };
         // 2. 지원한 Recruit를 선별
         Recruit recruit1 = project.getRecruits()
                 .stream().filter(recruit -> detailField.equals(recruit.getDetailField()))
                 .findFirst().orElse(null);
         // 3. 해당 Recruit 에 지원
+
+
         ParticipatedUsers participatedUsers = ParticipatedUsers
                 .makeParticipatedUserAsMReady(user, project, recruit1);
 
