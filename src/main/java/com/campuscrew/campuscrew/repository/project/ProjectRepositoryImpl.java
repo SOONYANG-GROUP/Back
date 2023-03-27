@@ -130,12 +130,13 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
         List<ManagerPageDto> transform = queryFactory.select(participatedUsers)
                 .from(participatedUsers)
                 .leftJoin(participatedUsers.user, user)
+                .leftJoin(participatedUsers.recruit, recruit)
                 .leftJoin(participatedUsers.project, project)
                 .where(project.id.eq(projectId), participatedUsers.status.eq(ParticipatedStatus.READY))
                 .transform(groupBy(participatedUsers.id).list(
                         Projections.constructor(ManagerPageDto.class,
                                 GroupBy.list(
-                                        Projections.constructor(AppliedUserDto.class, user.id, user.name)
+                                        Projections.constructor(AppliedUserDto.class, recruit.detailField, user.id, user.name)
                                 ))));
         return transform.stream()
                 .findFirst()

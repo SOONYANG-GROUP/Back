@@ -102,15 +102,15 @@ public class ProjectService {
     public void applyProject(Long projectId, String email, String detailField) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("로그인 후 사용 가능 합니다."));
-
+        // 1. 프로젝트에 연관 되어 있는 Recruit 까지 모두 조회
         Project project = projectRepository
                 .findByIdWithRecruits(projectId)
                 .orElse(null);
-
+        // 2. 지원한 Recruit를 선별
         Recruit recruit1 = project.getRecruits()
                 .stream().filter(recruit -> detailField.equals(recruit.getDetailField()))
                 .findFirst().orElse(null);
-
+        // 3. 해당 Recruit 에 지원
         ParticipatedUsers participatedUsers = ParticipatedUsers
                 .makeParticipatedUserAsMReady(user, project, recruit1);
 
@@ -118,7 +118,7 @@ public class ProjectService {
     }
     // 1. 현재 유저 정보를 조회하고, 프로젝트 id로 프로젝트를 조회 한다.
     // 2. 현재 유저 정보가 프로젝트의 관리자 이면, ready 상태인 모든 회원에 대한 정보를 볼 수 있어야 한다.
-
+    // 3.
     public ManagerPageDto getManagerPage(Long id, String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Not login"));
