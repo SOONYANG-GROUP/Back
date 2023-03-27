@@ -31,7 +31,8 @@ public class Recruit {
 
     // ready인 상태에서 거절을 할 수 있다.
     // fetch join 으로 조회 거절한 회원의 user_id 정보로 삭제
-    @OneToMany(mappedBy = "recruit", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recruit", cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<ParticipatedUsers> participatedUsers;
 
 
