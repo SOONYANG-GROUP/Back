@@ -1,12 +1,11 @@
 package com.campuscrew.campuscrew.service;
 
+import com.campuscrew.campuscrew.controller.exception.NotAccessibleAuthenticationException;
 import com.campuscrew.campuscrew.controller.exception.RequiredLoginStateException;
-import com.campuscrew.campuscrew.domain.board.Comment;
-import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;
-import com.campuscrew.campuscrew.domain.board.Project;
-import com.campuscrew.campuscrew.domain.board.SubComment;
+import com.campuscrew.campuscrew.domain.board.*;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.HomeDto;
+import com.campuscrew.campuscrew.dto.ManagerPageDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.ParticipatedUsersRepository;
@@ -110,6 +109,23 @@ public class ProjectService {
                 .makeParticipatedUserAsMReady(user, project);
 
         participatedUserRepository.save(participatedUsers);
+    }
+    // 1. 현재 유저 정보를 조회하고, 프로젝트 id로 프로젝트를 조회 한다.
+    // 2. 현재 유저 정보가 프로젝트의 관리자 이면, page 에 대한 정보를 보내준다.
+    // 3. 관리자가 아니면 예외가 발생한다.
+    // 4.
+    public ManagerPageDto getManagerPage(Long id, String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("Not login"));
 
+        ParticipatedUsers participatedUsers = participatedUserRepository
+                .findByUsersIdAndProjectId(user.getId(), id)
+                .orElse(null);
+
+        if (participatedUsers.getStatus() != ParticipatedStatus.MANAGER) {
+            throw new NotAccessibleAuthenticationException("Manager 만 접근 가능");
+        }
+
+        return projectRepository.fetchManagerPage(user.getId(), id);
     }
 }

@@ -19,15 +19,11 @@ public class ReferenceDto implements Serializable {
         this.url = url;
     }
 
-
-
-
     public static List<ReferenceDto> referencesToDto(List<Reference> references) {
         return references.stream()
                 .map(ReferenceDto::referenceDto)
                 .collect(Collectors.toList());
     }
-
     private static ReferenceDto referenceDto(Reference reference) {
         return new ReferenceDto(reference.getUrl());
     }

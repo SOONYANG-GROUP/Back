@@ -5,6 +5,7 @@ import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.dto.AddCommentDto;
 import com.campuscrew.campuscrew.dto.AddSubCommentDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
+import com.campuscrew.campuscrew.dto.ManagerPageDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.project.CommentPageDto;
@@ -46,8 +47,6 @@ public class ProjectController {
         return projectService.getMainPage(id);
     }
 
-
-
     @PostMapping("/{id}/comment")
     public String addComment(@PathVariable Long id,
                              @RequestBody AddCommentDto addCommentDto,
@@ -69,9 +68,16 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/comment/subcomment")
-    public List<SubCommentDto> getSubComment(@PathVariable Long id,
-                                             @RequestParam Long commentId) {
+    public List<SubCommentDto> getSubComment(@RequestParam Long commentId) {
         return repository.fetchSubComment(commentId);
+    }
+
+    @GetMapping("/{id}/manager")
+    public ManagerPageDto getManagerPage(@PathVariable Long id,
+                                         @AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+
+        return projectService.getManagerPage(id, email);
     }
 
     @GetMapping("/{id}/comment")
@@ -92,4 +98,5 @@ public class ProjectController {
         projectService.applyProject(id, email);
         return "ok";
     }
+
 }

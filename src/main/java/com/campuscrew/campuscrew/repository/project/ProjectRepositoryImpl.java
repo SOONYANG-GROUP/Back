@@ -1,12 +1,11 @@
 package com.campuscrew.campuscrew.repository.project;
 
+import com.campuscrew.campuscrew.domain.board.ParticipatedStatus;
 import com.campuscrew.campuscrew.domain.board.ProjectStatus;
 
+import com.campuscrew.campuscrew.domain.board.QParticipatedUsers;
 import com.campuscrew.campuscrew.domain.board.QReference;
-import com.campuscrew.campuscrew.dto.CommentDto;
-import com.campuscrew.campuscrew.dto.CountDto;
-import com.campuscrew.campuscrew.dto.HomeCardDto;
-import com.campuscrew.campuscrew.dto.HomeDto;
+import com.campuscrew.campuscrew.dto.*;
 import com.campuscrew.campuscrew.dto.project.*;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.CollectionExpression;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.campuscrew.campuscrew.domain.board.QComment.comment1;
+import static com.campuscrew.campuscrew.domain.board.QParticipatedUsers.participatedUsers;
 import static com.campuscrew.campuscrew.domain.board.QProject.project;
 import static com.campuscrew.campuscrew.domain.board.QRecruit.recruit;
 import static com.campuscrew.campuscrew.domain.board.QReference.reference;
@@ -124,4 +124,23 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 user.name, subComment1.createTime.as("createDate"),
                                 subComment1.subComment)));
     }
+    // 1. 회원 상태가 READY인 모든 회원 정보를 조회 할 수 있어야 한다.
+    @Override
+    public ManagerPageDto fetchManagerPage(Long userId, Long projectId) {
+        List<ManagerPageDto> transform = queryFactory.select(participatedUsers)
+                .from(participatedUsers)
+                .leftJoin(participatedUsers.user, user)
+                .leftJoin(participatedUsers.project, project)
+                .where(project.id.eq(projectId), participatedUsers.status.eq(ParticipatedStatus.READY))
+                .transform(groupBy(participatedUsers.id).list(
+                        Projections.constructor(ManagerPageDto.class,
+                                GroupBy.list(
+                                        Projections.constructor(AppliedUserDto.class, user.id, user.name)
+                                ))));
+        return transform.stream()
+                .findFirst()
+                .orElse(null);
+    }
+
+
 }

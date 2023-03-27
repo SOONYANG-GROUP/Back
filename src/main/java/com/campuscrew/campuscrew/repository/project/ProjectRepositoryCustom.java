@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.repository.project;
 
 import com.campuscrew.campuscrew.dto.HomeDto;
+import com.campuscrew.campuscrew.dto.ManagerPageDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 
 import java.util.List;
@@ -13,4 +14,7 @@ public interface ProjectRepositoryCustom {
     CommentPageDto fetchCommentPage(Long id);
 
     List<SubCommentDto> fetchSubComment(Long commentId);
+
+    ManagerPageDto fetchManagerPage(Long userId, Long projectId);
+
 }
