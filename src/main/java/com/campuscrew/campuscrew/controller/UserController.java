@@ -37,5 +37,4 @@ public class UserController {
         String email = userDetails.getUsername();
         return userService.profile(email);
     }
-
 }

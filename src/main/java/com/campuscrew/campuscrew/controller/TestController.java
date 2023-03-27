@@ -39,16 +39,4 @@ public class TestController {
         System.out.println(user.getAttributes());
         return "ok";
     }
-
-
-    @PostMapping("/join")
-    public String join(@ModelAttribute User user) {
-        var oldPwd = user.getPassword();
-        var newPwd = passwordEncoder.encode(user.getPassword());
-        user.setRole(Role.USER);
-        user.setPassword(newPwd);
-        userRepository.save(user);
-        return "redirect:/";
-    }
-
 }
