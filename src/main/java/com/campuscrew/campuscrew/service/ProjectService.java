@@ -98,12 +98,13 @@ public class ProjectService {
     // 참여 버튼을 누르면 호출되는 api
     // 1. 현재 로그인 되어 있는 user 정보를 조회
     // 2. 지원한 직군에 대한 정보를 조회
-    // 3.
+    // 3. 프로젝트의 특정 직군에 대해 신청을 넣으면 ready 상태로 저장
     public void applyProject(Long projectId, String email, String detailField) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("로그인 후 사용 가능 합니다."));
 
-        Project project = projectRepository.findByIdWithRecruits(projectId)
+        Project project = projectRepository
+                .findByIdWithRecruits(projectId)
                 .orElse(null);
 
         Recruit recruit1 = project.getRecruits()
@@ -111,14 +112,13 @@ public class ProjectService {
                 .findFirst().orElse(null);
 
         ParticipatedUsers participatedUsers = ParticipatedUsers
-                .makeParticipatedUserAsMReady(user, project);
+                .makeParticipatedUserAsMReady(user, project, recruit1);
 
         participatedUserRepository.save(participatedUsers);
     }
     // 1. 현재 유저 정보를 조회하고, 프로젝트 id로 프로젝트를 조회 한다.
-    // 2. 현재 유저 정보가 프로젝트의 관리자 이면, page 에 대한 정보를 보내준다.
-    // 3. 관리자가 아니면 예외가 발생한다.
-    // 4.
+    // 2. 현재 유저 정보가 프로젝트의 관리자 이면, ready 상태인 모든 회원에 대한 정보를 볼 수 있어야 한다.
+
     public ManagerPageDto getManagerPage(Long id, String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Not login"));

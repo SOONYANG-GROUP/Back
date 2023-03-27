@@ -4,6 +4,8 @@ import com.campuscrew.campuscrew.dto.project.RecruitUserDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -23,12 +25,15 @@ public class Recruit {
 
     private String detailField;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
     private Project project;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private JoinedUser joinedUser;
+    // ready인 상태에서 거절을 할 수 있다.
+    // fetch join 으로 조회 거절한 회원의 user_id 정보로 삭제
+    @OneToMany(mappedBy = "recruit", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ParticipatedUsers> participatedUsers;
+
 
     public static Recruit makeRecruit(RecruitUserDto dto) {
         Recruit recruit = new Recruit();

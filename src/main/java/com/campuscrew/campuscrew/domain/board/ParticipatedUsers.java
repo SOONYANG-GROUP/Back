@@ -25,12 +25,14 @@ public class ParticipatedUsers {
     @JoinColumn(name = "project_id")
     private Project project;
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recruit_id")
+    private Recruit recruit;
+
     @Enumerated(EnumType.STRING)
     private ParticipatedStatus status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recruit_id")
-    private Recruit recruit;
 
     public static ParticipatedUsers makeParticipatedUserAsManager(User user, Project project) {
         ParticipatedUsers participatedUsers = new ParticipatedUsers();
@@ -48,10 +50,14 @@ public class ParticipatedUsers {
 
 
 
-    public static ParticipatedUsers makeParticipatedUserAsMReady(User user, Project project) {
+    public static ParticipatedUsers makeParticipatedUserAsMReady(User user, Project project, Recruit recruit1) {
         ParticipatedUsers participatedUsers = new ParticipatedUsers();
         participatedUsers.setStatus(ParticipatedStatus.READY);
         participatedUsers.participateProject(user, project);
+
+        // 연관 관계를 맺는다.
+        participatedUsers.setRecruit(recruit1);
+        recruit1.getParticipatedUsers().add(participatedUsers);
         return participatedUsers;
     }
 
