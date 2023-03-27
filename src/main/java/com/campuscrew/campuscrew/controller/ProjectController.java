@@ -70,9 +70,7 @@ public class ProjectController {
 
     @GetMapping("/{id}/comment/subcomment")
     public List<SubCommentDto> getSubComment(@PathVariable Long id,
-                                             @RequestParam Long commentId,
-                                             @AuthenticationPrincipal UserDetails userDetails,
-                                             @RequestBody AddSubCommentDto addSubCommentDto) {
+                                             @RequestParam Long commentId) {
         return repository.fetchSubComment(commentId);
     }
 
