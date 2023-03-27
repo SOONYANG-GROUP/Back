@@ -40,7 +40,7 @@ public class Comment {
 
     public static Comment createComment(User user, String comment, Project project) {
         Comment added = new Comment();
-        added.setSubCommentCount(0);
+        added.subCommentCount = 0;
         added.setComment(comment);
         added.setCreateTime(LocalDateTime.now());
         added.addProject(project);

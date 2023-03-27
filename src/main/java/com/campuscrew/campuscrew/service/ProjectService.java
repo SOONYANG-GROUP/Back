@@ -95,7 +95,9 @@ public class ProjectService {
 
         subCommentRepository.save(subComment);
     }
-    // 1. 현재 로그인 되어 있는 회원일 경우
+    // 참여 버튼을 누르면 호출되는 api
+    // 1. 현재 로그인 되어 있는 user 정보를 조회
+    // 2. 현재 프로젝트의 정보를 조회
     public void applyProject(Long projectId, String email) {
 
     }
