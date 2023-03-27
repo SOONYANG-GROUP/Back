@@ -40,7 +40,6 @@ public class ProjectMainDto implements Serializable {
 
     private String description; // project
 
-    @QueryProjection
     public ProjectMainDto(List<RecruitUserDto> recruitUserDtos, List<ReferenceDto> referenceDtos, Long id, LocalDateTime createDateTime, String title, String description) {
         this.recruitUserDtos = recruitUserDtos;
         this.referenceDtos = referenceDtos;

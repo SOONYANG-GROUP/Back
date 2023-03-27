@@ -2,6 +2,7 @@ package com.campuscrew.campuscrew.service;
 
 import com.campuscrew.campuscrew.controller.exception.RequiredLoginStateException;
 import com.campuscrew.campuscrew.domain.board.Comment;
+import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.domain.board.SubComment;
 import com.campuscrew.campuscrew.domain.user.User;
@@ -40,6 +41,9 @@ public class ProjectService {
 
         Project project = Project.createProject(findUser, addProjectDto); //
         projectRepository.save(project);
+
+        ParticipatedUsers participatedUsers = ParticipatedUsers.makeParticipatedUserAsManager(findUser, project);
+        participatedUserRepository.save(participatedUsers);
 
         // 2.현재 project에 관한 권한을 가져야 한다.
         // 2-1 project 를 모집하는 유저는 해당 project 게시글에 대한 권한을 통해
@@ -90,5 +94,9 @@ public class ProjectService {
         SubComment subComment = SubComment.makeSubComment(user, findComment, comment);
 
         subCommentRepository.save(subComment);
+    }
+    // 1. 현재 로그인 되어 있는 회원일 경우
+    public void applyProject(Long projectId, String email) {
+
     }
 }

@@ -52,7 +52,7 @@ public class QRecruit extends EntityPathBase<Recruit> {
 
     public QRecruit(Class<? extends Recruit> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.project = inits.isInitialized("project") ? new QProject(forProperty("project")) : null;
+        this.project = inits.isInitialized("project") ? new QProject(forProperty("project"), inits.get("project")) : null;
     }
 
 }

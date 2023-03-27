@@ -7,6 +7,5 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class CommentPageDto {
-    private Integer subCommentCount;
     private List<CommentDto> commentDtos;
 }

@@ -20,6 +20,8 @@ public class CommentDto {
 
     private Long commentId;
 
+    private Integer subCommentCount;
+
     private String name;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)

@@ -28,7 +28,30 @@ public class ParticipatedUsers {
     @Enumerated(EnumType.STRING)
     private ParticipatedStatus status;
 
-    private static ParticipatedUsers getDefaultJoinedUser() {
+    public static ParticipatedUsers makeParticipatedUserAsManager(User user, Project project) {
+        ParticipatedUsers participatedUsers = new ParticipatedUsers();
+        participatedUsers.setStatus(ParticipatedStatus.MANAGER);
+        participatedUsers.participateProject(user, project);
+        return participatedUsers;
+    }
+
+    public static ParticipatedUsers makeParticipatedUserAsMember(User user, Project project) {
+        ParticipatedUsers participatedUsers = new ParticipatedUsers();
+        participatedUsers.setStatus(ParticipatedStatus.MEMBER);
+        participatedUsers.participateProject(user, project);
+        return participatedUsers;
+    }
+
+
+
+    public static ParticipatedUsers makeParticipatedUserAsMReady(User user, Project project) {
+        ParticipatedUsers participatedUsers = new ParticipatedUsers();
+        participatedUsers.setStatus(ParticipatedStatus.READY);
+        participatedUsers.participateProject(user, project);
+        return participatedUsers;
+    }
+
+    public static ParticipatedUsers getDefaultParticipatedUser() {
         ParticipatedUsers participatedUsers = new ParticipatedUsers();
         return participatedUsers;
     }

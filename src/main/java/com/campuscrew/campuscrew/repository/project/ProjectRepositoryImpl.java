@@ -1,14 +1,15 @@
 package com.campuscrew.campuscrew.repository.project;
 
 import com.campuscrew.campuscrew.domain.board.ProjectStatus;
-import com.campuscrew.campuscrew.domain.board.QComment;
-import com.campuscrew.campuscrew.domain.board.QSubComment;
+
+import com.campuscrew.campuscrew.domain.board.QReference;
 import com.campuscrew.campuscrew.dto.CommentDto;
 import com.campuscrew.campuscrew.dto.CountDto;
 import com.campuscrew.campuscrew.dto.HomeCardDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.*;
 import com.querydsl.core.group.GroupBy;
+import com.querydsl.core.types.CollectionExpression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,12 +19,12 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.campuscrew.campuscrew.domain.board.QComment.comment1;
-import static com.campuscrew.campuscrew.domain.board.QSubComment.subComment1;
-import static com.campuscrew.campuscrew.domain.user.QUser.user;
-import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.campuscrew.campuscrew.domain.board.QProject.project;
 import static com.campuscrew.campuscrew.domain.board.QRecruit.recruit;
 import static com.campuscrew.campuscrew.domain.board.QReference.reference;
+import static com.campuscrew.campuscrew.domain.board.QSubComment.subComment1;
+import static com.campuscrew.campuscrew.domain.user.QUser.user;
+import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.querydsl.core.types.Projections.list;
 import static java.util.stream.Collectors.toList;
 
@@ -100,9 +101,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .where(comment1.project.id.eq(id))
                 .transform(groupBy(project.id).list(
                         Projections.constructor(CommentPageDto.class,
-                                comment1.subCommentCount,
                                 GroupBy.list(Projections.constructor(CommentDto.class,
                                         comment1.id,
+                                        comment1.subCommentCount,
                                         user.name,
                                         comment1.createTime.as("createDate"),
                                         comment1.comment)))));
@@ -117,7 +118,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .leftJoin(subComment1.user, user)
                 .leftJoin(subComment1.comment, comment1)
                 .where(comment1.id.eq(commentId))
-                .transform(groupBy(comment1.id).list(Projections.constructor(SubCommentDto.class,
+                .transform(groupBy(comment1.id)
+                        .list(Projections.constructor(SubCommentDto.class,
                         subComment1.id, user.name, subComment1.createTime, subComment1.subComment
                 )));
     }

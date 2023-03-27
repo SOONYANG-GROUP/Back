@@ -74,10 +74,14 @@ public class ProjectController {
         return projectService.getHomePage();
     }
 
-//
-//    private String BuildRedirectFrontUrl(String) {
-//        StringBuilder builder = new StringBuilder();
-//        builder.append("redirect:");
-//        builder.append(FrontServerAttr.FRONT_URL);
-//    }
+    // 참여 버튼을 누르면 호출되는 api
+    // 1. 현재 로그인 되어 있는 user 정보를 조회
+    // 2. 현재 프로젝트의 정보를 조회
+    @PostMapping("/{id}/join")
+    public String applyProject(@PathVariable Long id,
+                              @AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        projectService.applyProject(id, email);
+        return "ok";
+    }
 }
