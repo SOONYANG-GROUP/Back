@@ -1,9 +1,7 @@
 package com.campuscrew.campuscrew.controller;
 
-import com.campuscrew.campuscrew.auth.PrincipalDetails;
-import com.campuscrew.campuscrew.domain.Role;
-import com.campuscrew.campuscrew.domain.User;
-import com.campuscrew.campuscrew.dto.UserJoin;
+import com.campuscrew.campuscrew.domain.user.Role;
+import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,15 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 @Controller
 @RequiredArgsConstructor
 @Slf4j
 public class TestController {
-
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -45,22 +40,8 @@ public class TestController {
         return "ok";
     }
 
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
 
-    @GetMapping("/loginForm")
-    public String loginForm() {
-        return "loginForm";
-    }
-
-    @GetMapping("/joinForm")
-    public String joinForm() {
-        return "joinForm";
-    }
-
-    @PostMapping("/joindd")
+    @PostMapping("/join")
     public String join(@ModelAttribute User user) {
         var oldPwd = user.getPassword();
         var newPwd = passwordEncoder.encode(user.getPassword());

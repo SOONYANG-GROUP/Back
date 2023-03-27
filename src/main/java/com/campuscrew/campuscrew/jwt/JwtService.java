@@ -23,7 +23,7 @@ public class JwtService {
     @Value("${jwt.secretKey}")
     private String secretKey;
 
-    @Value("${jwt.access.expiration}")
+    @Value("${jwt.access.expiration}") // 1000 * 2000
     private Long accessTokenExpirationPeriod;
 
     @Value("${jwt.refresh.expiration}")

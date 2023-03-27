@@ -1,4 +1,4 @@
-package com.campuscrew.campuscrew.domain;
+package com.campuscrew.campuscrew.domain.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

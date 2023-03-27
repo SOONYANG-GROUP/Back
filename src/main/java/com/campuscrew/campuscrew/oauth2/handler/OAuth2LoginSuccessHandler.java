@@ -1,6 +1,6 @@
 package com.campuscrew.campuscrew.oauth2.handler;
 
-import com.campuscrew.campuscrew.domain.Role;
+import com.campuscrew.campuscrew.domain.user.Role;
 import com.campuscrew.campuscrew.dto.TokenDto;
 import com.campuscrew.campuscrew.jwt.JwtService;
 import com.campuscrew.campuscrew.oauth2.CustomOAuth2User;

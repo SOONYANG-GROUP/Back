@@ -1,7 +1,8 @@
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test5?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3306/test9?serverTimezone=Asia/Seoul
     username: root
     password: 1234
   main:
@@ -12,14 +13,19 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
+    properties:
+      hibernate:
+        globally_quoted_identifiers: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        default_batch_fetch_size: 100
   config:
     import: application-oauth.yml
-
 
 jwt:
   secretKey: asdasdasdasdasdadadadadadadadadadadadafafafafasfasfasfasfafafafs
   access:
-    expiration: 500000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h))
+    expiration: 2000000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h)) 1000 * 200
     header: Authorization
 
   refresh:

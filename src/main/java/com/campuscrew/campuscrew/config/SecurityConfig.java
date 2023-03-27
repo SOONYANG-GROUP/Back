@@ -67,16 +67,18 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 //== URL별 권한 관리 옵션 ==//
+
                 .authorizeHttpRequests()
                 // 아이콘, css, js 관련
+
                 // 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능, h2-console에 접근 가능
-                .requestMatchers("/","/css/**","/images/**","/js/**","/favicon.ico","/h2-console/**").permitAll()
+                .requestMatchers(HttpMethod.GET,"/","/css/**","/images/**","/js/**", "/favicon.ico/**" ,"/h2-console/**").permitAll()
                 .requestMatchers("/join/**").permitAll() // 회원가입 접근 가능
                 .requestMatchers("/main/**").permitAll()
-                .requestMatchers("/board/**").permitAll()
+                .requestMatchers("/projects/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .anyRequest().authenticated()// 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+                .anyRequest().permitAll()// 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
@@ -170,6 +172,8 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+    // jwtAuthentication 이 호출 되면 안된다.
 
 //    Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTY3OTUzMTYwMywiZW1haWwiOiIwNzgzNWNhNC1jMWM3LTRmNDgtYjBhOC0zMGFhMzgzNWJhMjVAZ29vZ2xlLmNvbSJ9.PiOl1EGL7_kFkgniWJLMfjqJ_cm7Kd7DkSvhUo5D7VCMk9DbgIIVKIouSkhLZ1HB26SM1PWR2J-kCQZb8-rKAg
 //    Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTY3OTUzMTYwMywiZW1haWwiOiIwNzgzNWNhNC1jMWM3LTRmNDgtYjBhOC0zMGFhMzgzNWJhMjVAZ29vZ2xlLmNvbSJ9.PiOl1EGL7_kFkgniWJLMfjqJ_cm7Kd7DkSvhUo5D7VCMk9DbgIIVKIouSkhLZ1HB26SM1PWR2J-kCQZb8-rKAg
