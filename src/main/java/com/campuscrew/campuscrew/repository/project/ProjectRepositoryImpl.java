@@ -120,7 +120,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .where(comment1.id.eq(commentId))
                 .transform(groupBy(comment1.id)
                         .list(Projections.constructor(SubCommentDto.class,
-                        subComment1.id, user.name, subComment1.createTime, subComment1.subComment
-                )));
+                        subComment1.id, user.name, subComment1.createTime, subComment1.subComment)));
     }
 }

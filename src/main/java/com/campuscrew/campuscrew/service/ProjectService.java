@@ -98,7 +98,18 @@ public class ProjectService {
     // 참여 버튼을 누르면 호출되는 api
     // 1. 현재 로그인 되어 있는 user 정보를 조회
     // 2. 현재 프로젝트의 정보를 조회
+    // 3. participated user 를 저장, 참여 신청 했다는 것을 전송
     public void applyProject(Long projectId, String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("로그인 후 사용 가능 합니다."));
+
+        Project project = projectRepository.findById(projectId)
+                .orElse(null);
+
+        ParticipatedUsers participatedUsers = ParticipatedUsers
+                .makeParticipatedUserAsMReady(user, project);
+
+        participatedUserRepository.save(participatedUsers);
 
     }
 }

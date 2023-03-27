@@ -8,6 +8,7 @@ import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.project.CommentPageDto;
+import com.campuscrew.campuscrew.repository.project.ProjectRepository;
 import com.campuscrew.campuscrew.repository.project.SubCommentDto;
 import com.campuscrew.campuscrew.service.ProjectService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,12 +19,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/projects")
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
+    private final ProjectRepository repository;
     @PostMapping("/add")
     public Long addProject(@RequestBody AddProjectDto addProjectDto,
                                      @AuthenticationPrincipal UserDetails userDetails,
@@ -62,6 +66,14 @@ public class ProjectController {
         String email = userDetails.getUsername();
         projectService.addSubComment(commentId, email, addSubCommentDto.getSubComment());
         return "ok";
+    }
+
+    @GetMapping("/{id}/comment/subcomment")
+    public List<SubCommentDto> getSubComment(@PathVariable Long id,
+                                             @RequestParam Long commentId,
+                                             @AuthenticationPrincipal UserDetails userDetails,
+                                             @RequestBody AddSubCommentDto addSubCommentDto) {
+        return repository.fetchSubComment(commentId);
     }
 
     @GetMapping("/{id}/comment")
