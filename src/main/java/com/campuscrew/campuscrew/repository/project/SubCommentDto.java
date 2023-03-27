@@ -12,7 +12,6 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class SubCommentDto {
 
     private Long subCommentId;
@@ -25,4 +24,10 @@ public class SubCommentDto {
 
     private String subComment;
 
+    public SubCommentDto(Long subCommentId, String name, LocalDate createDate, String subComment) {
+        this.subCommentId = subCommentId;
+        this.name = name;
+        this.createDate = createDate;
+        this.subComment = subComment;
+    }
 }
