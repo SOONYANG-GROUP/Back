@@ -36,6 +36,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .transform(groupBy(project.projectStatus)
                         .list(Projections.constructor(ProfileDto.class,
                         user.id, user.name, user.detailField,
+                                user.selfIntroduction,
+                                user.shortIntroduction,
                         GroupBy.list(Projections.constructor(ProjectGroupDto.class,
                                 project.projectStatus,
                                 project.title, project.description)))));
