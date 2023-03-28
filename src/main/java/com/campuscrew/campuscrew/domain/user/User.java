@@ -42,9 +42,9 @@ public class User {
 
     private String shortIntroduction;
 
-    private String socialId;
-
     private String detailField;
+
+    private String socialId;
 
     private String refreshToken;
 
@@ -87,6 +87,8 @@ public class User {
     }
 
     public void editUser(EditForm editForm) {
-
+        this.setDetailField(editForm.getDetailField());
+        this.setSelfIntroduction(editForm.getSelfIntroduction());
+        this.setShortIntroduction(editForm.getShortIntroduction());
     }
 }

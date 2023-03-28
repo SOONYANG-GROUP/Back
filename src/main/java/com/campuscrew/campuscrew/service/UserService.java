@@ -51,9 +51,10 @@ public class UserService {
     }
 
     public void editUser(EditForm editForm, String email) {
-        User user = userRepository.findByEmail(email)
+        User user = userRepository
+                .findByEmail(email)
                 .orElse(null);
-        user.editUser(editForm);
 
+        user.editUser(editForm);
     }
 }

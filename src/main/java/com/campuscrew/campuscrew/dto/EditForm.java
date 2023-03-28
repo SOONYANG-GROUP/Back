@@ -6,4 +6,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class EditForm {
+    private String detailField;
+    private String shortIntroduction;
+    private String selfIntroduction;
 }
