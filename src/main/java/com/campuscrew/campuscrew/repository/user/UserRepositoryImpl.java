@@ -7,6 +7,7 @@ import com.campuscrew.campuscrew.dto.ProjectGroupDto;
 import com.querydsl.core.QueryFactory;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import java.util.List;
@@ -22,7 +23,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     public UserRepositoryImpl(EntityManager em) {
-        this.queryFactory = new JPAQueryFactory(em);
+        this.queryFactory = new JPAQueryFactory(JPQLTemplates.DEFAULT, em);
     }
 
     @Override
@@ -44,6 +45,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                         user.id, user.name, user.detailField,
                         GroupBy.list(Projections.constructor(ProjectGroupDto.class,
                                 project.projectStatus, project.title, project.description)))));
+
         for (ProfileDto profileDto : profileDtos) {
             System.out.println("profileDto = " + profileDto);
             for (ProjectGroupDto projectGroupDto : profileDto.getProjectGroupDtos()) {
