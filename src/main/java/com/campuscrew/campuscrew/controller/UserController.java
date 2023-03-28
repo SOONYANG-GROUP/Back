@@ -35,6 +35,12 @@ public class UserController {
                 .build();
     }
 
+
+    @GetMapping("/profile")
+    public UserProfileDto getProfile() {
+        return null;
+    }
+
     @GetMapping("/exlogin")
     public String redirect(@RequestParam String accessToken,
                            @RequestParam String refreshToken,
