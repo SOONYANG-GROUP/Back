@@ -59,6 +59,7 @@ public class ProjectController {
                                 @RequestParam Long commentId,
                                 @AuthenticationPrincipal UserDetails userDetails,
                                 @RequestBody AddSubCommentDto addSubCommentDto) {
+        System.out.println("comment = " + commentId);
         String email = userDetails.getUsername();
         projectService.addSubComment(commentId, email, addSubCommentDto.getSubComment());
         return "ok";
