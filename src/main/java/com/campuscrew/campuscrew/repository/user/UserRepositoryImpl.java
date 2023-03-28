@@ -28,13 +28,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 
     @Override
     public ProfileDto fetchProfile(Long id) {
-//        List<ProfileDto> fetch = queryFactory.select(Projections.constructor(ProfileDto.class,
-//                        user.id, user.name, user.detailField))
-//                .from(user)
-//                .leftJoin(participatedUsers).on(participatedUsers.user.id.eq(user.id))
-//                .leftJoin(project).on(project.user.id.eq(user.id))
-//                .where(user.id.eq(id))
-//                .fetch();
 
         List<ProfileDto> profileDtos = queryFactory.selectFrom(participatedUsers)
                 .leftJoin(participatedUsers.project, project)
@@ -44,7 +37,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                         .list(Projections.constructor(ProfileDto.class,
                         user.id, user.name, user.detailField,
                         GroupBy.list(Projections.constructor(ProjectGroupDto.class,
-                                project.projectStatus, project.title, project.description)))));
+                                project.projectStatus,
+                                project.title, project.description)))));
 
         for (ProfileDto profileDto : profileDtos) {
             System.out.println("profileDto = " + profileDto);
