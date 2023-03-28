@@ -94,6 +94,16 @@ public class Project {
         }
     }
 
+    public static void startProject(Project project) {
+        project.setProjectStatus(ProjectStatus.RUNNING);
+    }
+
+    public static void endProject(Project project) {
+        project.setProjectStatus(ProjectStatus.END);
+    }
+
+
+
 //    private void addJoinUser(JoinedUser joinedUser) {
 //        this.joinedUsers.add(joinedUser);
 //        joinedUser.setProject(this);

@@ -28,6 +28,15 @@ public class ProjectController {
     private final ProjectService projectService;
     private final ProjectRepository repository;
 
+
+
+    @GetMapping("/start")
+    public String startProject() {
+//        projectService.
+        return "ok";
+    }
+
+
     @PostMapping("/add")
     public Long addProject(@RequestBody AddProjectDto addProjectDto,
                                      @AuthenticationPrincipal UserDetails userDetails,

@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProjectMainDto implements Serializable {
     private ProjectStatus projectStatus;
     private List<RecruitUserDto> recruitUserDtos; // project - recruit
@@ -42,14 +43,6 @@ public class ProjectMainDto implements Serializable {
 
     private String description; // project
 
-    public ProjectMainDto(List<RecruitUserDto> recruitUserDtos, List<ReferenceDto> referenceDtos, Long id, LocalDateTime createDateTime, String title, String description) {
-        this.recruitUserDtos = recruitUserDtos;
-        this.referenceDtos = referenceDtos;
-        this.id = id;
-        this.createDateTime = createDateTime;
-        this.title = title;
-        this.description = description;
-    }
 
     public static ProjectMainDto getProjectMain(Project project) {
         ProjectMainDto dto = new ProjectMainDto();
