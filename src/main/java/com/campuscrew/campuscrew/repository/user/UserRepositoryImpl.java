@@ -1,15 +1,18 @@
 package com.campuscrew.campuscrew.repository.user;
 
-import com.campuscrew.campuscrew.domain.board.QParticipatedUsers;
-import com.campuscrew.campuscrew.domain.user.QUser;
+
+import com.campuscrew.campuscrew.domain.board.ProjectStatus;
 import com.campuscrew.campuscrew.dto.ProfileDto;
+import com.campuscrew.campuscrew.dto.ProjectGroupDto;
 import com.querydsl.core.QueryFactory;
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-
 import java.util.List;
+import java.util.Map;
 
+import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.campuscrew.campuscrew.domain.board.QParticipatedUsers.participatedUsers;
 import static com.campuscrew.campuscrew.domain.board.QProject.project;
 import static com.campuscrew.campuscrew.domain.user.QUser.user;
@@ -23,17 +26,34 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     }
 
     @Override
-    public ProfileDto fetchProfile(String email) {
+    public ProfileDto fetchProfile(Long id) {
         List<ProfileDto> fetch = queryFactory.select(Projections.constructor(ProfileDto.class, user.id, user.name, user.detailField))
                 .from(user)
                 .leftJoin(participatedUsers).on(participatedUsers.user.id.eq(user.id))
                 .leftJoin(project).on(project.user.id.eq(user.id))
-                .where(user.email.eq(email))
+                .where(user.id.eq(id))
                 .fetch();
+
+        List<ProfileDto> profileDtos = queryFactory.selectFrom(participatedUsers)
+                .leftJoin(participatedUsers.project, project)
+                .leftJoin(participatedUsers.user, user)
+                .where(user.id.eq(id))
+                .transform(groupBy(project.projectStatus)
+                        .list(Projections.constructor(ProfileDto.class,
+                        user.id, user.name, user.detailField,
+                        GroupBy.list(Projections.constructor(ProjectGroupDto.class,
+                                project.projectStatus, project.title, project.description)))));
         for (ProfileDto profileDto : fetch) {
             System.out.println("profileDto = " + profileDto);
+            for (ProjectGroupDto projectGroupDto : profileDto.getProjectGroupDtos()) {
+                System.out.println(projectGroupDto);
+            }
         }
-        return fetch.stream().findFirst()
+        return profileDtos
+                .stream()
+                .findFirst()
                 .orElseGet(ProfileDto::new);
     }
+
+
 }

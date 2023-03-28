@@ -45,7 +45,9 @@ public class UserService {
     }
 
     public ProfileDto getProfile(String email) {
-        return userRepository.fetchProfile(email);
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+        return userRepository.fetchProfile(user.getId());
     }
 
     public void editUser(EditForm editForm, String email) {
