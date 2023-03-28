@@ -6,7 +6,7 @@
 //import com.campuscrew.campuscrew.oauth.userinfo.GoogleUserInfo;
 //import com.campuscrew.campuscrew.oauth.userinfo.NaverUserInfo;
 //import com.campuscrew.campuscrew.oauth.userinfo.UserInfo;
-//import com.campuscrew.campuscrew.repository.UserRepository;
+//import com.campuscrew.campuscrew.repository.user.UserRepository;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

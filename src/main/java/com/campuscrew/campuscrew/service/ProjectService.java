@@ -13,7 +13,7 @@ import com.campuscrew.campuscrew.repository.ParticipatedUsersRepository;
 import com.campuscrew.campuscrew.repository.project.CommentPageDto;
 import com.campuscrew.campuscrew.repository.project.CommentRepository;
 import com.campuscrew.campuscrew.repository.project.ProjectRepository;
-import com.campuscrew.campuscrew.repository.UserRepository;
+import com.campuscrew.campuscrew.repository.user.UserRepository;
 import com.campuscrew.campuscrew.repository.project.SubCommentRepository;
 import com.campuscrew.campuscrew.service.exception.AlreadyAppliedProject;
 import com.campuscrew.campuscrew.service.exception.UserNotFoundException;

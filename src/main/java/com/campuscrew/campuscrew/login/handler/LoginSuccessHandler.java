@@ -2,7 +2,7 @@ package com.campuscrew.campuscrew.login.handler;
 
 import com.campuscrew.campuscrew.dto.TokenDto;
 import com.campuscrew.campuscrew.jwt.JwtService;
-import com.campuscrew.campuscrew.repository.UserRepository;
+import com.campuscrew.campuscrew.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,10 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @RequiredArgsConstructor

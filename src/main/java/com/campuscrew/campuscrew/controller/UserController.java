@@ -7,7 +7,6 @@ import com.campuscrew.campuscrew.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +36,12 @@ public class UserController {
 
 
     @GetMapping("/profile")
-    public UserProfileDto getProfile() {
-        return null;
+    public ProfileDto getProfile(@AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+
+        ProfileDto profile = userService.getProfile(email);
+
+        return profile;
     }
 
     @GetMapping("/exlogin")
@@ -56,10 +59,4 @@ public class UserController {
     }
 
 
-    @GetMapping("/profile")
-    public ProfileDto getProfile(@AuthenticationPrincipal
-                                     UserDetails userDetails) {
-        String email = userDetails.getUsername();
-        return userService.profile(email);
-    }
 }

@@ -4,7 +4,7 @@ import com.campuscrew.campuscrew.domain.user.Role;
 import com.campuscrew.campuscrew.dto.TokenDto;
 import com.campuscrew.campuscrew.jwt.JwtService;
 import com.campuscrew.campuscrew.oauth2.CustomOAuth2User;
-import com.campuscrew.campuscrew.repository.UserRepository;
+import com.campuscrew.campuscrew.repository.user.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

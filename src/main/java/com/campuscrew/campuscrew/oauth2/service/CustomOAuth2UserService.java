@@ -4,7 +4,7 @@ import com.campuscrew.campuscrew.domain.user.SocialType;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.oauth2.CustomOAuth2User;
 import com.campuscrew.campuscrew.oauth2.OAuth2Attributes;
-import com.campuscrew.campuscrew.repository.UserRepository;
+import com.campuscrew.campuscrew.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

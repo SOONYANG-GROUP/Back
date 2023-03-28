@@ -1,9 +1,7 @@
 package com.campuscrew.campuscrew.controller;
 
 import com.campuscrew.campuscrew.domain.board.Project;
-import com.campuscrew.campuscrew.domain.user.Role;
-import com.campuscrew.campuscrew.domain.user.User;
-import com.campuscrew.campuscrew.repository.UserRepository;
+import com.campuscrew.campuscrew.repository.user.UserRepository;
 import com.campuscrew.campuscrew.repository.project.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

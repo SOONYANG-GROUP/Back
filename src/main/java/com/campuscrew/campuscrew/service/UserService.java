@@ -4,7 +4,7 @@ import com.campuscrew.campuscrew.domain.user.Role;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.ProfileDto;
 import com.campuscrew.campuscrew.dto.UserJoin;
-import com.campuscrew.campuscrew.repository.UserRepository;
+import com.campuscrew.campuscrew.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,12 +41,10 @@ public class UserService {
         return user;
     }
 
-    public ProfileDto profile(String email) {
-        return userRepository.findByEmail(email)
-                .map(user -> new ProfileDto(user.getName(), user.getNickname(),
-                        user.getSelfIntroduction(), user.getShortIntroduction()))
+    public ProfileDto getProfile(String email) {
+        User user = userRepository.findByEmail(email)
                 .orElse(null);
-
+        return userRepository.fetchProfile(user.getId());
     }
 
 }
