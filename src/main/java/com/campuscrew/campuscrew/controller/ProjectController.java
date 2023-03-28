@@ -96,4 +96,13 @@ public class ProjectController {
         return "ok";
     }
 
+    // 관리자 페이지에서 승인 대기중인 신청자를 거절
+    //
+    @PostMapping("/{id}/reject")
+    public String rejectProject(@PathVariable Long id,
+                                @RequestParam Long memberId) {
+        projectService.rejectApply(id, memberId);
+        return "ok";
+    }
+
 }

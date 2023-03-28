@@ -4,7 +4,6 @@ import com.campuscrew.campuscrew.controller.exception.NotAccessibleAuthenticatio
 import com.campuscrew.campuscrew.controller.exception.RequiredLoginStateException;
 import com.campuscrew.campuscrew.domain.board.*;
 import com.campuscrew.campuscrew.domain.user.User;
-import com.campuscrew.campuscrew.dto.ApplyingFieldDto;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.ManagerPageDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
@@ -84,14 +83,27 @@ public class ProjectService {
 
 
     // 관리자가 요청에 대해서 거절 했을 때
-    public void rejectApply() {
+    // 1. projectId, memberId에 대한 신청 정보를 조회
+    // 2. 해당 요청을 거절 하는 것이므로 요청 정보를 삭제
+    // 3.
+    public void rejectApply(Long projectId, Long memberId) {
+        ParticipatedUsers pu = participatedUserRepository.findByUsersIdAndProjectId(memberId, projectId)
+                .orElse(null);
+        // 1. 해당 participated 요청을 deny
+        participatedUserRepository.delete(pu);
 
+        // 1. 이후 해당 회원에게 로그로 알림
     }
     // 관리자가 요청에 대해서 승인 했을 때
-    public void acceptApply() {
+    public void acceptApply(Long projectId, Long memberId) {
+        ParticipatedUsers participatedUsers = participatedUserRepository.findByUsersIdAndProjectId(memberId, projectId)
+                .orElse(null);
+        // 1. 이제 승인 되었으니, 해당 프로젝트의 참여 멤버가 됨
+        participatedUsers.setStatus(ParticipatedStatus.MEMBER);
+
+        // 2. 그에 대한 정보를 로그로 남김
 
     }
-
 
     public CommentPageDto getCommentPage(Long id) {
         return projectRepository.fetchCommentPage(id);
@@ -139,7 +151,6 @@ public class ProjectService {
     }
     // 1. 현재 유저 정보를 조회하고, 프로젝트 id로 프로젝트를 조회 한다.
     // 2. 현재 유저 정보가 프로젝트의 관리자 이면, ready 상태인 모든 회원에 대한 정보를 볼 수 있어야 한다.
-    // 3.
     public ManagerPageDto getManagerPage(Long id, String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Not login"));
@@ -150,6 +161,23 @@ public class ProjectService {
 
         if (participatedUsers.getStatus() != ParticipatedStatus.MANAGER) {
             throw new NotAccessibleAuthenticationException("Manager 만 접근 가능");
+        }
+
+        return projectRepository.fetchManagerPage(user.getId(), id);
+    }
+    //
+    public ManagerPageDto getMemberPage(Long id, String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("Not login"));
+
+        ParticipatedUsers participatedUsers = participatedUserRepository
+                .findByUsersIdAndProjectId(user.getId(), id)
+                .orElse(null);
+
+        ParticipatedStatus status = participatedUsers.getStatus();
+
+        if ((status != ParticipatedStatus.MEMBER) && (status != ParticipatedStatus.MANAGER)) {
+            throw new NotAccessibleAuthenticationException("Manager 나 Member 만 접근 가능");
         }
 
         return projectRepository.fetchManagerPage(user.getId(), id);
