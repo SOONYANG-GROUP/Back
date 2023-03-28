@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Entity
 @Setter
 @Getter
-
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubComment {
@@ -35,7 +34,6 @@ public class SubComment {
 
     private LocalDateTime createTime;
 
-
     public static SubComment makeSubComment(User user, Comment findComment, String comment) {
         SubComment subComment1 = new SubComment();
         subComment1.setSubComment(comment);
@@ -44,7 +42,6 @@ public class SubComment {
         subComment1.addUser(user);
         return subComment1;
     }
-
     private void addUser(User user) {
         this.user = user;
         user.getSubComments().add(this);

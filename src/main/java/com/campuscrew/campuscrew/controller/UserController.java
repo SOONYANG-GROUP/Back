@@ -1,5 +1,6 @@
 package com.campuscrew.campuscrew.controller;
 
+import com.campuscrew.campuscrew.dto.MemberPageDto;
 import com.campuscrew.campuscrew.dto.ProfileDto;
 import com.campuscrew.campuscrew.dto.UserJoin;
 import com.campuscrew.campuscrew.dto.UserJoinSuccessDto;
@@ -20,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class UserController {
     private final UserService userService;
+
 
     @PostMapping(value = "/join", consumes = "application/json")
     public UserJoinSuccessDto join(@RequestBody
