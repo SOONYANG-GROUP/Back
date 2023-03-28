@@ -143,5 +143,11 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .orElse(null);
     }
 
+    @Override
+    public MemberPageDto fetchMemberPage(Long projectId) {
+
+        return null;
+    }
+
 
 }
