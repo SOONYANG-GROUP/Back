@@ -44,4 +44,8 @@ public class Recruit {
         recruit.setMaxRecruit(dto.getMaxRecruit());
         return recruit;
     }
+
+    public void participateProject() {
+        currentRecruit += 1;
+    }
 }

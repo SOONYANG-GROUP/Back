@@ -101,6 +101,7 @@ public class ProjectService {
         // 1. 이제 승인 되었으니, 해당 프로젝트의 참여 멤버가 됨
         participatedUsers.setStatus(ParticipatedStatus.MEMBER);
 
+        participatedUsers.getRecruit().participateProject();
         // 2. 그에 대한 정보를 로그로 남김
 
     }
