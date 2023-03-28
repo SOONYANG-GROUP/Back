@@ -16,11 +16,12 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping
+    @PostMapping("/edit")
     public String editUser(@AuthenticationPrincipal UserDetails userDetails,
                            @RequestBody EditForm editForm) {
 
