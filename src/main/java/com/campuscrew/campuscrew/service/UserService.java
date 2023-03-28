@@ -42,9 +42,8 @@ public class UserService {
     }
 
     public ProfileDto getProfile(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElse(null);
-        return userRepository.fetchProfile(user.getId());
+
+        return userRepository.fetchProfile(email);
     }
 
 }

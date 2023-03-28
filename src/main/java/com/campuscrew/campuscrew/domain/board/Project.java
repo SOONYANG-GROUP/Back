@@ -51,17 +51,16 @@ public class Project {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
     private List<Recruit> recruits = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
     private List<ParticipatedUsers> participatedUsers = new ArrayList<>(); //
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
     private List<Reference> references = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
     private List<Comment> comments = new ArrayList<>();
 
     private LocalDateTime startWithDate;

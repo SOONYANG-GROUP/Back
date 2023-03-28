@@ -57,6 +57,4 @@ public class UserController {
         response.sendRedirect(redirectUrl);
         return "ok";
     }
-
-
 }

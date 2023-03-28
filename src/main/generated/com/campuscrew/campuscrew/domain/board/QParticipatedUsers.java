@@ -22,6 +22,8 @@ public class QParticipatedUsers extends EntityPathBase<ParticipatedUsers> {
 
     public static final QParticipatedUsers participatedUsers = new QParticipatedUsers("participatedUsers");
 
+    public final StringPath description = createString("description");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final QProject project;
@@ -29,6 +31,8 @@ public class QParticipatedUsers extends EntityPathBase<ParticipatedUsers> {
     public final QRecruit recruit;
 
     public final EnumPath<ParticipatedStatus> status = createEnum("status", ParticipatedStatus.class);
+
+    public final StringPath url = createString("url");
 
     public final com.campuscrew.campuscrew.domain.user.QUser user;
 

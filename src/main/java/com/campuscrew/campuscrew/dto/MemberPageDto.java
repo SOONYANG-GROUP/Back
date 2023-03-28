@@ -10,7 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(of = {"openChatUrl", "voiceChatUrl"})
 public class MemberPageDto {
+    private Long memberId;
     private String openChatUrl;
     private String voiceChatUrl;
+    private String url;
+    private String description;
     private List<ParticipatedUserDto> participatedUserDtos;
 }

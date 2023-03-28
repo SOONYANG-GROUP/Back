@@ -33,6 +33,10 @@ public class ParticipatedUsers {
     @Enumerated(EnumType.STRING)
     private ParticipatedStatus status;
 
+    private String url;
+
+    private String description;
+
 
     public static ParticipatedUsers makeParticipatedUserAsManager(User user, Project project) {
         ParticipatedUsers participatedUsers = new ParticipatedUsers();
