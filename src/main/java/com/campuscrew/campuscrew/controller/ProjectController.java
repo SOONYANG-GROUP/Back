@@ -27,10 +27,12 @@ import java.util.List;
 public class ProjectController {
     private final ProjectService projectService;
     private final ProjectRepository repository;
+
     @PostMapping("/add")
     public Long addProject(@RequestBody AddProjectDto addProjectDto,
                                      @AuthenticationPrincipal UserDetails userDetails,
-                                     HttpServletResponse response, RedirectAttributes redirectAttributes) {
+                                     HttpServletResponse response,
+                           RedirectAttributes redirectAttributes) {
         String email = userDetails.getUsername();
         log.info("email = {}", email);
         Project project = projectService.addProject(email, addProjectDto);
@@ -75,7 +77,6 @@ public class ProjectController {
     public ManagerPageDto getManagerPage(@PathVariable Long id,
                                          @AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
-
         return projectService.getManagerPage(id, email);
     }
 

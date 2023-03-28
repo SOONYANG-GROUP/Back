@@ -4,6 +4,7 @@ import com.campuscrew.campuscrew.domain.board.Comment;
 import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.domain.board.SubComment;
+import com.campuscrew.campuscrew.dto.EditForm;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +29,7 @@ public class User {
     private Long id;
 
     private Integer age;
+
     private String password;
 
     private String email;
@@ -43,9 +45,10 @@ public class User {
     private String socialId;
 
     private String detailField;
+
     private String refreshToken;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST,
             orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
 
@@ -81,5 +84,9 @@ public class User {
     public void addProject(Project project) {
         project.setUser(this);
         this.projects.add(project);
+    }
+
+    public void editUser(EditForm editForm) {
+
     }
 }

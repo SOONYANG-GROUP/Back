@@ -24,7 +24,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 
     @Override
     public ProfileDto fetchProfile(String email) {
-        List<ProfileDto> fetch = queryFactory.select(Projections.constructor(ProfileDto.class, user.name, user.detailField))
+        List<ProfileDto> fetch = queryFactory.select(Projections.constructor(ProfileDto.class, user.id, user.name, user.detailField))
                 .from(user)
                 .leftJoin(participatedUsers).on(participatedUsers.user.id.eq(user.id))
                 .leftJoin(project).on(project.user.id.eq(user.id))

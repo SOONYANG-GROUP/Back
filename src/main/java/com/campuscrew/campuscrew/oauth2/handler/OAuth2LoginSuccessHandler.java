@@ -27,11 +27,12 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String redirectUrl = Optional
                 .ofNullable(request.getParameter("redirectUrl"))
-                .orElse(null);// ?redirectUrl=?
+                .orElse(null);
 
         log.info("OAuth2 성공");
         log.info("redirectUrl = {}", redirectUrl);

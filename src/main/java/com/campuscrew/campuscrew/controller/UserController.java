@@ -1,9 +1,6 @@
 package com.campuscrew.campuscrew.controller;
 
-import com.campuscrew.campuscrew.dto.MemberPageDto;
-import com.campuscrew.campuscrew.dto.ProfileDto;
-import com.campuscrew.campuscrew.dto.UserJoin;
-import com.campuscrew.campuscrew.dto.UserJoinSuccessDto;
+import com.campuscrew.campuscrew.dto.*;
 import com.campuscrew.campuscrew.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +17,21 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
+
     private final UserService userService;
 
+    @PostMapping
+    public String editUser(@AuthenticationPrincipal UserDetails userDetails,
+                           @RequestBody EditForm editForm) {
+
+        String email = userDetails.getUsername();
+        userService.editUser(editForm, email);
+        return "ok";
+    }
 
     @PostMapping(value = "/join", consumes = "application/json")
     public UserJoinSuccessDto join(@RequestBody
-                           UserJoin userJoin) throws Exception {
+                                       UserJoin userJoin) throws Exception {
         log.info("userJoin = {}", userJoin);
         userService.signUp(userJoin);
         return UserJoinSuccessDto.builder()
@@ -36,13 +42,10 @@ public class UserController {
                 .build();
     }
 
-
     @GetMapping("/profile")
     public ProfileDto getProfile(@AuthenticationPrincipal UserDetails userDetails) {
         String email = userDetails.getUsername();
-
         ProfileDto profile = userService.getProfile(email);
-
         return profile;
     }
 

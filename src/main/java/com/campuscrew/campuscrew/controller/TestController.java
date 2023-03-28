@@ -13,13 +13,14 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class TestController {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final ProjectRepository repository;
+
     @ResponseBody
     @GetMapping("/test/project")
     public String testPro(@RequestParam Long id) {
@@ -29,6 +30,7 @@ public class TestController {
                 .stream().forEach(System.out::println);
         return "ok";
     }
+
     @GetMapping("/user")
     @ResponseBody
     public String checkUser(Authentication authentication,

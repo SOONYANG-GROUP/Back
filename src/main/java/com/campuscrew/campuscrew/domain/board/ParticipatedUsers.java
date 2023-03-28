@@ -25,7 +25,6 @@ public class ParticipatedUsers {
     @JoinColumn(name = "project_id")
     private Project project;
 
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "recruit_id")
     private Recruit recruit;
@@ -51,7 +50,6 @@ public class ParticipatedUsers {
         participatedUsers.participateProject(user, project);
         return participatedUsers;
     }
-
 
 
     public static ParticipatedUsers makeParticipatedUserAsMReady(User user, Project project, Recruit recruit1) {
