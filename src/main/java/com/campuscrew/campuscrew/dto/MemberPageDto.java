@@ -1,14 +1,12 @@
 package com.campuscrew.campuscrew.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @ToString(of = {"openChatUrl", "voiceChatUrl"})
 public class MemberPageDto {

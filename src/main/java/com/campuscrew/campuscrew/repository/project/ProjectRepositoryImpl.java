@@ -1,14 +1,9 @@
 package com.campuscrew.campuscrew.repository.project;
-
 import com.campuscrew.campuscrew.domain.board.ParticipatedStatus;
 import com.campuscrew.campuscrew.domain.board.ProjectStatus;
-
-import com.campuscrew.campuscrew.domain.board.QParticipatedUsers;
-import com.campuscrew.campuscrew.domain.board.QReference;
 import com.campuscrew.campuscrew.dto.*;
 import com.campuscrew.campuscrew.dto.project.*;
 import com.querydsl.core.group.GroupBy;
-import com.querydsl.core.types.CollectionExpression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -109,7 +104,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                         comment1.comment)))));
         return createDate.stream()
                 .findFirst()
-                .orElse(null);
+                .orElseGet(CommentPageDto::new);
     }
 
     @Override
@@ -143,7 +138,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 ))));
         return transform.stream()
                 .findFirst()
-                .orElse(null);
+                .orElseGet(ManagerPageDto::new);
     }
 
     @Override
@@ -168,12 +163,13 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                         MemberPageDto.class, project.openChatUrl, project.voiceChatUrl,
                         GroupBy.list(Projections.constructor(ParticipatedUserDto.class, recruit.detailField, user.name)
                 ))));
+
         for (MemberPageDto memberPageDto : fetch) {
             System.out.println("memberPageDto = " + memberPageDto);
         }
 
-        return null;
+        return fetch.stream()
+                .findFirst()
+                .orElseGet(MemberPageDto::new);
     }
-
-
 }
