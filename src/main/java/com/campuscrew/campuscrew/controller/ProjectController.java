@@ -105,4 +105,12 @@ public class ProjectController {
         return "ok";
     }
 
+    @PostMapping("/{id}/permit")
+    public String permitProject(@PathVariable Long id,
+                                @RequestParam Long memberId) {
+
+        projectService.rejectApply(id, memberId);
+        return "ok";
+    }
+
 }
