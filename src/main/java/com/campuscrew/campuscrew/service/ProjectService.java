@@ -114,12 +114,13 @@ public class ProjectService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("로그인 후 사용 가능 합니다."));
 
-        Comment findComment = commentRepository.findById(commentId)
+            Comment findComment = commentRepository.findById(commentId)
                 .orElse(null);
 
         SubComment subComment = SubComment.makeSubComment(user, findComment, comment);
 
         subCommentRepository.save(subComment);
+
     }
     // 참여 버튼을 누르면 호출되는 api
     // 1. 현재 로그인 되어 있는 user 정보를 조회

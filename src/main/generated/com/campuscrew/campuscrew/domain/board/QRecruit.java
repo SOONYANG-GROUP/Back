@@ -32,6 +32,8 @@ public class QRecruit extends EntityPathBase<Recruit> {
 
     public final NumberPath<Integer> maxRecruit = createNumber("maxRecruit", Integer.class);
 
+    public final ListPath<ParticipatedUsers, QParticipatedUsers> participatedUsers = this.<ParticipatedUsers, QParticipatedUsers>createList("participatedUsers", ParticipatedUsers.class, QParticipatedUsers.class, PathInits.DIRECT2);
+
     public final QProject project;
 
     public QRecruit(String variable) {

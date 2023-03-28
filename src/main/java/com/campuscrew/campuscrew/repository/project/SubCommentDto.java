@@ -9,12 +9,14 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@ToString(of = {"name", "createDate", "subComment"})
 public class SubCommentDto {
     private Long subCommentId;
     private String name;

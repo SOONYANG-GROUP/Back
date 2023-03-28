@@ -108,7 +108,6 @@ public class ProjectController {
     @PostMapping("/{id}/permit")
     public String permitProject(@PathVariable Long id,
                                 @RequestParam Long memberId) {
-
         projectService.acceptApply(id, memberId);
         return "ok";
     }

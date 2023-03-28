@@ -114,15 +114,19 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
     @Override
     public List<SubCommentDto> fetchSubComment(Long commentId) {
-        return queryFactory.selectFrom(subComment1)
+        List<SubCommentDto> transform = queryFactory.selectFrom(subComment1)
                 .leftJoin(subComment1.user, user)
                 .leftJoin(subComment1.comment, comment1)
                 .where(comment1.id.eq(commentId))
                 .transform(groupBy(comment1.id)
                         .list(Projections.constructor(SubCommentDto.class,
-                        subComment1.id.as("subCommentId"),
+                                subComment1.id.as("subCommentId"),
                                 user.name, subComment1.createTime.as("createDate"),
                                 subComment1.subComment)));
+        for (SubCommentDto subCommentDto : transform) {
+            System.out.println("subCommentDto = " + subCommentDto);
+        }
+        return transform;
     }
     // 1. 회원 상태가 READY인 모든 회원 정보를 조회 할 수 있어야 한다.
     @Override
@@ -145,6 +149,11 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
     @Override
     public MemberPageDto fetchMemberPage(Long projectId) {
+//        queryFactory.selectFrom(participatedUsers)
+//                .leftJoin(participatedUsers.recruit, recruit)
+//                .leftJoin(participatedUsers.project, project)
+//                .where(project.id.eq(projectId))
+//                .transform(groupBy())
 
         return null;
     }
