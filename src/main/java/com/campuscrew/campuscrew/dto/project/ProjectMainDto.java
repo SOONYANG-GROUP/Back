@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.dto.project;
 
 import com.campuscrew.campuscrew.domain.board.Project;
+import com.campuscrew.campuscrew.domain.board.ProjectStatus;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -16,6 +17,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class ProjectMainDto implements Serializable {
+    private ProjectStatus projectStatus;
     private List<RecruitUserDto> recruitUserDtos; // project - recruit
     private List<ReferenceDto> referenceDtos; // project - reference
     private Long id;

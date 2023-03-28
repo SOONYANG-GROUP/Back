@@ -39,6 +39,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .leftJoin(reference).on(reference.project.id.eq(project.id))
                 .where(project.id.eq(id))
                 .transform(groupBy(project.id).list(Projections.constructor(ProjectMainDto.class,
+                        project.projectStatus,
                         GroupBy.list(Projections.constructor(RecruitUserDto.class,
                                 recruit.field, recruit.detailField, recruit.maxRecruit, recruit.currentRecruit)),
                         GroupBy.list(Projections.constructor(ReferenceDto.class, reference.url)),
@@ -160,7 +161,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .leftJoin(participatedUsers.project, project)
                 .where(project.id.eq(projectId))
                 .transform(groupBy(project.id).list(Projections.constructor(
-                        MemberPageDto.class,user.id.as("memberId"), project.openChatUrl, project.voiceChatUrl, participatedUsers.url,
+                        MemberPageDto.class,user.id.as("memberId"), project.projectStatus,project.openChatUrl, project.voiceChatUrl, participatedUsers.url,
                         participatedUsers.description, GroupBy.list(Projections.constructor(ParticipatedUserDto.class, recruit.detailField, user.name)
                 ))));
 

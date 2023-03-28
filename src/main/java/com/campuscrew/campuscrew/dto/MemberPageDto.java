@@ -1,5 +1,6 @@
 package com.campuscrew.campuscrew.dto;
 
+import com.campuscrew.campuscrew.domain.board.ProjectStatus;
 import lombok.*;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString(of = {"openChatUrl", "voiceChatUrl"})
 public class MemberPageDto {
+    private ProjectStatus projectStatus;
     private Long memberId;
     private String openChatUrl;
     private String voiceChatUrl;
