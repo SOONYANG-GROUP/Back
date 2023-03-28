@@ -32,6 +32,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
         List<ProfileDto> profileDtos = queryFactory.selectFrom(participatedUsers)
                 .leftJoin(participatedUsers.project, project)
                 .leftJoin(participatedUsers.user, user)
+                .distinct()
                 .where(user.id.eq(id))
                 .transform(groupBy(project.projectStatus)
                         .list(Projections.constructor(ProfileDto.class,
