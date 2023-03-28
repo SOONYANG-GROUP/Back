@@ -148,11 +148,18 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
     @Override
     public MemberPageDto fetchMemberPage(Long projectId) {
-//        queryFactory.selectFrom(participatedUsers)
-//                .leftJoin(participatedUsers.recruit, recruit)
-//                .leftJoin(participatedUsers.project, project)
-//                .where(project.id.eq(projectId))
-//                .transform(groupBy())
+        List<MemberPageDto> fetch = queryFactory.select(Projections.constructor(MemberPageDto.class, project.openChatUrl,
+                        project.voiceChatUrl, list(Projections.constructor(ParticipatedUserDto.class,
+                                recruit.detailField, user.name)))
+                ).from(participatedUsers)
+                .leftJoin(participatedUsers.user, user)
+                .leftJoin(participatedUsers.recruit, recruit)
+                .leftJoin(participatedUsers.project, project)
+                .where(project.id.eq(projectId))
+                .fetch();
+        for (MemberPageDto memberPageDto : fetch) {
+            System.out.println("memberPageDto = " + memberPageDto);
+        }
 
         return null;
     }

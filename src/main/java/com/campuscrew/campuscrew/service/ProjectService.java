@@ -6,6 +6,7 @@ import com.campuscrew.campuscrew.domain.board.*;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.ManagerPageDto;
+import com.campuscrew.campuscrew.dto.MemberPageDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.ParticipatedUsersRepository;
@@ -168,7 +169,7 @@ public class ProjectService {
         return projectRepository.fetchManagerPage(user.getId(), id);
     }
     //
-    public ManagerPageDto getMemberPage(Long id, String email) {
+    public MemberPageDto getMemberPage(Long id, String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Not login"));
 
@@ -182,6 +183,6 @@ public class ProjectService {
             throw new NotAccessibleAuthenticationException("Manager 나 Member 만 접근 가능");
         }
 
-        return projectRepository.fetchManagerPage(user.getId(), id);
+        return projectRepository.fetchMemberPage(id);
     }
 }

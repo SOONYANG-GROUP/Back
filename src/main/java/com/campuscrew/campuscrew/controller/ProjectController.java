@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Slf4j
@@ -113,4 +114,10 @@ public class ProjectController {
         return "ok";
     }
 
+    @GetMapping("/{id}/member")
+    public MemberPageDto getMemberPage(@PathVariable Long id,
+                                       @AuthenticationPrincipal UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        return projectService.getMemberPage(id, email);
+    }
 }
