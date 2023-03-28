@@ -148,15 +148,26 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
     @Override
     public MemberPageDto fetchMemberPage(Long projectId) {
-        List<MemberPageDto> fetch = queryFactory.select(Projections.constructor(MemberPageDto.class, project.openChatUrl,
-                        project.voiceChatUrl, list(Projections.constructor(ParticipatedUserDto.class,
-                                recruit.detailField, user.name)))
-                ).from(participatedUsers)
+//        List<MemberPageDto> fetch = queryFactory.select(Projections.constructor(MemberPageDto.class, project.openChatUrl,
+//                        project.voiceChatUrl, list(Projections.constructor(ParticipatedUserDto.class,
+//                                recruit.detailField, user.name)))
+//                ).from(participatedUsers)
+//                .leftJoin(participatedUsers.user, user)
+//                .leftJoin(participatedUsers.recruit, recruit)
+//                .leftJoin(participatedUsers.project, project)
+//                .where(project.id.eq(projectId))
+//                .fetch(); // 결과가 하나 나오길 기대 했는데 2개 나오는 것, 이유는 select 결과가 2개 이기 때문에 그렇다,
+//                        // groupby를 사용했을 때는 그렇지 않았다는 것 을 알수 있다 .
+
+        List<MemberPageDto> fetch = queryFactory.selectFrom(participatedUsers)
                 .leftJoin(participatedUsers.user, user)
                 .leftJoin(participatedUsers.recruit, recruit)
                 .leftJoin(participatedUsers.project, project)
                 .where(project.id.eq(projectId))
-                .fetch();
+                .transform(groupBy(project.id).list(Projections.constructor(
+                        MemberPageDto.class, project.openChatUrl, project.voiceChatUrl,
+                        GroupBy.list(Projections.constructor(ParticipatedUserDto.class, recruit.detailField, user.name)
+                ))));
         for (MemberPageDto memberPageDto : fetch) {
             System.out.println("memberPageDto = " + memberPageDto);
         }
