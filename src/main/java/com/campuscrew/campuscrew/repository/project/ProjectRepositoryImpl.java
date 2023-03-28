@@ -114,15 +114,14 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
     @Override
     public List<SubCommentDto> fetchSubComment(Long commentId) {
-        List<SubCommentDto> transform = queryFactory.selectFrom(subComment1)
-                .leftJoin(subComment1.user, user)
+        List<SubCommentDto> transform = queryFactory.select(Projections.constructor(
+                    SubCommentDto.class, subComment1.id.as("subCommentId"), user.name,
+                      subComment1.createTime.as("createDate"), subComment1.subComment
+                )).from(subComment1).
+                leftJoin(subComment1.user, user)
                 .leftJoin(subComment1.comment, comment1)
                 .where(comment1.id.eq(commentId))
-                .transform(groupBy(comment1.id)
-                        .list(Projections.constructor(SubCommentDto.class,
-                                subComment1.id.as("subCommentId"),
-                                user.name, subComment1.createTime.as("createDate"),
-                                subComment1.subComment)));
+                .fetch();
         for (SubCommentDto subCommentDto : transform) {
             System.out.println("subCommentDto = " + subCommentDto);
         }
