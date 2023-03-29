@@ -17,6 +17,7 @@ import static com.querydsl.core.group.GroupBy.groupBy;
 import static com.campuscrew.campuscrew.domain.board.QParticipatedUsers.participatedUsers;
 import static com.campuscrew.campuscrew.domain.board.QProject.project;
 import static com.campuscrew.campuscrew.domain.user.QUser.user;
+import static com.querydsl.core.types.dsl.Expressions.list;
 
 public class UserRepositoryImpl implements UserRepositoryCustom{
 
@@ -39,7 +40,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                         user.id, user.name, user.detailField,
                                 user.selfIntroduction,
                                 user.shortIntroduction,
-                        GroupBy.list(Projections.constructor(ProjectGroupDto.class,
+                        list(Projections.constructor(ProjectGroupDto.class,
                                 project.projectStatus,
                                 project.title, project.description)))));
 
