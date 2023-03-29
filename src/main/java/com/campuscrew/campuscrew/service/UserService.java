@@ -25,17 +25,14 @@ public class UserService {
             throw new Exception("이미 존재하는 회원 입니다.");
         }
 
-        if (userRepository.findByNickname(userJoin.getNickname()).isPresent()) {
-            throw new Exception("이미 존재하는 닉네임입니다.");
-        }
 
         User user = User.builder()
+                .name(userJoin.getName())
+                .detailField(userJoin.getDetailField())
                 .email(userJoin.getEmail())
                 .password(userJoin.getPassword())
-                .nickname(userJoin.getNickname())
-                .age(userJoin.getAge())
-                .role(Role.USER)
                 .createDate(LocalDateTime.now())
+                .role(Role.USER)
                 .build();
 
         user.passwordEncode(passwordEncoder);

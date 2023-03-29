@@ -36,8 +36,9 @@ public class UserController {
         log.info("userJoin = {}", userJoin);
         userService.signUp(userJoin);
         return UserJoinSuccessDto.builder()
-                .age(userJoin.getAge())
-                .nickname(userJoin.getNickname())
+                .detailField(userJoin.getDetailField())
+                .shortIntroduction(userJoin.getShortIntroduction())
+                .selfIntroduction(userJoin.getSelfIntroduction())
                 .name(userJoin.getName())
                 .email(userJoin.getEmail())
                 .build();
@@ -59,7 +60,6 @@ public class UserController {
                 .queryParam("refreshToken", refreshToken)
                 .encode(StandardCharsets.UTF_8)
                 .toUriString();
-
         response.sendRedirect(redirectUrl);
         return "ok";
     }

@@ -8,9 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserJoinSuccessDto {
-    private String username;
-    private Integer age;
-    private String nickname;
     private String name;
     private String email;
+    private String selfIntroduction;
+    private String shortIntroduction;
+    private String detailField;
 }

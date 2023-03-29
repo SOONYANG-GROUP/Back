@@ -20,7 +20,6 @@ import static com.campuscrew.campuscrew.domain.board.QReference.reference;
 import static com.campuscrew.campuscrew.domain.board.QSubComment.subComment1;
 import static com.campuscrew.campuscrew.domain.user.QUser.user;
 import static com.querydsl.core.group.GroupBy.groupBy;
-import static com.querydsl.core.types.Projections.list;
 import static java.util.stream.Collectors.toList;
 
 public class ProjectRepositoryImpl implements ProjectRepositoryCustom{

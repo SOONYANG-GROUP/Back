@@ -29,7 +29,6 @@ public class User {
     private Long id;
 
     private Integer age;
-
     private String password;
 
     private String email;
@@ -45,7 +44,6 @@ public class User {
     private String detailField;
 
     private String socialId;
-
     private String refreshToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST,
