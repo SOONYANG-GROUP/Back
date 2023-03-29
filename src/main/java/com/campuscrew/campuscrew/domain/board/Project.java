@@ -81,6 +81,7 @@ public class Project {
         project.setOpenChatUrl(dto.getOpenChatUrl());
         project.setVoiceChatUrl(dto.getVoiceChatUrl());
         project.setCreatedDateTime(LocalDateTime.now());
+        project.setStartWithDate(LocalDateTime.of(LocalDate.parse(dto.getRecruitmentDate()), LocalTime.now()));
         project.setRecruitmentDate(LocalDateTime.of(LocalDate.parse(dto.getRecruitmentDate()),
                 LocalTime.now()));
         project.addRecruits(dto.dtoToRecruit()); // recruit List
