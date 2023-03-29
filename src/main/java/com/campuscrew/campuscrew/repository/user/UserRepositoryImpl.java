@@ -30,8 +30,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     public ProfileDto fetchProfile(Long id) {
 
         List<ProfileDto> profileDtos = queryFactory.selectFrom(participatedUsers)
-                .join(participatedUsers.project, project)
-                .join(participatedUsers.user, user)
+                .join(participatedUsers.project, project).on(project.user.id.eq(participatedUsers.user.id))
+                .join(participatedUsers.user, user).on(user.id.eq(participatedUsers.user.id))
                 .distinct()
                 .where(user.id.eq(id))
                 .transform(groupBy(project.projectStatus)
