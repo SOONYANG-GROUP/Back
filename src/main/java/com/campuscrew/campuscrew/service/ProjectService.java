@@ -90,7 +90,8 @@ public class ProjectService {
     // 2. 해당 요청을 거절 하는 것이므로 요청 정보를 삭제
     // 3.
     public void rejectApply(Long projectId, Long memberId) {
-        ParticipatedUsers pu = participatedUserRepository.findByUsersIdAndProjectId(memberId, projectId)
+        ParticipatedUsers pu = participatedUserRepository
+                .findByUsersIdAndProjectId(memberId, projectId)
                 .orElse(null);
         // 1. 해당 participated 요청을 deny
         participatedUserRepository.delete(pu);
