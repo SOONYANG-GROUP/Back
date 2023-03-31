@@ -161,6 +161,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .where(project.id.eq(projectId))
                 .transform(groupBy(project.id).list(Projections.constructor(
                         MemberPageDto.class,
+                        project.projectStatus,
                         user.id.as("memberId"),
                         project.projectStatus, project.openChatUrl,
                         project.voiceChatUrl, participatedUsers.url,
