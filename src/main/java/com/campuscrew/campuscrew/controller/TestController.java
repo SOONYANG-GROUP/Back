@@ -31,7 +31,8 @@ public class TestController {
         Project project = repository.findByIdWithRecruits(1L)
                 .orElse(null);
         project.getRecruits()
-                .stream().forEach(System.out::println);
+                .stream()
+                .forEach(System.out::println);
         return "ok";
     }
 

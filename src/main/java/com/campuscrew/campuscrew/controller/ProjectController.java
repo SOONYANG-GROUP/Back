@@ -49,7 +49,7 @@ public class ProjectController {
         String email = userDetails.getUsername();
         log.info("email = {}", email);
         Project project = projectService.addProject(email, addProjectDto);
-        ProjectMainDto projectMainDto = ProjectMainDto.getProjectMain(project);
+//        ProjectMainDto projectMainDto = ProjectMainDto.getProjectMain(project);
         return project.getId();
     }
 
