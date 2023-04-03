@@ -32,7 +32,6 @@ public class TestJwt {
 
     @Test
     void create() {
-        SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy hh:mm:ss a z");
-        format.setTimeZone(TimeZone.getTimeZone("GMT"));
+
     }
 }

@@ -10,6 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString(of = {"detailField", "name"})
 public class ParticipatedUserDto {
+    private Long id;
     private String detailField;
     private String name;
 }

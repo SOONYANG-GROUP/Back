@@ -167,6 +167,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                         project.voiceChatUrl, participatedUsers.url,
                         participatedUsers.description,
                         GroupBy.list(Projections.constructor(ParticipatedUserDto.class,
+                                user.id,
                                 recruit.detailField,
                                 user.name)
                 ))));
