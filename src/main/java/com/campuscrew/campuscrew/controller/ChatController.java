@@ -1,2 +1,4 @@
-package com.campuscrew.campuscrew.controller;public class ChatController {
+package com.campuscrew.campuscrew.controller;
+
+public class ChatController {
 }

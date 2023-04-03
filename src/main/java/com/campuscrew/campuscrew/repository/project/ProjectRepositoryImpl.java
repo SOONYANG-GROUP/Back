@@ -163,7 +163,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                         MemberPageDto.class,
                         project.projectStatus,
                         user.id.as("memberId"),
-                        project.projectStatus, project.openChatUrl,
+                        project.openChatUrl,
                         project.voiceChatUrl, participatedUsers.url,
                         participatedUsers.description,
                         GroupBy.list(Projections.constructor(ParticipatedUserDto.class,

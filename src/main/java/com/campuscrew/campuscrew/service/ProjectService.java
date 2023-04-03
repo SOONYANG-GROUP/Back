@@ -189,6 +189,19 @@ public class ProjectService {
         return projectRepository.fetchMemberPage(id);
     }
 
+    public void startProject(Long id) {
+        projectRepository.findById(id)
+                .ifPresent(project ->
+                        project.setProjectStatus(ProjectStatus.RUNNING));
+    }
+
+    public void endProject(Long id) {
+        projectRepository.findById(id)
+                .ifPresent(project ->
+                        project.setProjectStatus(ProjectStatus.END));
+    }
+
+
     public void startAllProject() {
         projectRepository.findAll()
                 .stream()
