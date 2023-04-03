@@ -28,9 +28,15 @@ public class ProjectController {
     private final ProjectService projectService;
     private final ProjectRepository repository;
 
-    @GetMapping("/start")
-    public String startProject() {
-//        projectService.
+    @GetMapping("/{id}/start")
+    public String startProject(@PathVariable Long id) {
+        projectService.startProject(id);
+        return "ok";
+    }
+
+    @GetMapping("/{id}/end")
+    public String endProject(@PathVariable Long id) {
+        projectService.endProject(id);
         return "ok";
     }
 
@@ -39,7 +45,7 @@ public class ProjectController {
     public Long addProject(@RequestBody AddProjectDto addProjectDto,
                                      @AuthenticationPrincipal UserDetails userDetails,
                                      HttpServletResponse response,
-                           RedirectAttributes redirectAttributes) {
+                           RedirectAttributes attributes) {
         String email = userDetails.getUsername();
         log.info("email = {}", email);
         Project project = projectService.addProject(email, addProjectDto);
@@ -124,7 +130,8 @@ public class ProjectController {
 
     @GetMapping("/{id}/member")
     public MemberPageDto getMemberPage(@PathVariable Long id,
-                                       @AuthenticationPrincipal UserDetails userDetails) {
+                                       @AuthenticationPrincipal
+                                       UserDetails userDetails) {
         String email = userDetails.getUsername();
         return projectService.getMemberPage(id, email);
     }

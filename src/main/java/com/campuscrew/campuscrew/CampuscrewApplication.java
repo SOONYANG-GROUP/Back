@@ -11,4 +11,3 @@ public class CampuscrewApplication {
 		SpringApplication.run(CampuscrewApplication.class, args);
 	}
 }
-//
