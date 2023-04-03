@@ -28,13 +28,13 @@ public class ProjectController {
     private final ProjectService projectService;
     private final ProjectRepository repository;
 
-    @GetMapping("/start")
+    @GetMapping("/{id}/start")
     public String startProject(@PathVariable Long id) {
         projectService.startProject(id);
         return "ok";
     }
 
-    @GetMapping
+    @GetMapping("/{id}/end")
     public String endProject(@PathVariable Long id) {
         projectService.endProject(id);
         return "ok";
