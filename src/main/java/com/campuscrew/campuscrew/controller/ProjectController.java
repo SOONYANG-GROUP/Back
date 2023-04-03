@@ -45,7 +45,7 @@ public class ProjectController {
     public Long addProject(@RequestBody AddProjectDto addProjectDto,
                                      @AuthenticationPrincipal UserDetails userDetails,
                                      HttpServletResponse response,
-                           RedirectAttributes redirectAttributes) {
+                           RedirectAttributes attributes) {
         String email = userDetails.getUsername();
         log.info("email = {}", email);
         Project project = projectService.addProject(email, addProjectDto);
@@ -130,7 +130,8 @@ public class ProjectController {
 
     @GetMapping("/{id}/member")
     public MemberPageDto getMemberPage(@PathVariable Long id,
-                                       @AuthenticationPrincipal UserDetails userDetails) {
+                                       @AuthenticationPrincipal
+                                       UserDetails userDetails) {
         String email = userDetails.getUsername();
         return projectService.getMemberPage(id, email);
     }
