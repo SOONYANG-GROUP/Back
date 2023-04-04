@@ -130,12 +130,14 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .leftJoin(participatedUsers.user, user)
                 .leftJoin(participatedUsers.recruit, recruit)
                 .leftJoin(participatedUsers.project, project)
-                .where(project.id.eq(projectId), participatedUsers.status.eq(ParticipatedStatus.READY))
+                .where(project.id.eq(projectId))
                 .transform(groupBy(participatedUsers.id).list(
                         Projections.constructor(ManagerPageDto.class,
                                 GroupBy.list(
-                                        Projections.constructor(AppliedUserDto.class, recruit.detailField, user.id, user.name)
+                                        Projections.constructor(AppliedUserDto.class,
+                                                recruit.detailField, user.id, user.name)
                                 ))));
+
         return transform.stream()
                 .findFirst()
                 .orElseGet(ManagerPageDto::new);
@@ -152,7 +154,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 //                .leftJoin(participatedUsers.project, project)
 //                .where(project.id.eq(projectId))
 //                .fetch(); // 결과가 하나 나오길 기대 했는데 2개 나오는 것, 이유는 select 결과가 2개 이기 때문에 그렇다,
-//                        // groupby를 사용했을 때는 그렇지 않았다는 것 을 알수 있다 .
+//                        // groupby를 사용했을 때는 그렇지 않았다는 것 을 알수 있다.
 
         List<MemberPageDto> fetch = queryFactory.selectFrom(participatedUsers)
                 .leftJoin(participatedUsers.user, user)
