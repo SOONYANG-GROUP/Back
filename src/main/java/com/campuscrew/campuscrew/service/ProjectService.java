@@ -24,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.MANAGER;
+import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.MEMBER;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -100,12 +103,17 @@ public class ProjectService {
     }
     // 관리자가 요청에 대해서 승인 했을 때
     public void acceptApply(Long projectId, Long memberId) {
-        ParticipatedUsers participatedUsers = participatedUserRepository.findByUsersIdAndProjectId(memberId, projectId)
+        ParticipatedUsers participatedUsers = participatedUserRepository
+                .findByUsersIdAndProjectId(memberId, projectId)
                 .orElse(null);
         // 1. 이제 승인 되었으니, 해당 프로젝트의 참여 멤버가 됨
-        participatedUsers.setStatus(ParticipatedStatus.MEMBER);
-
-        participatedUsers.getRecruit().participateProject();
+        ParticipatedStatus userStatus = participatedUsers.getStatus();
+        if (userStatus == MEMBER || userStatus == MANAGER) {
+            participatedUsers.setStatus(MEMBER);
+            participatedUsers.getRecruit().participateProject();
+        } else {
+            throw new AlreadyAppliedProject("이미 프로젝트에 참여 했습니다.");
+        }
         // 2. 그에 대한 정보를 로그로 남김
 
     }
@@ -182,7 +190,7 @@ public class ProjectService {
 
         ParticipatedStatus status = participatedUsers.getStatus();
 
-        if ((status != ParticipatedStatus.MEMBER) && (status != ParticipatedStatus.MANAGER)) {
+        if ((status != MEMBER) && (status != ParticipatedStatus.MANAGER)) {
             throw new NotAccessibleAuthenticationException("Manager 나 Member 만 접근 가능");
         }
 
