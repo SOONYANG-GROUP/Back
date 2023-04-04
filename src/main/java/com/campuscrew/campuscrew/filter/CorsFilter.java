@@ -23,9 +23,9 @@ public class CorsFilter implements Filter {
         res.setHeader("Access-Control-Allow-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-        if("OPTIONS".equalsIgnoreCase(req.getMethod())) {
+        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
             res.setStatus(HttpServletResponse.SC_OK);
-        }else {
+        } else {
             chain.doFilter(req, res);
         }
     }
