@@ -38,8 +38,6 @@ import java.util.Arrays;
 @EnableMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-
-
     private final LoginService loginService;
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -73,7 +71,7 @@ public class SecurityConfig {
                 .requestMatchers("/projects/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .anyRequest().hasRole("GUEST") // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+                .anyRequest().permitAll() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
