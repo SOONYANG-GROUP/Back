@@ -146,6 +146,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .leftJoin(participatedUsers.recruit, recruit)
                 .leftJoin(participatedUsers.project, project)
                 .where(project.id.eq(projectId), participatedUsers.status.eq(ParticipatedStatus.READY))
+                .fetch();
 
         return transform.stream()
                 .findFirst()
