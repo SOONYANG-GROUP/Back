@@ -73,7 +73,7 @@ public class SecurityConfig {
                 .requestMatchers("/projects/**").permitAll()
                 .requestMatchers("/user/**").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .anyRequest().permitAll()// 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
+                .anyRequest().hasRole("USER")// 위의 경로 이외에는 모두 인증된 사용자만 접근 가능
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .and()
