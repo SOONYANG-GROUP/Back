@@ -26,8 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.MANAGER;
-import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.MEMBER;
+import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -110,7 +109,7 @@ public class ProjectService {
                 .orElse(null);
         // 1. 이제 승인 되었으니, 해당 프로젝트의 참여 멤버가 됨
         ParticipatedStatus userStatus = participatedUsers.getStatus();
-        if (userStatus == MEMBER || userStatus == MANAGER) {
+        if (userStatus == READY) {
             participatedUsers.setStatus(MEMBER);
             participatedUsers.getRecruit().participateProject();
         } else {
