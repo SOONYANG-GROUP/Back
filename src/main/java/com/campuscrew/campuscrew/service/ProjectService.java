@@ -206,7 +206,7 @@ public class ProjectService {
             throw new NotAccessibleAuthenticationException("Manager 나 Member 만 접근 가능");
         }
 
-        return projectRepository.fetchMemberPage(id);
+        return projectRepository.fetchMemberPage(id, user.getId());
     }
 
     public void startProject(Long id) {
@@ -230,8 +230,10 @@ public class ProjectService {
                 .forEach(Project::startProject);
     }
 
-    public void addMemberContent(Long memberId, MemberEditForm form) {
-        participatedUserRepository.findById(memberId)
+    public void addMemberContent(Long id, MemberEditForm form, String email) {
+        User findUser = userRepository.findByEmail(email)
+                .orElse(null);
+        participatedUserRepository.findByUsersIdAndProjectId(findUser.getId(), id)
                 .ifPresent(user -> {
                     String url = form.getUrl();
                     user.setUrl(url);

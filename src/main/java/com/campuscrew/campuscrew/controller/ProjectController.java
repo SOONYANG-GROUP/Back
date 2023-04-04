@@ -136,10 +136,11 @@ public class ProjectController {
         return projectService.getMemberPage(id, email);
     }
 
-    @PostMapping("/members/{memberId}")
+    @PostMapping("/{id}/members/edit")
     public String addContent(@RequestBody MemberEditForm editForm,
-                             @PathVariable Long memberId) {
-        projectService.addMemberContent(memberId, editForm);
+                             @PathVariable Long id,
+                             @AuthenticationPrincipal UserDetails userDetails) {
+        projectService.addMemberContent(id, editForm, userDetails.getUsername());
         return "pok";
     }
 }

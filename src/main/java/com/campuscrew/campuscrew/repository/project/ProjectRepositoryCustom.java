@@ -18,5 +18,5 @@ public interface ProjectRepositoryCustom {
 
     ManagerPageDto fetchManagerPage(Long userId, Long projectId);
 
-    MemberPageDto fetchMemberPage(Long projectId);
+    MemberPageDto fetchMemberPage(Long projectId, Long id);
 }

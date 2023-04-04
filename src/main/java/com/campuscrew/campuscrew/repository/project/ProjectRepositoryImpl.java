@@ -137,7 +137,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                         Projections.constructor(AppliedUserDto.class,
                                                 recruit.detailField, user.id, user.name)
                                 ))));
-//
+
 //        List<ManagerPageDto> transform = queryFactory.select(
 //                Projections.constructor(ManagerPageDto.class,
 //                        Projections.list(Projections.constructor(AppliedUserDto.class,
@@ -159,7 +159,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     }
 
     @Override
-    public MemberPageDto fetchMemberPage(Long projectId) {
+    public MemberPageDto fetchMemberPage(Long projectId, Long id) {
 //        List<MemberPageDto> fetch = queryFactory.select(Projections.constructor(MemberPageDto.class, project.openChatUrl,
 //                        project.voiceChatUrl, list(Projections.constructor(ParticipatedUserDto.class,
 //                                recruit.detailField, user.name)))
@@ -179,26 +179,23 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .transform(groupBy(project.id).list(Projections.constructor(
                         MemberPageDto.class,
                         project.projectStatus,
-                        participatedUsers.id.as("participateUserId"),
                         project.openChatUrl,
-                        project.voiceChatUrl, participatedUsers.url,
+                        project.voiceChatUrl,
+                        participatedUsers.url,
                         participatedUsers.description,
                         GroupBy.list(Projections.constructor(ParticipatedUserDto.class,
                                 user.id,
                                 participatedUsers.id.as("memberId"),
                                 recruit.detailField,
-                                user.name)
-                ))));
+                                user.name)))));
 
         for (MemberPageDto memberPageDto : fetch) {
             System.out.println("memberPageDto = " + memberPageDto);
         }
 
-        return fetch.stream()
+        return fetch
+                .stream()
                 .findFirst()
                 .orElseGet(MemberPageDto::new);
     }
-
-
-
 }
