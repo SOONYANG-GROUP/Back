@@ -125,18 +125,27 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     // 1. 회원 상태가 READY인 모든 회원 정보를 조회 할 수 있어야 한다.
     @Override
     public ManagerPageDto fetchManagerPage(Long userId, Long projectId) {
-        List<ManagerPageDto> transform = queryFactory.select(participatedUsers)
+//        List<ManagerPageDto> transform = queryFactory.select(participatedUsers)
+//                .from(participatedUsers)
+//                .leftJoin(participatedUsers.user, user)
+//                .leftJoin(participatedUsers.recruit, recruit)
+//                .leftJoin(participatedUsers.project, project)
+//                .where(project.id.eq(projectId), participatedUsers.status.eq(ParticipatedStatus.READY))
+//                .transform(groupBy(participatedUsers.id).list(
+//                        Projections.constructor(ManagerPageDto.class,
+//                                GroupBy.list(
+//                                        Projections.constructor(AppliedUserDto.class,
+//                                                recruit.detailField, user.id, user.name)
+//                                ))));
+//
+        List<ManagerPageDto> transform = queryFactory.select(Projections.constructor(ManagerPageDto.class,
+                        Projections.list(Projections.constructor(AppliedUserDto.class,
+                                recruit.detailField, user.id, user.name))))
                 .from(participatedUsers)
                 .leftJoin(participatedUsers.user, user)
                 .leftJoin(participatedUsers.recruit, recruit)
                 .leftJoin(participatedUsers.project, project)
-                .where(project.id.eq(projectId))
-                .transform(groupBy(participatedUsers.id).list(
-                        Projections.constructor(ManagerPageDto.class,
-                                GroupBy.list(
-                                        Projections.constructor(AppliedUserDto.class,
-                                                recruit.detailField, user.id, user.name)
-                                ))));
+                .where(project.id.eq(projectId), participatedUsers.status.eq(ParticipatedStatus.READY))
 
         return transform.stream()
                 .findFirst()
