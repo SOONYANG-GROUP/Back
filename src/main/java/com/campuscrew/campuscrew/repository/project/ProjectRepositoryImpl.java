@@ -138,7 +138,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 //                                                recruit.detailField, user.id, user.name)
 //                                ))));
 //
-        List<ManagerPageDto> transform = queryFactory.select(Projections.constructor(ManagerPageDto.class,
+        List<ManagerPageDto> transform = queryFactory.select(
+                Projections.constructor(ManagerPageDto.class,
                         Projections.list(Projections.constructor(AppliedUserDto.class,
                                 recruit.detailField, user.id, user.name))))
                 .from(participatedUsers)
@@ -147,6 +148,10 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .leftJoin(participatedUsers.project, project)
                 .where(project.id.eq(projectId), participatedUsers.status.eq(ParticipatedStatus.READY))
                 .fetch();
+
+        for (ManagerPageDto managerPageDto : transform) {
+            System.out.println(managerPageDto);
+        }
 
         return transform.stream()
                 .findFirst()
