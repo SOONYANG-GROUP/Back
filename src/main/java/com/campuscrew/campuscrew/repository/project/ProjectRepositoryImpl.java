@@ -158,7 +158,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .leftJoin(participatedUsers.user, user)
                 .leftJoin(participatedUsers.recruit, recruit)
                 .leftJoin(participatedUsers.project, project)
-                .where(project.id.eq(projectId))
+                .where(project.id.eq(projectId), participatedUsers.status.ne(ParticipatedStatus.READY))
                 .transform(groupBy(project.id).list(Projections.constructor(
                         MemberPageDto.class,
                         project.projectStatus,
