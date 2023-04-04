@@ -102,7 +102,7 @@ public class ProjectService {
 
         // 1. 이후 해당 회원에게 로그로 알림
     }
-    // 관리자가 요청에 대해서 승인 했을 때
+
     public void acceptApply(Long projectId, Long memberId) {
         ParticipatedUsers participatedUsers = participatedUserRepository
                 .findByUsersIdAndProjectId(memberId, projectId)

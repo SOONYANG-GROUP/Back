@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.domain.board;
 
 import com.campuscrew.campuscrew.dto.project.RecruitUserDto;
+import com.campuscrew.campuscrew.service.exception.AlreadyAppliedProject;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -46,6 +47,10 @@ public class Recruit {
     }
 
     public void participateProject() {
-        currentRecruit += 1;
+        if(maxRecruit > currentRecruit) {
+            currentRecruit += 1;
+        } else {
+            throw new IllegalStateException("이미 projects 인원이 가득 찼습니다.");
+        }
     }
 }
