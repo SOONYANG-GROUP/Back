@@ -138,8 +138,7 @@ public class ProjectController {
 
     @PostMapping("/members/{memberId}")
     public String addContent(@RequestBody MemberEditForm editForm,
-                             @PathVariable Long memberId,
-                             @AuthenticationPrincipal UserDetails userDetails) {
+                             @PathVariable Long memberId) {
         projectService.addMemberContent(memberId, editForm);
         return "pok";
     }

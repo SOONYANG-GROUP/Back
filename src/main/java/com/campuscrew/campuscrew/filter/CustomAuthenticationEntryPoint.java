@@ -16,7 +16,8 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.info("request.url = {}", request.getRequestURI());
-        TokenDto tokenDto = new TokenDto(request.getHeader("Authorization"), request.getHeader("Authorizationrefresh"));
+        TokenDto tokenDto = new TokenDto(request.getHeader("Authorization"),
+                request.getHeader("Authorizationrefresh"));
         ObjectMapper objectMapper = new ObjectMapper();
         String s = objectMapper.writeValueAsString(tokenDto);
         log.info("message: ", authException);

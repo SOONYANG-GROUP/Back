@@ -197,11 +197,11 @@ public class ProjectService {
     }
 
     public void endProject(Long id) {
+        // 완료 상태로 만든다. 이제 수정이 불가능 해야함
         projectRepository.findById(id)
                 .ifPresent(project ->
                         project.setProjectStatus(ProjectStatus.END));
     }
-
 
     public void startAllProject() {
         projectRepository.findAll()
