@@ -162,7 +162,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .transform(groupBy(project.id).list(Projections.constructor(
                         MemberPageDto.class,
                         project.projectStatus,
-                        user.id.as("memberId"),
+                        user.id.as("participateUserId"),
                         project.openChatUrl,
                         project.voiceChatUrl, participatedUsers.url,
                         participatedUsers.description,

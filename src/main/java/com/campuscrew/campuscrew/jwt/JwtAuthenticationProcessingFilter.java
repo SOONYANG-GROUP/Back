@@ -95,6 +95,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                 .roles(user.getRole().name())
                 .build();
 
+        log.info("name = {}", user.getRole().name());
+
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,
                 null,
                 authoritiesMapper.mapAuthorities(userDetails.getAuthorities()));
@@ -130,6 +132,4 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         userRepository.saveAndFlush(user);
         return reIssuedRefreshToken;
     }
-
-
 }
