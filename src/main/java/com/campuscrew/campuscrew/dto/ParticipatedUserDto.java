@@ -11,6 +11,7 @@ import lombok.ToString;
 @ToString(of = {"detailField", "name"})
 public class ParticipatedUserDto {
     private Long id;
+    private Long memberId;
     private String detailField;
     private String name;
 }

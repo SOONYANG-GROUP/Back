@@ -6,6 +6,7 @@ import com.campuscrew.campuscrew.domain.board.*;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.ManagerPageDto;
+import com.campuscrew.campuscrew.dto.MemberEditForm;
 import com.campuscrew.campuscrew.dto.MemberPageDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
@@ -208,5 +209,14 @@ public class ProjectService {
                 .filter(project-> project.getCreatedDateTime()
                         .compareTo(LocalDateTime.now()) >= 0)
                 .forEach(Project::startProject);
+    }
+
+    public void addMemberContent(Long memberId, MemberEditForm form) {
+        participatedUserRepository.findById(memberId)
+                .ifPresent(user -> {
+                    String url = form.getUrl();
+                    user.setUrl(url);
+                    user.setDescription(form.getDescription());
+                });
     }
 }
