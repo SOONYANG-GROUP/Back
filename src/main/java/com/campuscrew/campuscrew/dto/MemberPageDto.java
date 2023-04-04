@@ -12,7 +12,7 @@ import java.util.List;
 @ToString(of = {"openChatUrl", "voiceChatUrl"})
 public class MemberPageDto {
     private ProjectStatus projectStatus;
-    private Long memberId;
+    private Long participateUserId;
     private String openChatUrl;
     private String voiceChatUrl;
     private String url;

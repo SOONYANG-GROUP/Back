@@ -6,6 +6,7 @@ import com.campuscrew.campuscrew.domain.board.*;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.ManagerPageDto;
+import com.campuscrew.campuscrew.dto.MemberEditForm;
 import com.campuscrew.campuscrew.dto.MemberPageDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.MANAGER;
 import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.MEMBER;
@@ -140,29 +142,40 @@ public class ProjectService {
     // 3. 프로젝트의 특정 직군에 대해 신청을 넣으면 ready 상태로 저장
     public void applyProject(Long projectId, String email, String detailField) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("로그인 후 사용 가능 합니다."));
+                .orElseThrow(() ->
+                        new UserNotFoundException("로그인 후 사용 가능 합니다."));
+
         // 1. 프로젝트에 연관 되어 있는 Recruit 까지 모두 조회
         Project project = projectRepository
                 .findByIdWithRecruits(projectId)
                 .orElse(null);
 
-        if (participatedUserRepository
-                .findByUsersIdAndProjectId(user.getId(), projectId)
-                .isPresent()) {
+        if (isPresent(projectId, user)) {
             throw new AlreadyAppliedProject("이미 지원한 신청인 입니다.");
-        };
+        }
         // 2. 지원한 Recruit를 선별
         Recruit recruit1 = project.getRecruits()
                 .stream().filter(recruit -> detailField.equals(recruit.getDetailField()))
                 .findFirst().orElse(null);
         // 3. 해당 Recruit 에 지원
 
-
         ParticipatedUsers participatedUsers = ParticipatedUsers
                 .makeParticipatedUserAsMReady(user, project, recruit1);
 
         participatedUserRepository.save(participatedUsers);
     }
+
+    private boolean isPresent(Long projectId, User user) {
+        Optional<ParticipatedUsers> byUsersIdAndProjectId = participatedUserRepository
+                .findByUsersIdAndProjectId(user.getId(), projectId);
+
+        ParticipatedUsers participatedUsers = byUsersIdAndProjectId.orElse(null);
+
+        log.info("get = {}", participatedUsers);
+        return byUsersIdAndProjectId
+                .isPresent();
+    }
+
     // 1. 현재 유저 정보를 조회하고, 프로젝트 id로 프로젝트를 조회 한다.
     // 2. 현재 유저 정보가 프로젝트의 관리자 이면, ready 상태인 모든 회원에 대한 정보를 볼 수 있어야 한다.
     public ManagerPageDto getManagerPage(Long id, String email) {
@@ -204,11 +217,11 @@ public class ProjectService {
     }
 
     public void endProject(Long id) {
+        // 완료 상태로 만든다. 이제 수정이 불가능 해야함
         projectRepository.findById(id)
                 .ifPresent(project ->
                         project.setProjectStatus(ProjectStatus.END));
     }
-
 
     public void startAllProject() {
         projectRepository.findAll()
@@ -216,5 +229,14 @@ public class ProjectService {
                 .filter(project-> project.getCreatedDateTime()
                         .compareTo(LocalDateTime.now()) >= 0)
                 .forEach(Project::startProject);
+    }
+
+    public void addMemberContent(Long memberId, MemberEditForm form) {
+        participatedUserRepository.findById(memberId)
+                .ifPresent(user -> {
+                    String url = form.getUrl();
+                    user.setUrl(url);
+                    user.setDescription(form.getDescription());
+                });
     }
 }

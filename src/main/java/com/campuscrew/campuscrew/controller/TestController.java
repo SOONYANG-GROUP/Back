@@ -40,8 +40,14 @@ public class TestController {
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
-            new SecurityContextLogoutHandler().logout(request, response, auth);
+            new SecurityContextLogoutHandler()
+                    .logout(request, response, auth);
         }
+        return "ok";
+    }
+
+    @GetMapping("/jwt-test")
+    public String test() {
         return "ok";
     }
 

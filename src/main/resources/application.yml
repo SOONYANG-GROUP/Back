@@ -25,7 +25,7 @@ spring:
 jwt:
   secretKey: asdasdasdasdasdadadadadadadadadadadadafafafafasfasfasfasfafafafs
   access:
-    expiration: 2000000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h)) 1000 * 200
+    expiration: 200000000000 # 1시간(60분) (1000L(ms -> s) * 60L(s -> m) * 60L(m -> h)) 1000 * 200
     header: Authorization
 
   refresh:
