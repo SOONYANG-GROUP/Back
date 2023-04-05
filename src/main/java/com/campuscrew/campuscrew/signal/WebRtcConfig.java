@@ -16,7 +16,6 @@ public class WebRtcConfig implements WebSocketConfigurer {
                 .withSockJS();
 
     }
-
     @Bean
     public WebSocketHandler signalingHandler() {
         return new SignalingHandler();

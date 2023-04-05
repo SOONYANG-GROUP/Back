@@ -5,8 +5,15 @@
     <title>Title</title>
 </head>
 <body>
-<a href="/oauth2/authorization/kakao">Kakao Login</a><br>
-<a href="/oauth2/authorization/google">Google Login</a><br>
-<a href="/oauth2/authorization/naver">Naver Login</a><br>
+<script>
+    const socket = new SockJS('http://localhost:8080/signal');
+    const stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log('SockJS 연결이 열렸습니다.');
+        stompClient.subscribe('/topic/messages', function (message) {
+            console.log('SockJS 메시지를 수신했습니다: ' + message.body);
+        });
+    });
+</script>
 </body>
 </html>
