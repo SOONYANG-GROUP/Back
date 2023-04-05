@@ -181,11 +181,11 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                         project.projectStatus,
                         project.openChatUrl,
                         project.voiceChatUrl,
-                        participatedUsers.url,
-                        participatedUsers.description,
                         GroupBy.list(Projections.constructor(ParticipatedUserDto.class,
                                 user.id,
                                 participatedUsers.id.as("memberId"),
+                                participatedUsers.url,
+                                participatedUsers.description,
                                 recruit.detailField,
                                 user.name)))));
 

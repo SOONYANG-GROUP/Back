@@ -12,6 +12,8 @@ import lombok.ToString;
 public class ParticipatedUserDto {
     private Long id;
     private Long memberId;
+    private String url;
+    private String description;
     private String detailField;
     private String name;
 }

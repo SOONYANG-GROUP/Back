@@ -14,7 +14,7 @@ public class MemberPageDto {
     private ProjectStatus projectStatus;
     private String openChatUrl;
     private String voiceChatUrl;
-    private String url;
-    private String description;
+//    private String url;
+//    private String description;
     private List<ParticipatedUserDto> participatedUserDtos;
 }
