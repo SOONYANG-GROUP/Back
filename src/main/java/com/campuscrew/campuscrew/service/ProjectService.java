@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.*;
@@ -92,7 +93,6 @@ public class ProjectService {
     // 관리자가 요청에 대해서 거절 했을 때
     // 1. projectId, memberId에 대한 신청 정보를 조회
     // 2. 해당 요청을 거절 하는 것이므로 요청 정보를 삭제
-    // 3.
     public void rejectApply(Long projectId, Long memberId) {
         ParticipatedUsers pu = participatedUserRepository
                 .findByUsersIdAndProjectId(memberId, projectId)
@@ -208,11 +208,21 @@ public class ProjectService {
 
         return projectRepository.fetchMemberPage(id, user.getId());
     }
+    // 1. project 가 진행 중으로 바뀔 때
+    // 2. ready 상태 회원들을 전부 삭제, 종료일을 기일로 부터 14일
 
     public void startProject(Long id) {
+        participatedUserRepository
+                .findParticipatedUsersByProjectIdAnAndStatus(id, READY)
+                .stream()
+                .forEach(participatedUserRepository::delete);
+
         projectRepository.findById(id)
-                .ifPresent(project ->
-                        project.setProjectStatus(ProjectStatus.RUNNING));
+                .ifPresent(project -> {
+                    project.setProjectStatus(ProjectStatus.RUNNING);
+                    project.setEndDate(LocalDateTime.now()
+                            .plus(14, ChronoUnit.DAYS));
+                });
     }
 
     public void endProject(Long id) {
