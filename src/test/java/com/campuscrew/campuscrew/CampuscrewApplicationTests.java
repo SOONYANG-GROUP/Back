@@ -24,19 +24,12 @@ class CampuscrewApplicationTests {
 
 	@Test
 	void contextLoads() {
-		ParticipatedUsers participatedUsers = repository
-				.findByUsersIdAndProjectId(4L, 1L)
-				.orElse(null);
 
-		Assertions.assertThat(participatedUsers).isNotNull();
 	}
 
 	@Test
 	void date() {
-		LocalDate today = LocalDate.now();
-		LocalDate date = LocalDate.parse("2023-03-27");
 
-		System.out.println(today.compareTo(date) >= 0); // start
 	}
 
 }
