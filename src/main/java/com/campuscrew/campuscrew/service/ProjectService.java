@@ -83,8 +83,7 @@ public class ProjectService {
 
     public HomeDto getHomePage() {
         // 날짜 순서
-        HomeDto homeDto = projectRepository.fetchCardSortByCreatedDate();
-        return homeDto;
+        return projectRepository.fetchCardSortByCreatedDate();
     }
     // project id에 해당하는 모든 댓글을 가져온다.
     // 그에 해당하는 모든 회원 정보를 조회하고 dto로 가져온다.
