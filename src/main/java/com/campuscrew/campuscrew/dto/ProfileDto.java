@@ -15,7 +15,5 @@ public class ProfileDto {
     private String detailField;
     private String selfIntroduction;
     private String shortIntroduction;
-    // 로그 출력 기능
-
     private List<ProjectGroupDto> projectGroupDtos;
 }

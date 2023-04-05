@@ -51,6 +51,15 @@ public class UserController {
         return profile;
     }
 
+    @GetMapping("/profile/{id}")
+    public ProfileDto getOtherUserProfile(@AuthenticationPrincipal UserDetails userDetails,
+                                          @PathVariable Long id) {
+        ProfileDto profile = userService.getProfile(id);
+        return profile;
+    }
+
+
+
     @GetMapping("/exlogin")
     public String redirect(@RequestParam String accessToken,
                            @RequestParam String refreshToken,
