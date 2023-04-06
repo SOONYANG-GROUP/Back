@@ -212,7 +212,7 @@ public class ProjectService {
 
     public void startProject(Long id) {
         participatedUserRepository
-                .findParticipatedUsersByProjectIdAnAndStatus(id, READY)
+                .findParticipatedUsersByProjectIdAnAndStatus(id, READY.name())
                 .stream()
                 .forEach(participatedUserRepository::delete);
 
