@@ -144,7 +144,7 @@ public class ProjectController {
         return "pok";
     }
 
-    @GetMapping
+    @GetMapping("/set")
     public String setRunningProject() {
         projectService.checkProjectRecruitmentDate();
         return "ok";
