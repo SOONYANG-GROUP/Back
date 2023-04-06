@@ -249,4 +249,14 @@ public class ProjectService {
                     user.setDescription(form.getDescription());
                 });
     }
+
+    public void checkProjectRecruitmentDate() {
+        projectRepository.findAll()
+                .stream()
+                .filter(project -> project.getRecruitmentDate().compareTo(LocalDateTime.now()) < 0)
+                .forEach(project -> {
+                    project.setProjectStatus(ProjectStatus.RUNNING);
+                    project.setEndDate(LocalDateTime.now().plus(14, ChronoUnit.DAYS));
+                });
+    }
 }

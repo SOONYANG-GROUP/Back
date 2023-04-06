@@ -143,4 +143,10 @@ public class ProjectController {
         projectService.addMemberContent(id, editForm, userDetails.getUsername());
         return "pok";
     }
+
+    @GetMapping
+    public String setRunningProject() {
+        projectService.checkProjectRecruitmentDate();
+        return "ok";
+    }
 }
