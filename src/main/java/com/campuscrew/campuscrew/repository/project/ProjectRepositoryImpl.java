@@ -62,6 +62,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 project.id, project.title, project.createdDateTime,
                                 project.recruitmentDate,
                                 project.projectStatus,
+                                project.endDate,
                                 GroupBy.list(Projections.constructor(RecruitUserDto.class,
                                         recruit.field,
                                         recruit.detailField,
