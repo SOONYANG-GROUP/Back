@@ -81,6 +81,7 @@ public class ParticipatedUsers {
         stringBuilder.append("\n");
         stringBuilder.append(description);
         this.description = stringBuilder.toString();
+        System.out.println(description);
     }
 
 }
