@@ -16,6 +16,6 @@ public interface ParticipatedUsersRepository extends JpaRepository<ParticipatedU
     @Query("select pu from ParticipatedUsers pu left join fetch pu.recruit r1 where pu.user.id = :usersId and pu.project.id = :projectId")
     Optional<ParticipatedUsers> findByUsersIdAndProjectId(@Param("usersId") Long usersId, @Param("projectId") Long projectId);
 
-    @Query("select pu from ParticipatedUsers pu where pu.project.id = :id and pu.project.projectStatus = :status")
-    List<ParticipatedUsers> findParticipatedUsersByProjectIdAnAndStatus(@Param("id") Long id, @Param("status") String status);
+    @Query("select pu from ParticipatedUsers pu where pu.project.id = :id and pu.status = :status")
+    List<ParticipatedUsers> findParticipatedUsersByProjectIdAnAndStatus(@Param("id") Long id, @Param("status") ParticipatedStatus status);
 }
