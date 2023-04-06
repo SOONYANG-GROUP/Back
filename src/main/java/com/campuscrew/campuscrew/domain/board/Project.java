@@ -41,16 +41,10 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
 
-//    @ManyToOne(fetch = LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;     user -- joinuser --
-//
-    //1. 연관 관계를 고려해보자. ex) 모든 user 가 project 에 대해 직접적으로 알아야 할 필요가 있을까?
-    //2. JoinedUser 라는 mapping 테이블에서 이를 관리하면 될 것인데
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.PERSIST)
     private List<Recruit> recruits = new ArrayList<>();
 
@@ -116,5 +110,4 @@ public class Project {
     3. 팀원란을 클릭, 이 프로젝트에 대해 참여를 안했다.
     4. user 정보를 조회 현재 세션으로 로그인 되어 있는 유저
     5. 로그인 했을 때 자기가 작성한 프로젝트 확인 가능
-
  */

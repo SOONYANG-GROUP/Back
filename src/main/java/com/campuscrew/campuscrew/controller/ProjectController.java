@@ -40,16 +40,14 @@ public class ProjectController {
         return "ok";
     }
 
-
     @PostMapping("/add")
     public Long addProject(@RequestBody AddProjectDto addProjectDto,
                                      @AuthenticationPrincipal UserDetails userDetails,
                                      HttpServletResponse response,
-                           RedirectAttributes attributes) {
+                                     RedirectAttributes attributes) {
         String email = userDetails.getUsername();
         log.info("email = {}", email);
         Project project = projectService.addProject(email, addProjectDto);
-//        ProjectMainDto projectMainDto = ProjectMainDto.getProjectMain(project);
         return project.getId();
     }
 
@@ -112,8 +110,6 @@ public class ProjectController {
         return "ok";
     }
 
-    // 관리자 페이지에서 승인 대기중인 신청자를 거절
-    //
     @PostMapping("/{id}/reject")
     public String rejectProject(@PathVariable Long id,
                                 @RequestParam Long memberId) {

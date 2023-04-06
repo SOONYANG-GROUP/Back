@@ -24,7 +24,6 @@ public class UserController {
     @PostMapping("/edit")
     public String editUser(@AuthenticationPrincipal UserDetails userDetails,
                            @RequestBody EditForm editForm) {
-
         String email = userDetails.getUsername();
         userService.editUser(editForm, email);
         return "ok";
@@ -58,18 +57,12 @@ public class UserController {
         return profile;
     }
 
-
-
-    @GetMapping("/exlogin")
-    public String redirect(@RequestParam String accessToken,
-                           @RequestParam String refreshToken,
-                           HttpServletResponse response) throws IOException {
-        String redirectUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/login")
-                .queryParam("accessToken", accessToken)
-                .queryParam("refreshToken", refreshToken)
-                .encode(StandardCharsets.UTF_8)
-                .toUriString();
-        response.sendRedirect(redirectUrl);
+    @GetMapping("/alarm/setting")
+    public String switchAlarm(@AuthenticationPrincipal
+                                  UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        userService.switchAlarm(email);
         return "ok";
     }
+
 }

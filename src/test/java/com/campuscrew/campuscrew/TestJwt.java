@@ -20,6 +20,13 @@ public class TestJwt {
 
     @Test
     void test() {
+        String str1 = "Hello";
+        String str2 = str1;
+
+        str1 = str1 + "hh";
+
+        System.out.println(str1);
+        System.out.println(str2);
 
     }
 

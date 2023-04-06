@@ -22,5 +22,6 @@ public class Log {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "project_id")
     private Project project;
 }

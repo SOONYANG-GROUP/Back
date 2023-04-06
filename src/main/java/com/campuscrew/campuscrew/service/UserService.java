@@ -52,6 +52,13 @@ public class UserService {
     }
 
 
+    public void switchAlarm(String email) {
+        User user = userRepository
+                .findByEmail(email)
+                .orElse(null);
+        user.switchAlarm();
+    }
+
 
     public void editUser(EditForm editForm, String email) {
         User user = userRepository

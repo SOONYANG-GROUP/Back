@@ -29,6 +29,9 @@ public class User {
     private Long id;
 
     private Integer age;
+
+    private Boolean acceptAlarm;
+
     private String password;
 
     private String email;
@@ -44,6 +47,7 @@ public class User {
     private String detailField;
 
     private String socialId;
+
     private String refreshToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST,
@@ -58,6 +62,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<SubComment> subComments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Alarm> alarms = new ArrayList<>();
+
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -88,5 +96,18 @@ public class User {
         this.setDetailField(editForm.getDetailField());
         this.setSelfIntroduction(editForm.getSelfIntroduction());
         this.setShortIntroduction(editForm.getShortIntroduction());
+    }
+
+    public void addAlarm(Alarm alarm) {
+        alarm.setUser(this);
+        this.alarms.add(alarm);
+    }
+
+    public void switchAlarm() {
+        if (acceptAlarm != null) {
+            acceptAlarm = !acceptAlarm;
+        } else {
+            acceptAlarm = true;
+        }
     }
 }

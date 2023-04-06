@@ -34,7 +34,6 @@ public class Comment {
 
     private String comment;
 
-
     private LocalDateTime createTime;
 
     private Integer subCommentCount;
