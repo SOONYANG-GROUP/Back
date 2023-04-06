@@ -78,7 +78,7 @@ public class ParticipatedUsers {
     public void appendDescription(String description) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(this.description);
-        stringBuilder.append("\n");
+        stringBuilder.append("<br>");
         stringBuilder.append(description);
         this.description = stringBuilder.toString();
         System.out.println(description);
