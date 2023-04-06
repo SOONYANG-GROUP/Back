@@ -34,10 +34,12 @@ public class HomeCardDto implements Serializable {
 
     private ProjectStatus status;
 
-    private List<RecruitUserDto> RecruitUserDtos;
-
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime endDate;
+
+
+    private List<RecruitUserDto> RecruitUserDtos;
+
 
 }
