@@ -245,8 +245,11 @@ public class ProjectService {
         participatedUserRepository.findByUsersIdAndProjectId(findUser.getId(), id)
                 .ifPresent(user -> {
                     String url = form.getUrl();
-                    user.setUrl(url);
-                    user.setDescription(form.getDescription());
+                    String description = form.getDescription();
+                    if (user.getUrl() != null) {
+                        user.setUrl(url);
+                    }
+                    user.appendDescription(description);
                 });
     }
 

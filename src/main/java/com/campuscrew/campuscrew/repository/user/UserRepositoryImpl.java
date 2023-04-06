@@ -33,7 +33,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .fetchFirst();
 
         List<ProjectGroupDto> fetch = queryFactory.select(Projections.constructor(
-                        ProjectGroupDto.class, project.projectStatus,
+                        ProjectGroupDto.class, project.id,
+                        project.projectStatus,
                         project.title, project.description))
                 .from(participatedUsers)
                 .innerJoin(project).on(project.user.id.eq(participatedUsers.user.id))
@@ -46,7 +47,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
             System.out.println(projectGroupDto);
         }
 
-        ProfileDto profileDto = new ProfileDto(user1.getId(),
+        ProfileDto profileDto = new ProfileDto(
+                user1.getId(),
                 user1.getName(),
                 user1.getDetailField(), user1.getDetailField(),
                 user1.getShortIntroduction(), fetch);

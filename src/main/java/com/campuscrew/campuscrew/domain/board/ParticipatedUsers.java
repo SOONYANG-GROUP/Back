@@ -75,4 +75,12 @@ public class ParticipatedUsers {
         user.getJoinedUsers().add(this);
     }
 
+    public void appendDescription(String description) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.description);
+        stringBuilder.append("\n");
+        stringBuilder.append(description);
+        this.description = stringBuilder.toString();
+    }
+
 }
