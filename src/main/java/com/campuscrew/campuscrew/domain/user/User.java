@@ -102,11 +102,12 @@ public class User {
         this.alarms.add(alarm);
     }
 
-    public void switchAlarm() {
+    public boolean switchAlarm() {
         if (acceptAlarm != null) {
             acceptAlarm = !acceptAlarm;
         } else {
             acceptAlarm = true;
         }
+        return acceptAlarm;
     }
 }

@@ -58,11 +58,11 @@ public class UserController {
     }
 
     @GetMapping("/alarm/setting")
-    public String switchAlarm(@AuthenticationPrincipal
+    public Boolean switchAlarm(@AuthenticationPrincipal
                                   UserDetails userDetails) {
         String email = userDetails.getUsername();
-        userService.switchAlarm(email);
-        return "ok";
+        boolean alarm = userService.switchAlarm(email);
+        return alarm;
     }
 
 }

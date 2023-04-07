@@ -52,11 +52,11 @@ public class UserService {
     }
 
 
-    public void switchAlarm(String email) {
+    public boolean switchAlarm(String email) {
         User user = userRepository
                 .findByEmail(email)
                 .orElse(null);
-        user.switchAlarm();
+        return user.switchAlarm();
     }
 
 
@@ -64,7 +64,6 @@ public class UserService {
         User user = userRepository
                 .findByEmail(email)
                 .orElse(null);
-
         user.editUser(editForm);
     }
 }
