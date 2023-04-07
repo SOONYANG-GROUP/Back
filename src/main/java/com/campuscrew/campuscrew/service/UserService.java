@@ -7,6 +7,7 @@ import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.EditForm;
 import com.campuscrew.campuscrew.dto.ProfileDto;
 import com.campuscrew.campuscrew.dto.UserJoin;
+import com.campuscrew.campuscrew.dto.user.AlarmDto;
 import com.campuscrew.campuscrew.repository.user.AlarmRepository;
 import com.campuscrew.campuscrew.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -80,9 +82,9 @@ public class UserService {
                 .orElse(0L);
     }
 
-    public void getAlarmList(String email) {
+    public List<AlarmDto> getAlarmList(String email) {
         User user = userRepository.findByEmail(email)
                 .orElse(null);
-        alarmRepository.fetchAlarmList(user.getId());
+        return alarmRepository.fetchAlarmList(user.getId());
     }
 }

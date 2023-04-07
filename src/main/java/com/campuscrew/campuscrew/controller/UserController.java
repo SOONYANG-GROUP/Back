@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.controller;
 
 import com.campuscrew.campuscrew.dto.*;
+import com.campuscrew.campuscrew.dto.user.AlarmDto;
 import com.campuscrew.campuscrew.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -73,10 +75,9 @@ public class UserController {
     }
 
     @GetMapping("/alarm/list")
-    public String getAlarms(@AuthenticationPrincipal
+    public List<AlarmDto> getAlarms(@AuthenticationPrincipal
                             UserDetails userDetails) {
         String email = userDetails.getUsername();
-        userService.getAlarmList(email);
-        return null;
+        return userService.getAlarmList(email);
     }
 }
