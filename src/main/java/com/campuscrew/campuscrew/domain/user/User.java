@@ -66,7 +66,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Alarm> alarms = new ArrayList<>();
 
-
     @Enumerated(EnumType.STRING)
     private Role role;
 

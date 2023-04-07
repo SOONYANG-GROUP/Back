@@ -66,13 +66,14 @@ public class ProjectService {
                 .filter(user -> project
                         .getRecruits()
                         .stream()
-                        .map(Recruit::getDetailField)
-                        .anyMatch(detailField ->
-                                user.getDetailField().equals(detailField)))
+                        .map(Recruit::getField)
+                        .anyMatch(field ->{
+                            System.out.println(field + ", user Detail Field " + user.getDetailField());
+                            return user.getDetailField().equals(field);
+                        }))
                 .forEach(user -> {
-                    System.out.println(user);
-//                    Alarm alarm = Alarm.createAlarm(project, user);
-//                    alarmRepository.save(alarm);
+                    Alarm alarm = Alarm.createAlarm(project, user);
+                    alarmRepository.save(alarm);
                 });
         // 2.현재 project에 관한 권한을 가져야 한다.
         // 2-1 project 를 모집하는 유저는 해당 project 게시글에 대한 권한을 통해
