@@ -64,5 +64,4 @@ public class UserController {
         boolean alarm = userService.switchAlarm(email);
         return alarm;
     }
-
 }

@@ -29,6 +29,7 @@ public class UserService {
         User user = User.builder()
                 .name(userJoin.getName())
                 .detailField(userJoin.getDetailField())
+                .acceptAlarm(true)
                 .email(userJoin.getEmail())
                 .password(userJoin.getPassword())
                 .createDate(LocalDateTime.now())
