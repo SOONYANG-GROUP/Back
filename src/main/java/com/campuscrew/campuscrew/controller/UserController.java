@@ -80,4 +80,10 @@ public class UserController {
         String email = userDetails.getUsername();
         return userService.getAlarmList(email);
     }
+
+    @GetMapping("/alarm/confirm/{alarmId}")
+    public String confirmAlarm(@PathVariable Long alarmId) {
+        userService.confirmAlarm(alarmId);
+        return "ok";
+    }
 }

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class AlarmDto {
+    private Long alarmId;
     private Long projectId;
     private String title;
     private String field;

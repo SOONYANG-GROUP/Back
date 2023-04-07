@@ -87,4 +87,10 @@ public class UserService {
                 .orElse(null);
         return alarmRepository.fetchAlarmList(user.getId());
     }
+
+    public void confirmAlarm(Long alarmId) {
+        alarmRepository.findById(alarmId)
+                .stream()
+                .forEach(alarm -> alarm.setAlarmStatus(AlarmStatus.CONFIRMED));
+    }
 }

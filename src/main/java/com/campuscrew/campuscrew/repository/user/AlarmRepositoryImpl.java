@@ -23,6 +23,7 @@ public class AlarmRepositoryImpl implements AlarmRepositoryCustom{
     @Override
     public List<AlarmDto> fetchAlarmList(Long memberId) {
         List<AlarmDto> fetch = query.select(Projections.constructor(AlarmDto.class,
+                        alarm.id.as("alarmId"),
                         project.id.as("projectId"),
                         project.title,
                         user.detailField.as("field"),
