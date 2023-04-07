@@ -1,10 +1,13 @@
 package com.campuscrew.campuscrew.service;
 
+import com.campuscrew.campuscrew.domain.user.Alarm;
+import com.campuscrew.campuscrew.domain.user.AlarmStatus;
 import com.campuscrew.campuscrew.domain.user.Role;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.EditForm;
 import com.campuscrew.campuscrew.dto.ProfileDto;
 import com.campuscrew.campuscrew.dto.UserJoin;
+import com.campuscrew.campuscrew.repository.user.AlarmRepository;
 import com.campuscrew.campuscrew.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +21,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final AlarmRepository alarmRepository;
     private final PasswordEncoder passwordEncoder;
 
     public User signUp(UserJoin userJoin) throws Exception {
@@ -66,5 +70,19 @@ public class UserService {
                 .findByEmail(email)
                 .orElse(null);
         user.editUser(editForm);
+    }
+
+    public Long getAlarmCount(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+        return alarmRepository
+                .countAlarmByUserId(user.getId(), AlarmStatus.UNCONFIRMED)
+                .orElse(0L);
+    }
+
+    public void getAlarmList(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+        alarmRepository.fetchAlarmList(user.getId());
     }
 }

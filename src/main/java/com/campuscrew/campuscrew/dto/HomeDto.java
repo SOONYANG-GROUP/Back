@@ -1,5 +1,6 @@
 package com.campuscrew.campuscrew.dto;
 
+import com.campuscrew.campuscrew.dto.project.CountDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.campuscrew.campuscrew.dto;
+package com.campuscrew.campuscrew.dto.project;
 
 import com.campuscrew.campuscrew.domain.board.ProjectStatus;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

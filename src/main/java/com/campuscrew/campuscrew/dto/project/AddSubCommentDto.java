@@ -1,4 +1,4 @@
-package com.campuscrew.campuscrew.dto;
+package com.campuscrew.campuscrew.dto.project;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

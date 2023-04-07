@@ -20,7 +20,11 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
+    public final BooleanPath acceptAlarm = createBoolean("acceptAlarm");
+
     public final NumberPath<Integer> age = createNumber("age", Integer.class);
+
+    public final ListPath<Alarm, QAlarm> alarms = this.<Alarm, QAlarm>createList("alarms", Alarm.class, QAlarm.class, PathInits.DIRECT2);
 
     public final ListPath<com.campuscrew.campuscrew.domain.board.Comment, com.campuscrew.campuscrew.domain.board.QComment> comments = this.<com.campuscrew.campuscrew.domain.board.Comment, com.campuscrew.campuscrew.domain.board.QComment>createList("comments", com.campuscrew.campuscrew.domain.board.Comment.class, com.campuscrew.campuscrew.domain.board.QComment.class, PathInits.DIRECT2);
 

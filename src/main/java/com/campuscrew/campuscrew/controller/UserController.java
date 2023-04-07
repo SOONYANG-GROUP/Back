@@ -64,4 +64,19 @@ public class UserController {
         boolean alarm = userService.switchAlarm(email);
         return alarm;
     }
+
+    @GetMapping("/alarm/count")
+    public Long getAlarmCount(@AuthenticationPrincipal
+                              UserDetails userDetails){
+        String email = userDetails.getUsername();
+        return userService.getAlarmCount(email);
+    }
+
+    @GetMapping("/alarm/list")
+    public String getAlarms(@AuthenticationPrincipal
+                            UserDetails userDetails) {
+        String email = userDetails.getUsername();
+        userService.getAlarmList(email);
+        return null;
+    }
 }

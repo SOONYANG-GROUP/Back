@@ -3,7 +3,9 @@ package com.campuscrew.campuscrew.controller;
 import com.campuscrew.campuscrew.domain.board.Comment;
 import com.campuscrew.campuscrew.domain.board.Project;
 import com.campuscrew.campuscrew.dto.*;
+import com.campuscrew.campuscrew.dto.project.AddCommentDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
+import com.campuscrew.campuscrew.dto.project.AddSubCommentDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.project.CommentPageDto;
 import com.campuscrew.campuscrew.repository.project.ProjectRepository;
@@ -17,7 +19,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.lang.reflect.Member;
 import java.util.List;
 
 @Slf4j
