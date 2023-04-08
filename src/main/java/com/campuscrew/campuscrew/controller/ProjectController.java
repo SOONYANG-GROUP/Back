@@ -128,7 +128,7 @@ public class ProjectController {
     @GetMapping("/{projectId}/cancel")
     public String cancelProject(@AuthenticationPrincipal
                                 UserDetails userDetails,
-                                Long projectId) {
+                                @PathVariable Long projectId) {
         String email = userDetails.getUsername();
         projectService.cancelProject(email, projectId);
         return "canceled";
