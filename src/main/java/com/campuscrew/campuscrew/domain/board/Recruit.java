@@ -53,4 +53,12 @@ public class Recruit {
             throw new IllegalStateException("이미 projects 인원이 가득 찼습니다.");
         }
     }
+
+    public void cancelProject() {
+        if(currentRecruit > 0) {
+            currentRecruit -= 1;
+        } else {
+            throw new IllegalStateException("이미 취소 했습니다.");
+        }
+    }
 }
