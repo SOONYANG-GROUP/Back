@@ -31,17 +31,27 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .from(user)
                 .where(user.id.eq(id))
                 .fetchFirst();
-
-        List<ProjectGroupDto> fetch = queryFactory.select(Projections.constructor(
-                        ProjectGroupDto.class, project.id,
+        // 멤버가 참여한 프로젝트 즉, participateUsers 테이블에서 user, project
+        // participateUsers user, project
+        List<ProjectGroupDto> fetch = queryFactory.select(Projections.constructor(ProjectGroupDto.class, project.id,
                         project.projectStatus,
                         project.title, project.description))
                 .from(participatedUsers)
-                .innerJoin(project).on(project.user.id.eq(participatedUsers.user.id))
-                .innerJoin(user).on(user.id.eq(participatedUsers.user.id))
-                .distinct()
-                .where(participatedUsers.user.id.eq(id))
+                .leftJoin(participatedUsers.project, project)
+                .leftJoin(participatedUsers.user, user)
+                .where(user.id.eq(id))
                 .fetch();
+
+//        List<ProjectGroupDto> fetch = queryFactory.select(Projections.constructor(
+//                        ProjectGroupDto.class, project.id,
+//                        project.projectStatus,
+//                        project.title, project.description))
+//                .from(participatedUsers)
+//                .innerJoin(project).on(project.user.id.eq(participatedUsers.user.id))
+//                .innerJoin(user).on(user.id.eq(participatedUsers.user.id))
+//                .distinct()
+//                .where(participatedUsers.user.id.eq(id))
+//                .fetch();
 
         for (ProjectGroupDto projectGroupDto : fetch) {
             System.out.println(projectGroupDto);

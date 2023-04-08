@@ -22,7 +22,7 @@ public class AlarmRepositoryImpl implements AlarmRepositoryCustom{
 
     @Override
     public List<AlarmDto> fetchAlarmList(Long memberId) {
-        List<AlarmDto> fetch = query.select(Projections.constructor(AlarmDto.class,
+        return query.select(Projections.constructor(AlarmDto.class,
                         alarm.id.as("alarmId"),
                         project.id.as("projectId"),
                         project.title,
@@ -33,6 +33,6 @@ public class AlarmRepositoryImpl implements AlarmRepositoryCustom{
                 .leftJoin(alarm.project, project)
                 .where(user.id.eq(memberId), alarm.alarmStatus.eq(AlarmStatus.UNCONFIRMED))
                 .fetch();
-        return fetch;
+
     }
 }

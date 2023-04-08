@@ -50,8 +50,7 @@ public class User {
 
     private String refreshToken;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST,
-            orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<Project> projects = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
