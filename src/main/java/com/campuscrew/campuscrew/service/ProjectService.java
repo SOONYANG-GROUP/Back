@@ -286,4 +286,15 @@ public class ProjectService {
                     project.setEndDate(LocalDateTime.now().plus(14, ChronoUnit.DAYS));
                 });
     }
+
+    public void cancelProject(String email, Long projectId) {
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+
+        participatedUserRepository
+                .findByUsersIdAndProjectId(user.getId(), projectId)
+                .ifPresent(participatedUsers-> {
+                    participatedUserRepository.delete(participatedUsers);
+                });
+    }
 }

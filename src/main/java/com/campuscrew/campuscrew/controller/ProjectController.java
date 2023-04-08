@@ -125,6 +125,15 @@ public class ProjectController {
         return "ok";
     }
 
+    @GetMapping("/{projectId}/cancel")
+    public String cancelProject(@AuthenticationPrincipal
+                                UserDetails userDetails,
+                                Long projectId) {
+        String email = userDetails.getUsername();
+        projectService.cancelProject(email, projectId);
+        return "canceled";
+    }
+
     @GetMapping("/{id}/member")
     public MemberPageDto getMemberPage(@PathVariable Long id,
                                        @AuthenticationPrincipal
