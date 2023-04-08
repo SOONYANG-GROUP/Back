@@ -294,6 +294,7 @@ public class ProjectService {
         participatedUserRepository
                 .findByUsersIdAndProjectId(user.getId(), projectId)
                 .ifPresent(participatedUsers -> {
+                    System.out.println(participatedUsers);
                     participatedUsers.getRecruit().cancelProject();
                     participatedUserRepository.delete(participatedUsers);
                 });
