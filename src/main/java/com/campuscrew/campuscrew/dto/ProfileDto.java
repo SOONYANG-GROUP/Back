@@ -11,6 +11,7 @@ import java.util.List;
 @ToString(of = {"name", "detailField"})
 public class ProfileDto {
     private Long id;
+    private String email;
     private String name;
     private String detailField;
     private String selfIntroduction;

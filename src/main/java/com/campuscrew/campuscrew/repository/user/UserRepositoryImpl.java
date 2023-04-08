@@ -34,7 +34,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
         // 멤버가 참여한 프로젝트 즉, participateUsers 테이블에서 user, project
         // participateUsers user, project
         List<ProjectGroupDto> fetch = queryFactory.select(Projections.constructor(ProjectGroupDto.class,
-                        user.email,
                         project.id,
                         project.projectStatus,
                         project.title, project.description))
@@ -61,6 +60,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 
         ProfileDto profileDto = new ProfileDto(
                 user1.getId(),
+                user1.getEmail(),
                 user1.getName(),
                 user1.getDetailField(), user1.getDetailField(),
                 user1.getShortIntroduction(), fetch);
