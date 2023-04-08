@@ -13,7 +13,7 @@ public interface ParticipatedUsersRepository extends JpaRepository<ParticipatedU
 
     Optional<ParticipatedUsers> findByProjectId(Long projectId);
 
-    @Query("select pu from ParticipatedUsers pu, Recruit r left join pu.recruit on r.id = pu.recruit.id where pu.user.id = :usersId and pu.project.id = :projectId")
+    @Query("select pu from ParticipatedUsers pu left join pu.recruit r where pu.user.id = :usersId and pu.project.id = :projectId")
     Optional<ParticipatedUsers> findByUsersIdAndProjectId(@Param("usersId") Long usersId, @Param("projectId") Long projectId);
 
     @Query("select pu from ParticipatedUsers pu where pu.project.id = :id and pu.status = :status")
