@@ -291,6 +291,9 @@ public class ProjectService {
         User user = userRepository.findByEmail(email)
                 .orElse(null);
 
+        log.info("user Id = {}", user.getId());
+        log.info("project Id = {}", projectId);
+
         participatedUserRepository
                 .findByUsersIdAndProjectId(user.getId(), projectId)
                 .ifPresent(participatedUsers -> {
