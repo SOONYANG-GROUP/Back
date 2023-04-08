@@ -33,7 +33,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .fetchFirst();
         // 멤버가 참여한 프로젝트 즉, participateUsers 테이블에서 user, project
         // participateUsers user, project
-        List<ProjectGroupDto> fetch = queryFactory.select(Projections.constructor(ProjectGroupDto.class, project.id,
+        List<ProjectGroupDto> fetch = queryFactory.select(Projections.constructor(ProjectGroupDto.class,
+                        user.email,
+                        project.id,
                         project.projectStatus,
                         project.title, project.description))
                 .from(participatedUsers)

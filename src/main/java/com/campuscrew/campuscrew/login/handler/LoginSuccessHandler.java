@@ -1,5 +1,6 @@
 package com.campuscrew.campuscrew.login.handler;
 
+import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.TokenDto;
 import com.campuscrew.campuscrew.jwt.JwtService;
 import com.campuscrew.campuscrew.repository.user.UserRepository;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,8 +32,6 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         String email = extractUsername(authentication);
         String accessToken =  jwtService.createAccessToken(email);
         String refreshToken = jwtService.createRefreshToken();
-
-        jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         userRepository.findByEmail(email)
                 .ifPresent(user -> {
                     user.updateRefreshToken(refreshToken);

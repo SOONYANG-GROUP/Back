@@ -34,6 +34,7 @@ public class JwtService {
     @Value("${jwt.refresh.header}")
     private String refreshHeader;
 
+    private static final String USER_ID = "user_id";
     public static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
     public static final String EMAIL_CLAIM = "email";
@@ -138,4 +139,13 @@ public class JwtService {
     }
 
 
+    public String createAccessToken(String email, Long id) {
+        Date now = new Date();
+        return JWT.create()
+                .withSubject(ACCESS_TOKEN_SUBJECT)
+                .withExpiresAt(new Date(now.getTime() + + accessTokenExpirationPeriod)) // 토큰 생성
+                .withClaim(EMAIL_CLAIM, email)
+                .withClaim(USER_ID, id)// payload에 담기는 내용
+                .sign(Algorithm.HMAC512(secretKey));
+    }
 }
