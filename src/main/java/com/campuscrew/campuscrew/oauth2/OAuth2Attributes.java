@@ -66,6 +66,7 @@ public class OAuth2Attributes {
                 .socialType(socialType)
                 .socialId(oauth2UserInfo.getId())
                 .name(oauth2UserInfo.getName())
+                .acceptAlarm(false)
                 .createDate(LocalDateTime.now())
                 .email(email)
                 .nickname(oauth2UserInfo.getNickname())
