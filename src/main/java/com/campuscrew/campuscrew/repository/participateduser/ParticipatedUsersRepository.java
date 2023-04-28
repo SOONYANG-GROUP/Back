@@ -1,4 +1,4 @@
-package com.campuscrew.campuscrew.repository;
+package com.campuscrew.campuscrew.repository.participateduser;
 
 import com.campuscrew.campuscrew.domain.board.ParticipatedStatus;
 import com.campuscrew.campuscrew.domain.board.ParticipatedUsers;

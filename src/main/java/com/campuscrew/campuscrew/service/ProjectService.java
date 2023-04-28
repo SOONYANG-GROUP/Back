@@ -7,11 +7,12 @@ import com.campuscrew.campuscrew.domain.user.Alarm;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.HomeDto;
 import com.campuscrew.campuscrew.dto.ManagerPageDto;
-import com.campuscrew.campuscrew.dto.MemberEditForm;
+import com.campuscrew.campuscrew.dto.AddTimeLineForm;
 import com.campuscrew.campuscrew.dto.MemberPageDto;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
-import com.campuscrew.campuscrew.repository.ParticipatedUsersRepository;
+import com.campuscrew.campuscrew.repository.participateduser.ParticipatedUsersRepository;
+import com.campuscrew.campuscrew.repository.participateduser.TimeLineRepository;
 import com.campuscrew.campuscrew.repository.project.CommentPageDto;
 import com.campuscrew.campuscrew.repository.project.CommentRepository;
 import com.campuscrew.campuscrew.repository.project.ProjectRepository;
@@ -36,6 +37,7 @@ import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.*;
 @Transactional
 @Slf4j
 public class ProjectService {
+    private final TimeLineRepository timeLineRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final ParticipatedUsersRepository participatedUserRepository;
@@ -200,27 +202,27 @@ public class ProjectService {
 
     // 1. 현재 유저 정보를 조회하고, 프로젝트 id로 프로젝트를 조회 한다.
     // 2. 현재 유저 정보가 프로젝트의 관리자 이면, ready 상태인 모든 회원에 대한 정보를 볼 수 있어야 한다.
-    public ManagerPageDto getManagerPage(Long id, String email) {
+    public ManagerPageDto getManagerPage(Long projectId, String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Not login"));
 
         ParticipatedUsers participatedUsers = participatedUserRepository
-                .findByUsersIdAndProjectId(user.getId(), id)
+                .findByUsersIdAndProjectId(user.getId(), projectId)
                 .orElse(null);
 
         if (participatedUsers.getStatus() != ParticipatedStatus.MANAGER) {
             throw new NotAccessibleAuthenticationException("Manager 만 접근 가능");
         }
 
-        return projectRepository.fetchManagerPage(user.getId(), id);
+        return projectRepository.fetchManagerPage(user.getId(), projectId);
     }
     //
-    public MemberPageDto getMemberPage(Long id, String email) {
+    public MemberPageDto getMemberPage(Long projectId, String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Not login"));
 
         ParticipatedUsers participatedUsers = participatedUserRepository
-                .findByUsersIdAndProjectId(user.getId(), id)
+                .findByUsersIdAndProjectId(user.getId(), projectId)
                 .orElse(null);
 
         ParticipatedStatus status = participatedUsers.getStatus();
@@ -229,7 +231,7 @@ public class ProjectService {
             throw new NotAccessibleAuthenticationException("Manager 나 Member 만 접근 가능");
         }
 
-        return projectRepository.fetchMemberPage(id, user.getId());
+        return projectRepository.fetchMemberPage(projectId, user.getId());
     }
     // 1. project 가 진행 중으로 바뀔 때
     // 2. ready 상태 회원들을 전부 삭제, 종료일을 기일로 부터 14일
@@ -263,17 +265,13 @@ public class ProjectService {
                 .forEach(Project::startProject);
     }
 
-    public void addMemberContent(Long id, MemberEditForm form, String email) {
+    public void addTimeLine(Long projectId, AddTimeLineForm form, String email) {
         User findUser = userRepository.findByEmail(email)
                 .orElse(null);
-        participatedUserRepository.findByUsersIdAndProjectId(findUser.getId(), id)
+        participatedUserRepository.findByUsersIdAndProjectId(findUser.getId(), projectId)
                 .ifPresent(user -> {
-                    String url = form.getUrl();
-                    String description = form.getDescription();
-                    if (user.getUrl() != null) {
-                        user.setUrl(url);
-                    }
-                    user.appendDescription(description);
+                    TimeLine timeLine = TimeLine.createTimeLine(form, user);
+                    timeLineRepository.save(timeLine);
                 });
     }
 

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -14,8 +16,7 @@ public class ParticipatedUserDto {
     private Long id;
     private ParticipatedStatus status;
     private Long memberId;
-    private String url;
-    private String description;
-    private String detailField;
+    private Long timeLineId;
+    private List<TimeLineDto> timeLineDtoList;
     private String name;
 }

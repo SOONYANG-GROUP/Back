@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @Setter
@@ -32,10 +35,8 @@ public class ParticipatedUsers {
     @Enumerated(EnumType.STRING)
     private ParticipatedStatus status;
 
-    private String url;
-
-    private String description;
-
+    @OneToMany(mappedBy = "participatedUsers", cascade = CascadeType.PERSIST)
+    private List<TimeLine> timeLines = new ArrayList<>();
 
     public static ParticipatedUsers makeParticipatedUserAsManager(User user, Project project) {
         ParticipatedUsers participatedUsers = new ParticipatedUsers();
@@ -75,13 +76,5 @@ public class ParticipatedUsers {
         user.getJoinedUsers().add(this);
     }
 
-    public void appendDescription(String description) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.description);
-        stringBuilder.append("`");
-        stringBuilder.append(description);
-        this.description = stringBuilder.toString();
-        System.out.println(description);
-    }
 
 }

@@ -142,13 +142,15 @@ public class ProjectController {
         return projectService.getMemberPage(id, email);
     }
 
-    @PostMapping("/{id}/members/edit")
-    public String addContent(@RequestBody MemberEditForm editForm,
-                             @PathVariable Long id,
-                             @AuthenticationPrincipal UserDetails userDetails) {
-        projectService.addMemberContent(id, editForm, userDetails.getUsername());
+
+    @PostMapping("/{id}/members/timelines/add")
+    public String addTimeLine(@RequestBody AddTimeLineForm addTimeLineForm,
+                              @PathVariable Long id,
+                              @AuthenticationPrincipal UserDetails userDetails) {
+        projectService.addTimeLine(id, addTimeLineForm, userDetails.getUsername());
         return "pok";
     }
+
 
     @GetMapping("/set")
     public String setRunningProject() {

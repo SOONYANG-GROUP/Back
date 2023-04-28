@@ -1,6 +1,7 @@
 package com.campuscrew.campuscrew.repository.project;
 import com.campuscrew.campuscrew.domain.board.ParticipatedStatus;
 import com.campuscrew.campuscrew.domain.board.ProjectStatus;
+import com.campuscrew.campuscrew.domain.board.QTimeLine;
 import com.campuscrew.campuscrew.dto.*;
 import com.campuscrew.campuscrew.dto.project.*;
 import com.querydsl.core.group.GroupBy;
@@ -18,6 +19,7 @@ import static com.campuscrew.campuscrew.domain.board.QProject.project;
 import static com.campuscrew.campuscrew.domain.board.QRecruit.recruit;
 import static com.campuscrew.campuscrew.domain.board.QReference.reference;
 import static com.campuscrew.campuscrew.domain.board.QSubComment.subComment1;
+import static com.campuscrew.campuscrew.domain.board.QTimeLine.timeLine;
 import static com.campuscrew.campuscrew.domain.user.QUser.user;
 import static com.querydsl.core.group.GroupBy.groupBy;
 import static java.util.stream.Collectors.toList;
@@ -142,16 +144,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                                 recruit.detailField, user.id, user.name)
                                 ))));
 
-//        List<ManagerPageDto> transform = queryFactory.select(
-//                Projections.constructor(ManagerPageDto.class,
-//                        Projections.list(Projections.constructor(AppliedUserDto.class,
-//                                recruit.detailField, user.id, user.name))))
-//                .from(participatedUsers)
-//                .leftJoin(participatedUsers.user, user)
-//                .leftJoin(participatedUsers.recruit, recruit)
-//                .leftJoin(participatedUsers.project, project)
-//                .where(project.id.eq(projectId), participatedUsers.status.eq(ParticipatedStatus.READY))
-//                .fetch();
+
 
         for (ManagerPageDto managerPageDto : transform) {
             System.out.println(managerPageDto);
@@ -163,22 +156,12 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     }
 
     @Override
-    public MemberPageDto fetchMemberPage(Long projectId, Long id) {
-//        List<MemberPageDto> fetch = queryFactory.select(Projections.constructor(MemberPageDto.class, project.openChatUrl,
-//                        project.voiceChatUrl, list(Projections.constructor(ParticipatedUserDto.class,
-//                                recruit.detailField, user.name)))
-//                ).from(participatedUsers)
-//                .leftJoin(participatedUsers.user, user)
-//                .leftJoin(participatedUsers.recruit, recruit)
-//                .leftJoin(participatedUsers.project, project)
-//                .where(project.id.eq(projectId))
-//                .fetch(); // 결과가 하나 나오길 기대 했는데 2개 나오는 것, 이유는 select 결과가 2개 이기 때문에 그렇다,
-//                        // groupby를 사용했을 때는 그렇지 않았다는 것 을 알수 있다.
-
+    public MemberPageDto fetchMemberPage(Long projectId, Long userId) {
         List<MemberPageDto> fetch = queryFactory.selectFrom(participatedUsers)
                 .leftJoin(participatedUsers.user, user)
                 .leftJoin(participatedUsers.recruit, recruit)
                 .leftJoin(participatedUsers.project, project)
+                .leftJoin(timeLine).on(timeLine.participatedUsers.id.eq(participatedUsers.id))
                 .where(project.id.eq(projectId), participatedUsers.status.ne(ParticipatedStatus.READY))
                 .transform(groupBy(project.id).list(Projections.constructor(
                         MemberPageDto.class,
@@ -189,8 +172,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 user.id,
                                 participatedUsers.status,
                                 participatedUsers.id.as("memberId"),
-                                participatedUsers.url,
-                                participatedUsers.description,
+                                GroupBy.list(Projections.constructor(TimeLineDto.class,
+                                        timeLine.id,
+                                        timeLine.title)),
                                 recruit.detailField,
                                 user.name)))));
 
