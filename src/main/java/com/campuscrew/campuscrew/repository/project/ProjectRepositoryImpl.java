@@ -176,6 +176,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 participatedUsers.id,
                                 GroupBy.list(Projections.constructor(TimeLineListTitleDto.class,
                                         timeLine.id, timeLine.title)))));
+
         return new MemberPageDtoV2(fetch, transform);
     }
 }
