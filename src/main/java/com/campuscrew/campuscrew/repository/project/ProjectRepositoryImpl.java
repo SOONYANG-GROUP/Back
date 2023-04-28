@@ -171,18 +171,21 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 user.id,
                                 participatedUsers.status,
                                 participatedUsers.id.as("memberId"),
-                                GroupBy.list(Projections.constructor(TimeLineListDto.class,
-                                        timeLine.id,
-                                        timeLine.title)
-                                ).as("timeLineListDtos"),
                                 recruit.detailField,
-                                user.name)))));
+                                user.name)),
+                        GroupBy.list(Projections.constructor(TimeLineListTitleDto.class, timeLine.id, timeLine.title)))));
 
         List<TimeLineListDto> transform = queryFactory.selectFrom(timeLine)
                 .leftJoin(timeLine.participatedUsers, participatedUsers)
                 .where(participatedUsers.project.id.eq(projectId), participatedUsers.status.ne(ParticipatedStatus.READY))
                 .transform(groupBy(participatedUsers.id).list(
-                        Projections.constructor(TimeLineListDto.class, timeLine.id, timeLine.title)));
+                        Projections.constructor(TimeLineListDto.class,
+                                participatedUsers.id,
+                                GroupBy.list(Projections.constructor(TimeLineListTitleDto.class, timeLine.id, timeLine.title)))));
+
+
+
+
 
 
         for (MemberPageDto memberPageDto : fetch) {

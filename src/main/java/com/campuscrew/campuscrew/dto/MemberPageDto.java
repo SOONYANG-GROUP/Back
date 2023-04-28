@@ -15,4 +15,5 @@ public class MemberPageDto {
     private String openChatUrl;
     private String voiceChatUrl;
     private List<ParticipatedUserDto> participatedUserDtos;
+    private List<TimeLineListDto> timeLineListDtos;
 }
