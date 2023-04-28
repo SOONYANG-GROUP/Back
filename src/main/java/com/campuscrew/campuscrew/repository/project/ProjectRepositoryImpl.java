@@ -117,8 +117,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
         List<SubCommentDto> transform = queryFactory.select(Projections.constructor(
                     SubCommentDto.class, subComment1.id.as("subCommentId"), user.name,
                       subComment1.createTime.as("createDate"), subComment1.subComment
-                )).from(subComment1).
-                leftJoin(subComment1.user, user)
+                )).from(subComment1)
+                .leftJoin(subComment1.user, user)
                 .leftJoin(subComment1.comment, comment1)
                 .where(comment1.id.eq(commentId))
                 .fetch();
@@ -143,12 +143,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                                 recruit.detailField, user.id, user.name)
                                 ))));
 
-
-
-        for (ManagerPageDto managerPageDto : transform) {
-            System.out.println(managerPageDto);
-        }
-
         return transform.stream()
                 .findFirst()
                 .orElseGet(ManagerPageDto::new);
@@ -160,7 +154,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .leftJoin(participatedUsers.user, user)
                 .leftJoin(participatedUsers.recruit, recruit)
                 .leftJoin(participatedUsers.project, project)
-                .leftJoin(timeLine).on(timeLine.participatedUsers.id.eq(participatedUsers.id))
                 .where(project.id.eq(projectId), participatedUsers.status.ne(ParticipatedStatus.READY))
                 .transform(GroupBy.groupBy(project.id).list(Projections.constructor(
                         MemberPageDto.class,
@@ -176,17 +169,13 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
 
         List<TimeLineListDto> transform = queryFactory.selectFrom(timeLine)
                 .leftJoin(timeLine.participatedUsers, participatedUsers)
-                .where(participatedUsers.project.id.eq(projectId), participatedUsers.status.ne(ParticipatedStatus.READY))
+                .where(participatedUsers.project.id.eq(projectId),
+                        participatedUsers.status.ne(ParticipatedStatus.READY))
                 .transform(groupBy(participatedUsers.id).list(
                         Projections.constructor(TimeLineListDto.class,
                                 participatedUsers.id,
-                                GroupBy.list(Projections.constructor(TimeLineListTitleDto.class, timeLine.id, timeLine.title)))));
-
-
-        for (MemberPageDto memberPageDto : fetch) {
-            System.out.println("memberPageDto = " + memberPageDto);
-        }
-
+                                GroupBy.list(Projections.constructor(TimeLineListTitleDto.class,
+                                        timeLine.id, timeLine.title)))));
         return new MemberPageDtoV2(fetch, transform);
     }
 }
