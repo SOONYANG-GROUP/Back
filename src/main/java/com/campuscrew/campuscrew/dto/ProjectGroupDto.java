@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ProjectGroupDto {
-    private Long id;
+    private Long projectId;
     private Long participateUsersId;
     private ProjectStatus status;
     private String title;

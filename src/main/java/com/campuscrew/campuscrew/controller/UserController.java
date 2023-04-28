@@ -2,6 +2,8 @@ package com.campuscrew.campuscrew.controller;
 
 import com.campuscrew.campuscrew.dto.*;
 import com.campuscrew.campuscrew.dto.user.AlarmDto;
+import com.campuscrew.campuscrew.repository.participateduser.TimeLineRepository;
+import com.campuscrew.campuscrew.repository.project.TimeLineListTitleDto;
 import com.campuscrew.campuscrew.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
+    private final TimeLineRepository timeLineRepository;
     private final UserService userService;
 
     @PostMapping("/edit")
@@ -52,9 +55,13 @@ public class UserController {
         return profile;
     }
 
+    @GetMapping("/profile/{participatedUserId}")
+    public List<TimeLineListTitleDto> getTimeLineTitleList(@PathVariable Long participatedUserId) {
+        return timeLineRepository.getTimeLineListTitles(participatedUserId);
+    }
+
     @GetMapping("/profile/{id}")
-    public ProfileDto getOtherUserProfile(@AuthenticationPrincipal UserDetails userDetails,
-                                          @PathVariable Long id) {
+    public ProfileDto getOtherUserProfile(@PathVariable Long id) {
         ProfileDto profile = userService.getProfile(id);
         return profile;
     }
