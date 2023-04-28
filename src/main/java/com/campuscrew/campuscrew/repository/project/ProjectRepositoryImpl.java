@@ -171,11 +171,14 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 user.id,
                                 participatedUsers.status,
                                 participatedUsers.id.as("memberId"),
-                                Projections.list(Projections.constructor(TimeLineListDto.class,
+                                GroupBy.list(Projections.constructor(TimeLineListDto.class,
                                         timeLine.id,
                                         timeLine.title)),
                                 recruit.detailField,
                                 user.name)))));
+
+
+
 
         for (MemberPageDto memberPageDto : fetch) {
             System.out.println("memberPageDto = " + memberPageDto);
