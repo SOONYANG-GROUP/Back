@@ -299,4 +299,10 @@ public class ProjectService {
                     participatedUserRepository.delete(participatedUsers);
                 });
     }
+
+    public TimeLineContentDto getTimeLine(Long timeLineId) {
+        return timeLineRepository.findById(timeLineId)
+                .map(TimeLineContentDto::convert)
+                .orElse(null);
+    }
 }
