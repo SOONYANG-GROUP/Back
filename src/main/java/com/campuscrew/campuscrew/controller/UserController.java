@@ -55,9 +55,9 @@ public class UserController {
         return profile;
     }
 
-    @GetMapping("/profile/{participatedUserId}")
-    public List<TimeLineListTitleDto> getTimeLineTitleList(@PathVariable Long participatedUserId) {
-        return timeLineRepository.getTimeLineListTitles(participatedUserId);
+    @GetMapping("/profile/{userId}/{participatedUsersId}")
+    public List<TimeLineListTitleDto> getTimeLineTitleList(@PathVariable Long participatedUsersId) {
+        return timeLineRepository.getTimeLineListTitles(participatedUsersId);
     }
 
     @GetMapping("/profile/{id}")
