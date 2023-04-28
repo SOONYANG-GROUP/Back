@@ -26,7 +26,7 @@ public class TimeLineRepositoryImpl implements TimeLineRepositoryCustom{
                 .from(timeLine)
                 .leftJoin(timeLine.participatedUsers, participatedUsers)
                 .where(participatedUsers.id.eq(participatedUserId))
-                .orderBy(timeLine.createJobTime.desc())
+                .orderBy(timeLine.createJobTime.asc())
                 .fetch();
     }
 }
