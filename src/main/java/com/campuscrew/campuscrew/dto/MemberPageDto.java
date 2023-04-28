@@ -10,10 +10,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(of = {"openChatUrl", "voiceChatUrl"})
-public class MemberPageDto {
+public class MemberPageDto implements MemberPages{
     private ProjectStatus projectStatus;
     private String openChatUrl;
     private String voiceChatUrl;
     private List<ParticipatedUserDto> participatedUserDtos;
-    private List<TimeLineListDto> timeLineListDtos;
+
 }

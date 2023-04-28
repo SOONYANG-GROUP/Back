@@ -5,10 +5,7 @@ import com.campuscrew.campuscrew.controller.exception.RequiredLoginStateExceptio
 import com.campuscrew.campuscrew.domain.board.*;
 import com.campuscrew.campuscrew.domain.user.Alarm;
 import com.campuscrew.campuscrew.domain.user.User;
-import com.campuscrew.campuscrew.dto.HomeDto;
-import com.campuscrew.campuscrew.dto.ManagerPageDto;
-import com.campuscrew.campuscrew.dto.AddTimeLineForm;
-import com.campuscrew.campuscrew.dto.MemberPageDto;
+import com.campuscrew.campuscrew.dto.*;
 import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.participateduser.ParticipatedUsersRepository;
@@ -217,7 +214,7 @@ public class ProjectService {
         return projectRepository.fetchManagerPage(user.getId(), projectId);
     }
     //
-    public MemberPageDto getMemberPage(Long projectId, String email) {
+    public MemberPages getMemberPage(Long projectId, String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Not login"));
 

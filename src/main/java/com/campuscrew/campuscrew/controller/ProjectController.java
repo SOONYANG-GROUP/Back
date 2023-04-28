@@ -135,7 +135,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/member")
-    public MemberPageDto getMemberPage(@PathVariable Long id,
+    public MemberPages getMemberPage(@PathVariable Long id,
                                        @AuthenticationPrincipal
                                        UserDetails userDetails) {
         String email = userDetails.getUsername();

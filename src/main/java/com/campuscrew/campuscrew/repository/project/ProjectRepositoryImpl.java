@@ -155,7 +155,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
     }
 
     @Override
-    public MemberPageDto fetchMemberPage(Long projectId, Long userId) {
+    public MemberPages fetchMemberPage(Long projectId, Long userId) {
         List<MemberPageDto> fetch = queryFactory.selectFrom(participatedUsers)
                 .leftJoin(participatedUsers.user, user)
                 .leftJoin(participatedUsers.recruit, recruit)
@@ -172,8 +172,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 participatedUsers.status,
                                 participatedUsers.id.as("memberId"),
                                 recruit.detailField,
-                                user.name)),
-                        GroupBy.list(Projections.constructor(TimeLineListTitleDto.class, timeLine.id, timeLine.title)))));
+                                user.name)))));
 
         List<TimeLineListDto> transform = queryFactory.selectFrom(timeLine)
                 .leftJoin(timeLine.participatedUsers, participatedUsers)
@@ -184,17 +183,10 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 GroupBy.list(Projections.constructor(TimeLineListTitleDto.class, timeLine.id, timeLine.title)))));
 
 
-
-
-
-
         for (MemberPageDto memberPageDto : fetch) {
             System.out.println("memberPageDto = " + memberPageDto);
         }
 
-        return fetch
-                .stream()
-                .findFirst()
-                .orElseGet(MemberPageDto::new);
+        return new MemberPageDtoV2(fetch, transform);
     }
 }
