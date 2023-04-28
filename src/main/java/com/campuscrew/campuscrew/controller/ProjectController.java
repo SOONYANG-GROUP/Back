@@ -152,7 +152,9 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/members/timelines/{timeLineId}")
-    public TimeLineDto
+    public TimeLineDto getTimeLine() {
+        return null;
+    }
 
 
     @GetMapping("/set")

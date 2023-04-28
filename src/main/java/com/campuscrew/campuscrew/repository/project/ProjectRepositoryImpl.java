@@ -1,7 +1,6 @@
 package com.campuscrew.campuscrew.repository.project;
 import com.campuscrew.campuscrew.domain.board.ParticipatedStatus;
 import com.campuscrew.campuscrew.domain.board.ProjectStatus;
-import com.campuscrew.campuscrew.domain.board.QTimeLine;
 import com.campuscrew.campuscrew.dto.*;
 import com.campuscrew.campuscrew.dto.project.*;
 import com.querydsl.core.group.GroupBy;
@@ -172,7 +171,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 user.id,
                                 participatedUsers.status,
                                 participatedUsers.id.as("memberId"),
-                                GroupBy.list(Projections.constructor(TimeLineDto.class,
+                                GroupBy.list(Projections.constructor(TimeLineListDto.class,
                                         timeLine.id,
                                         timeLine.title)),
                                 recruit.detailField,

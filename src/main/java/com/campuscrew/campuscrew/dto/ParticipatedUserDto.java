@@ -16,7 +16,6 @@ public class ParticipatedUserDto {
     private Long id;
     private ParticipatedStatus status;
     private Long memberId;
-    private Long timeLineId;
-    private List<TimeLineDto> timeLineDtoList;
+    private List<TimeLineListDto> timeLineDtoList;
     private String name;
 }
