@@ -171,9 +171,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 user.id,
                                 participatedUsers.status,
                                 participatedUsers.id.as("memberId"),
-                                GroupBy.list(Projections.constructor(TimeLineListDto.class,
+                                Projections.constructor(TimeLineListDto.class,
                                         timeLine.id,
-                                        timeLine.title)),
+                                        timeLine.title),
                                 recruit.detailField,
                                 user.name)))));
 
