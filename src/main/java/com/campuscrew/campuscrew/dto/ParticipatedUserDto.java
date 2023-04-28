@@ -17,5 +17,6 @@ public class ParticipatedUserDto {
     private ParticipatedStatus status;
     private Long memberId;
     private List<TimeLineListDto> timeLineDtoList;
+    private String detailField;
     private String name;
 }
