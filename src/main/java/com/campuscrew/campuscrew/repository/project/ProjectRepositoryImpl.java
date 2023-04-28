@@ -162,7 +162,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .leftJoin(participatedUsers.project, project)
                 .leftJoin(timeLine).on(timeLine.participatedUsers.id.eq(participatedUsers.id))
                 .where(project.id.eq(projectId), participatedUsers.status.ne(ParticipatedStatus.READY))
-                .transform(groupBy(project.id).list(Projections.constructor(
+                .transform(GroupBy.groupBy(project.id).list(Projections.constructor(
                         MemberPageDto.class,
                         project.projectStatus,
                         project.openChatUrl,
@@ -173,11 +173,16 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 participatedUsers.id.as("memberId"),
                                 GroupBy.list(Projections.constructor(TimeLineListDto.class,
                                         timeLine.id,
-                                        timeLine.title)),
+                                        timeLine.title)
+                                ).as("timeLineListDtos"),
                                 recruit.detailField,
                                 user.name)))));
 
-
+        List<TimeLineListDto> transform = queryFactory.selectFrom(timeLine)
+                .leftJoin(timeLine.participatedUsers, participatedUsers)
+                .where(participatedUsers.project.id.eq(projectId), participatedUsers.status.ne(ParticipatedStatus.READY))
+                .transform(groupBy(participatedUsers.id).list(
+                        Projections.constructor(TimeLineListDto.class, timeLine.id, timeLine.title)));
 
 
         for (MemberPageDto memberPageDto : fetch) {
