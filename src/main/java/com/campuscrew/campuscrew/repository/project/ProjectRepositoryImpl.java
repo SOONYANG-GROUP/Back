@@ -171,9 +171,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                                 user.id,
                                 participatedUsers.status,
                                 participatedUsers.id.as("memberId"),
-                                Projections.constructor(TimeLineListDto.class,
-                                        timeLine.id,
-                                        timeLine.title),
+
                                 recruit.detailField,
                                 user.name)))));
 
