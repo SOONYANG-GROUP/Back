@@ -152,7 +152,7 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}/members/timelines/{timeLineId}")
-    public TimeLineContentDto getTimeLine(@PathVariable Long timeLineId) {
+    public TimeLineContentDto getTimeLineContent(@PathVariable Long timeLineId) {
         return projectService.getTimeLine(timeLineId);
     }
 
