@@ -60,6 +60,11 @@ public class UserController {
         return timeLineRepository.getTimeLineListTitles(participatedUsersId);
     }
 
+    @GetMapping("/profile/{userId}/{participatedUsersId}/{timeLineId}")
+    public TimeLineContent getTimeLineContent(@PathVariable Long timeLineId) {
+        return timeLineRepository.getTimeLineContent(timeLineId);
+    }
+
     @GetMapping("/profile/{id}")
     public ProfileDto getOtherUserProfile(@PathVariable Long id) {
         ProfileDto profile = userService.getProfile(id);

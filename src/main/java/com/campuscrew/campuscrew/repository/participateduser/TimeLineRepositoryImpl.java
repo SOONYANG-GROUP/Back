@@ -1,6 +1,8 @@
 package com.campuscrew.campuscrew.repository.participateduser;
 
 import com.campuscrew.campuscrew.domain.board.QTimeLine;
+import com.campuscrew.campuscrew.dto.TimeLineContent;
+import com.campuscrew.campuscrew.dto.TimeLineDto;
 import com.campuscrew.campuscrew.repository.project.TimeLineListTitleDto;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
@@ -28,5 +30,13 @@ public class TimeLineRepositoryImpl implements TimeLineRepositoryCustom{
                 .where(participatedUsers.id.eq(participatedUserId))
                 .orderBy(timeLine.createJobTime.asc())
                 .fetch();
+    }
+
+    public TimeLineContent getTimeLineContent(Long timeLineId) {
+        return queryFactory.select(Projections.constructor(TimeLineContent.class, timeLine.url, timeLine.description,
+                        timeLine.createJobTime, timeLine.updateJobTime))
+                .from(timeLine)
+                .where(timeLine.id.eq(timeLineId))
+                .fetchOne();
     }
 }
