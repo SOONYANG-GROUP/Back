@@ -18,10 +18,10 @@ import java.time.LocalDateTime;
 public class TimeLineListTitleWithMemberNameDto {
     private Long timeLineId;
     private String title;
-    private String url;
-    private String description;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createTimeLineDateTime;
+    private String url;
+    private String description;
     private String memberName;
 }
