@@ -301,7 +301,7 @@ public class ProjectService {
 
         ParticipatedUsers participatedUsers = participatedUserRepository.findByUsersIdAndProjectId(user.getId(), projectId)
                 .orElse(null);
-
+        job.updateJobDate();
         TimeLine timeLine = TimeLine.createTimeLine(form, participatedUsers, job);
         timeLineRepository.save(timeLine);
     }
@@ -309,5 +309,9 @@ public class ProjectService {
 
     public List<JobDto> getJobList(Long projectId) {
         return jobRepository.getJobList(projectId);
+    }
+
+    public List<TimeLineListTitleWithMemberNameDto> getJobTimeLines(Long jobId) {
+        return timeLineRepository.getTimeLineListTitleWithName(jobId);
     }
 }

@@ -1,8 +1,10 @@
 package com.campuscrew.campuscrew.repository.participateduser;
 
+import com.campuscrew.campuscrew.domain.board.QJob;
 import com.campuscrew.campuscrew.domain.board.QTimeLine;
 import com.campuscrew.campuscrew.dto.TimeLineContent;
 import com.campuscrew.campuscrew.dto.TimeLineDto;
+import com.campuscrew.campuscrew.dto.TimeLineListTitleWithMemberNameDto;
 import com.campuscrew.campuscrew.repository.project.TimeLineListTitleDto;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.Projections;
@@ -12,8 +14,10 @@ import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
+import static com.campuscrew.campuscrew.domain.board.QJob.job;
 import static com.campuscrew.campuscrew.domain.board.QParticipatedUsers.participatedUsers;
 import static com.campuscrew.campuscrew.domain.board.QTimeLine.timeLine;
+import static com.campuscrew.campuscrew.domain.user.QUser.user;
 import static com.querydsl.core.group.GroupBy.groupBy;
 
 public class TimeLineRepositoryImpl implements TimeLineRepositoryCustom{
@@ -38,5 +42,19 @@ public class TimeLineRepositoryImpl implements TimeLineRepositoryCustom{
                 .from(timeLine)
                 .where(timeLine.id.eq(timeLineId))
                 .fetchOne();
+    }
+
+
+    // 조회 목록 timeLine >>
+    @Override
+    public List<TimeLineListTitleWithMemberNameDto> getTimeLineListTitleWithName(Long jobId) {
+        return queryFactory.select(Projections.constructor(TimeLineListTitleWithMemberNameDto.class, timeLine.id,
+                        timeLine.title, timeLine.createJobTime, participatedUsers.user.name))
+                .from(timeLine)
+                .leftJoin(timeLine.job, job)
+                .leftJoin(timeLine.participatedUsers, participatedUsers)
+                .where(job.id.eq(jobId))
+                .orderBy(timeLine.createJobTime.asc())
+                .fetch();
     }
 }

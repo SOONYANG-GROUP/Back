@@ -185,4 +185,10 @@ public class ProjectController {
     public List<JobDto> getJobDto(@PathVariable Long projectId) {
         return projectService.getJobList(projectId);
     }
+
+    @GetMapping("/{projectId}/members/jobs/{jobId}/timelines")
+    public List<TimeLineListTitleWithMemberNameDto> getJobTimeLines(@PathVariable Long jobId,
+                                                                    @PathVariable Long projectId, @AuthenticationPrincipal UserDetails userDetails) {
+        return projectService.getJobTimeLines(jobId);
+    }
 }

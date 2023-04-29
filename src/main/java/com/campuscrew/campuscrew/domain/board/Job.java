@@ -46,4 +46,8 @@ public class Job {
                 .build();
     }
 
+    public void updateJobDate() {
+        this.updateJobDate = LocalDateTime.now();
+    }
+
 }
