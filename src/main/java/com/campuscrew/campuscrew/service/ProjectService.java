@@ -10,12 +10,9 @@ import com.campuscrew.campuscrew.dto.project.AddProjectDto;
 import com.campuscrew.campuscrew.dto.project.ProjectMainDto;
 import com.campuscrew.campuscrew.repository.participateduser.ParticipatedUsersRepository;
 import com.campuscrew.campuscrew.repository.participateduser.TimeLineRepository;
-import com.campuscrew.campuscrew.repository.project.CommentPageDto;
-import com.campuscrew.campuscrew.repository.project.CommentRepository;
-import com.campuscrew.campuscrew.repository.project.ProjectRepository;
+import com.campuscrew.campuscrew.repository.project.*;
 import com.campuscrew.campuscrew.repository.user.AlarmRepository;
 import com.campuscrew.campuscrew.repository.user.UserRepository;
-import com.campuscrew.campuscrew.repository.project.SubCommentRepository;
 import com.campuscrew.campuscrew.service.exception.AlreadyAppliedProject;
 import com.campuscrew.campuscrew.service.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +38,7 @@ public class ProjectService {
     private final CommentRepository commentRepository;
     private final SubCommentRepository subCommentRepository;
     private final AlarmRepository alarmRepository;
+    private final JobRepository jobRepository;
     // addProject email을 통해 회원을 조회 하고
     public Project addProject(String email, AddProjectDto addProjectDto) {
         // 1.필요 유저 정보를 조회한다.
@@ -304,5 +302,17 @@ public class ProjectService {
         return timeLineRepository.findById(timeLineId)
                 .map(TimeLineContentDto::convert)
                 .orElse(null);
+    }
+
+    // job 추가
+
+    public void addJob(Long projectId, JobCreateForm form) {
+        Project project = projectRepository.findById(projectId).orElse(null);
+        Job job = Job.createJob(project, form);
+        jobRepository.save(job);
+    }
+
+    public void addSubTimeLine() {
+
     }
 }

@@ -20,6 +20,10 @@ public class TimeLine {
 
     private String url;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_id")
+    private Job job;
+
     @Lob
     private String description;
 

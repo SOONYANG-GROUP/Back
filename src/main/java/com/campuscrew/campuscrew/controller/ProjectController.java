@@ -162,4 +162,13 @@ public class ProjectController {
         projectService.checkProjectRecruitmentDate();
         return "ok";
     }
+
+
+    @PostMapping("/{projectId}/members/job/add")
+    public String addJob(@PathVariable Long projectId,
+                         @AuthenticationPrincipal UserDetails userDetails,
+                         @RequestBody JobCreateForm jobCreateForm) {
+        projectService.addJob(projectId);
+        return "ok";
+    }
 }
