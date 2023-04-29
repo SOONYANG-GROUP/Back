@@ -28,6 +28,8 @@ public class QTimeLine extends EntityPathBase<TimeLine> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final QJob job;
+
     public final QParticipatedUsers participatedUsers;
 
     public final StringPath title = createString("title");
@@ -54,6 +56,7 @@ public class QTimeLine extends EntityPathBase<TimeLine> {
 
     public QTimeLine(Class<? extends TimeLine> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.job = inits.isInitialized("job") ? new QJob(forProperty("job"), inits.get("job")) : null;
         this.participatedUsers = inits.isInitialized("participatedUsers") ? new QParticipatedUsers(forProperty("participatedUsers"), inits.get("participatedUsers")) : null;
     }
 

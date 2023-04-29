@@ -1,5 +1,6 @@
 package com.campuscrew.campuscrew.service;
 
+import com.campuscrew.campuscrew.controller.JobDto;
 import com.campuscrew.campuscrew.controller.exception.NotAccessibleAuthenticationException;
 import com.campuscrew.campuscrew.controller.exception.RequiredLoginStateException;
 import com.campuscrew.campuscrew.domain.board.*;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 
 import static com.campuscrew.campuscrew.domain.board.ParticipatedStatus.*;
@@ -314,5 +316,9 @@ public class ProjectService {
 
     public void addSubTimeLine() {
 
+    }
+
+    public List<JobDto> getJobList(Long projectId) {
+        return jobRepository.getJobList(projectId);
     }
 }

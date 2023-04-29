@@ -164,11 +164,16 @@ public class ProjectController {
     }
 
 
-    @PostMapping("/{projectId}/members/job/add")
+    @PostMapping("/{projectId}/members/jobs/add")
     public String addJob(@PathVariable Long projectId,
                          @AuthenticationPrincipal UserDetails userDetails,
                          @RequestBody JobCreateForm jobCreateForm) {
-        projectService.addJob(projectId);
+        projectService.addJob(projectId, jobCreateForm);
         return "ok";
+    }
+
+    @GetMapping("/{projectId}/members/jobs")
+    public List<JobDto> getJobDto(@PathVariable Long projectId) {
+        return projectService.getJobList(projectId);
     }
 }
