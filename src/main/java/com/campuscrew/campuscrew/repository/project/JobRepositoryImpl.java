@@ -26,6 +26,7 @@ public class JobRepositoryImpl implements JobRepositoryCustom{
                         job.startJobDate, job.updateJobDate))
                 .from(job)
                 .where(job.project.id.eq(projectId))
+                .orderBy(job.startJobDate.asc())
                 .fetch();
     }
 }

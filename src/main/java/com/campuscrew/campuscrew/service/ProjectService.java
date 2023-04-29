@@ -247,7 +247,7 @@ public class ProjectService {
                 .orElse(null);
         participatedUserRepository.findByUsersIdAndProjectId(findUser.getId(), projectId)
                 .ifPresent(user -> {
-                    TimeLine timeLine = TimeLine.createTimeLine(form, user);
+                    TimeLine timeLine = TimeLine.createTimeLine(form, user, null);
                     timeLineRepository.save(timeLine);
                 });
     }
@@ -294,14 +294,18 @@ public class ProjectService {
         jobRepository.save(job);
     }
 
-    public void addJobTimeLine(Long jobId, Long projectId, String email) {
+    public void addJobTimeLine(Long jobId, Long projectId, String email, AddTimeLineForm form) {
         User user = userRepository.findByEmail(email)
                 .orElse(null);
         Job job = jobRepository.findById(jobId).orElse(null);
 
         ParticipatedUsers participatedUsers = participatedUserRepository.findByUsersIdAndProjectId(user.getId(), projectId)
                 .orElse(null);
+
+        TimeLine timeLine = TimeLine.createTimeLine(form, participatedUsers, job);
+        timeLineRepository.save(timeLine);
     }
+
 
     public List<JobDto> getJobList(Long projectId) {
         return jobRepository.getJobList(projectId);

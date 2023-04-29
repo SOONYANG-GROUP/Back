@@ -175,8 +175,9 @@ public class ProjectController {
     @PostMapping("/{projectId}/members/jobs/timelines/{jobId}")
     public String addJobTimeLine(@PathVariable Long jobId,
                               @PathVariable Long projectId,
-                              @AuthenticationPrincipal UserDetails userDetails) {
-        projectService.addJobTimeLine(jobId, projectId, userDetails.getUsername());
+                              @AuthenticationPrincipal UserDetails userDetails,
+                              @RequestBody AddTimeLineForm form) {
+        projectService.addJobTimeLine(jobId, projectId, userDetails.getUsername(), form);
         return "ok";
     }
 

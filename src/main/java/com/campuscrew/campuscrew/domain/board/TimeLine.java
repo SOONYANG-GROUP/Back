@@ -37,16 +37,18 @@ public class TimeLine {
 
     @Builder
     public TimeLine(String title, String url, String description,
-                    LocalDateTime createJobTime, LocalDateTime updateJobTime, ParticipatedUsers users) {
+                    LocalDateTime createJobTime, LocalDateTime updateJobTime,
+                    ParticipatedUsers users, Job job) {
         this.title = title;
         this.url = url;
         this.description = description;
         this.createJobTime = createJobTime;
         this.updateJobTime = updateJobTime;
         this.participatedUsers = users;
+        this.job = job;
     }
 
-    public static TimeLine createTimeLine(AddTimeLineForm form, ParticipatedUsers users) {
+    public static TimeLine createTimeLine(AddTimeLineForm form, ParticipatedUsers users, Job job) {
         return TimeLine.builder()
                 .createJobTime(LocalDateTime.now())
                 .updateJobTime(LocalDateTime.now())
@@ -54,6 +56,7 @@ public class TimeLine {
                 .description(form.getDescription())
                 .title(form.getTitle())
                 .users(users)
+                .job(job)
                 .build();
     }
 }
