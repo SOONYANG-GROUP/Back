@@ -17,8 +17,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TimeLineListTitleWithMemberNameDto {
     private Long timeLineId;
-    private
     private String title;
+    private String url;
+    private String description;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createTimeLineDateTime;
