@@ -41,9 +41,8 @@ public class ProjectService {
     private final SubCommentRepository subCommentRepository;
     private final AlarmRepository alarmRepository;
     private final JobRepository jobRepository;
-    // addProject email을 통해 회원을 조회 하고
+
     public Project addProject(String email, AddProjectDto addProjectDto) {
-        // 1.필요 유저 정보를 조회한다.
 
         User findUser = userRepository.findByEmail(email)
                 .orElseThrow(()-> new RequiredLoginStateException("로그인이 필요 합니다."));
@@ -56,9 +55,6 @@ public class ProjectService {
         participatedUserRepository.save(participatedUsers);
 
 
-        // 알람 기능 추가
-        // 1. 현재 모든 유저 중, 알람을 받고자 하는 유저에 한하여 알람을 전송
-        // 1-1. user 의 detailField 정보를 가지고 현재 Project 의 모집 인원 정보 중 하나라도 일치한다면 그 즉시 alram 을 생성
         userRepository.findAll()
                 .stream()
                 .filter(User::getAcceptAlarm)
@@ -74,14 +70,9 @@ public class ProjectService {
                     Alarm alarm = Alarm.createAlarm(project, user);
                     alarmRepository.save(alarm);
                 });
-        // 2.현재 project에 관한 권한을 가져야 한다.
-        // 2-1 project 를 모집하는 유저는 해당 project 게시글에 대한 권한을 통해
-        // joinedUser 에 대해서 조회를 해야 할 수 있어야 한다.
-        // 2-2 현재 프로젝트에 참여한 member 들은 자신들이 했던 작업 목록을 작성 할 수 있어야 한다.
-        // 이러한 이유로 매핑 테이블을 작성
         return project;
     }
-    // 회원 가입 되어 있는 유저
+
     public Comment addComment(String email, Long projectId, String comment) {
         User findUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("가입 되어 있지 않은 유지 입니다."));
@@ -94,9 +85,6 @@ public class ProjectService {
         return added;
     }
 
-    // 1. MainPage 정보를 가져 온다.
-    // 2. 필요한 정보
-    // 3.
 
     public ProjectMainDto getMainPage(Long id) {
 
@@ -104,16 +92,8 @@ public class ProjectService {
     }
 
     public HomeDto getHomePage() {
-        // 날짜 순서
         return projectRepository.fetchCardSortByCreatedDate();
     }
-    // project id에 해당하는 모든 댓글을 가져온다.
-    // 그에 해당하는 모든 회원 정보를 조회하고 dto로 가져온다.
-
-
-    // 관리자가 요청에 대해서 거절 했을 때
-    // 1. projectId, memberId에 대한 신청 정보를 조회
-    // 2. 해당 요청을 거절 하는 것이므로 요청 정보를 삭제
 
     public void rejectApply(Long projectId, Long memberId) {
         ParticipatedUsers pu = participatedUserRepository
@@ -306,16 +286,21 @@ public class ProjectService {
                 .orElse(null);
     }
 
-    // job 추가
-
+    // add job, job list를 추가 한다.
+    //
     public void addJob(Long projectId, JobCreateForm form) {
         Project project = projectRepository.findById(projectId).orElse(null);
         Job job = Job.createJob(project, form);
         jobRepository.save(job);
     }
 
-    public void addSubTimeLine() {
+    public void addJobTimeLine(Long jobId, Long projectId, String email) {
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
+        Job job = jobRepository.findById(jobId).orElse(null);
 
+        ParticipatedUsers participatedUsers = participatedUserRepository.findByUsersIdAndProjectId(user.getId(), projectId)
+                .orElse(null);
     }
 
     public List<JobDto> getJobList(Long projectId) {

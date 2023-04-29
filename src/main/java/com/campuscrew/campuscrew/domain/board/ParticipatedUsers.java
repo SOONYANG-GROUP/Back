@@ -76,5 +76,4 @@ public class ParticipatedUsers {
         user.getJoinedUsers().add(this);
     }
 
-
 }

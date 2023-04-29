@@ -38,8 +38,6 @@ public class HomeCardDto implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime endDate;
 
-
     private List<RecruitUserDto> RecruitUserDtos;
-
 
 }

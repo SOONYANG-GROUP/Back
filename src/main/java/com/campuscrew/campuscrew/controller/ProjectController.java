@@ -172,6 +172,14 @@ public class ProjectController {
         return "ok";
     }
 
+    @PostMapping("/{projectId}/members/jobs/timelines/{jobId}")
+    public String addJobTimeLine(@PathVariable Long jobId,
+                              @PathVariable Long projectId,
+                              @AuthenticationPrincipal UserDetails userDetails) {
+        projectService.addJobTimeLine(jobId, projectId, userDetails.getUsername());
+        return "ok";
+    }
+
     @GetMapping("/{projectId}/members/jobs")
     public List<JobDto> getJobDto(@PathVariable Long projectId) {
         return projectService.getJobList(projectId);
