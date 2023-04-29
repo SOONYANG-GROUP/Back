@@ -172,7 +172,7 @@ public class ProjectController {
         return "ok";
     }
 
-    @PostMapping("/{projectId}/members/jobs/timelines/{jobId}")
+    @PostMapping("/{projectId}/members/jobs/{jobId}/timelines")
     public String addJobTimeLine(@PathVariable Long jobId,
                               @PathVariable Long projectId,
                               @AuthenticationPrincipal UserDetails userDetails,
