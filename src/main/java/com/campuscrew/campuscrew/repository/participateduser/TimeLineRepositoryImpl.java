@@ -49,7 +49,7 @@ public class TimeLineRepositoryImpl implements TimeLineRepositoryCustom{
     @Override
     public List<TimeLineListTitleWithMemberNameDto> getTimeLineListTitleWithName(Long jobId) {
         return queryFactory.select(Projections.constructor(TimeLineListTitleWithMemberNameDto.class, timeLine.id,
-                        timeLine.title, timeLine.createJobTime, participatedUsers.user.name))
+                        timeLine.title, timeLine.createJobTime, timeLine.url, timeLine.description, participatedUsers.user.name))
                 .from(timeLine)
                 .leftJoin(timeLine.job, job)
                 .leftJoin(timeLine.participatedUsers, participatedUsers)
