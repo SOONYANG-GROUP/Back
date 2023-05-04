@@ -5,6 +5,7 @@ import com.campuscrew.campuscrew.domain.user.AlarmStatus;
 import com.campuscrew.campuscrew.domain.user.Role;
 import com.campuscrew.campuscrew.domain.user.User;
 import com.campuscrew.campuscrew.dto.EditForm;
+import com.campuscrew.campuscrew.dto.NameDto;
 import com.campuscrew.campuscrew.dto.ProfileDto;
 import com.campuscrew.campuscrew.dto.UserJoin;
 import com.campuscrew.campuscrew.dto.user.AlarmDto;
@@ -92,5 +93,11 @@ public class UserService {
         alarmRepository.findById(alarmId)
                 .stream()
                 .forEach(alarm -> alarm.setAlarmStatus(AlarmStatus.CONFIRMED));
+    }
+
+    public NameDto getUserInfo(String email) {
+        return userRepository.findByEmail(email)
+                .map(user -> new NameDto(user.getName()))
+                .orElse(null);
     }
 }

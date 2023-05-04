@@ -98,4 +98,10 @@ public class UserController {
         userService.confirmAlarm(alarmId);
         return "ok";
     }
+
+    @GetMapping("/info")
+    public NameDto nameDto(@AuthenticationPrincipal
+                               UserDetails userDetails) {
+        return userService.getUserInfo(userDetails.getUsername());
+    }
 }
