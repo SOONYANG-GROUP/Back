@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://campuscrew.ccibsmzxsm8j.us-east-1.rds.amazonaws.com:3306/test9?serverTimezone=Asia/Seoul
-    username: admin
-    password: ch359415
+    url: jdbc:mysql://localhost:3306/test9?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
   main:
     allow-circular-references: true
   jpa:
