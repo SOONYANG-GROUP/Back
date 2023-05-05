@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -26,6 +28,9 @@ public class Job {
     private LocalDateTime startJobDate;
 
     private LocalDateTime updateJobDate;
+
+    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL)
+    private List<TimeLine> timeLines = new ArrayList<>();
 
     @Builder
     public Job(Project project, String jobTitle, String jobDescription, LocalDateTime startJobDate, LocalDateTime updateJobDate) {

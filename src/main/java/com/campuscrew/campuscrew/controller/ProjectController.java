@@ -172,6 +172,13 @@ public class ProjectController {
         return "ok";
     }
 
+    @DeleteMapping("/{projectId}/members/jobs/{jobId}")
+    public String removeJob(@PathVariable Long jobId,
+                            @AuthenticationPrincipal UserDetails userDetails) {
+        projectService.removeJob(jobId);
+        return "ok";
+    }
+
     @PostMapping("/{projectId}/members/jobs/{jobId}/timelines")
     public String addJobTimeLine(@PathVariable Long jobId,
                               @PathVariable Long projectId,
@@ -180,6 +187,7 @@ public class ProjectController {
         projectService.addJobTimeLine(jobId, projectId, userDetails.getUsername(), form);
         return "ok";
     }
+
 
     @GetMapping("/{projectId}/members/jobs")
     public List<JobDto> getJobDto(@PathVariable Long projectId) {

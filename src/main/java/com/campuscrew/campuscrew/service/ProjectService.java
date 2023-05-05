@@ -314,4 +314,8 @@ public class ProjectService {
     public List<TimeLineListTitleWithMemberNameDto> getJobTimeLines(Long jobId) {
         return timeLineRepository.getTimeLineListTitleWithName(jobId);
     }
+
+    public void removeJob(Long jobId) {
+        jobRepository.deleteById(jobId);
+    }
 }
