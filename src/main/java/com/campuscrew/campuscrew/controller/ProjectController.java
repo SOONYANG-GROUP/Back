@@ -163,6 +163,13 @@ public class ProjectController {
         return "ok";
     }
 
+    @PostMapping("/{projectId}/members/jobs/add")
+    public String addSimpleJob(@PathVariable Long projectId,
+                         @AuthenticationPrincipal UserDetails userDetails,
+                         @RequestBody SimpleJobForm form) {
+        projectService.addSummary(projectId, form);
+        return "ok";
+    }
 
     @PostMapping("/{projectId}/members/jobs/add")
     public String addJob(@PathVariable Long projectId,

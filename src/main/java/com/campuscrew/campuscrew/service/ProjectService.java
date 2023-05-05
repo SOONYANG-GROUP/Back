@@ -294,6 +294,12 @@ public class ProjectService {
         jobRepository.save(job);
     }
 
+    public void addSummary(Long projectId, SimpleJobForm form) {
+        Project project = projectRepository.findById(projectId)
+                .orElse(null);
+        Job job = Job.createSimpleJob(project, form);
+    }
+
     public void addJobTimeLine(Long jobId, Long projectId, String email, AddTimeLineForm form) {
         User user = userRepository.findByEmail(email)
                 .orElse(null);
