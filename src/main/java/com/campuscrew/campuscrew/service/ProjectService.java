@@ -313,7 +313,6 @@ public class ProjectService {
         timeLineRepository.save(timeLine);
     }
 
-
     public List<JobDto> getJobList(Long projectId) {
         return jobRepository.getJobList(projectId);
     }
