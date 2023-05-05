@@ -152,7 +152,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         final CorsConfiguration configuration = new CorsConfiguration();
 //        "http://localhost:3000" <--> "https://master--mellow-smakager-4139f2.netlify.app"
-        configuration.setAllowedOrigins(Arrays.asList("https://master--mellow-smakager-4139f2.netlify.app"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
         configuration.setAllowedMethods(Arrays.asList("HEAD",
                 "GET", "POST", "PUT", "DELETE", "PATCH"));
         configuration.setMaxAge(Duration.of(3000, ChronoUnit.SECONDS));
