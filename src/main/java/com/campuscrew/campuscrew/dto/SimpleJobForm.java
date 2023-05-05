@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class SimpleJobForm {
-    private String name;
+    private String title;
     private String description;
 }

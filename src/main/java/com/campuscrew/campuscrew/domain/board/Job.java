@@ -27,6 +27,7 @@ public class Job {
     private String jobDescription;
 
     private JobState state;
+
     private LocalDateTime startJobDate;
 
     private LocalDateTime updateJobDate;
@@ -56,10 +57,11 @@ public class Job {
                 .updateJobDate(LocalDateTime.now())
                 .build();
     }
+
     public static Job createSimpleJob(Project project, SimpleJobForm form) {
         return Job.builder()
                 .jobDescription(form.getDescription())
-                .jobTitle(form.getName())
+                .jobTitle(form.getTitle())
                 .state(JobState.OPINION)
                 .project(project)
                 .startJobDate(LocalDateTime.now())

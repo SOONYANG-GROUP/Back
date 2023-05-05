@@ -15,8 +15,8 @@ public class CorsFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+//        "https://master--mellow-smakager-4139f2.netlify.app" < -- > http://localhost:3000
+        res.setHeader("Access-Control-Allow-Origin", "https://master--mellow-smakager-4139f2.netlify.app");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods","*");
         res.setHeader("Access-Control-Max-Age", "3600");
@@ -30,3 +30,7 @@ public class CorsFilter implements Filter {
         }
     }
 }
+
+
+
+//callback:url
