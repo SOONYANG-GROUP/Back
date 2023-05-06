@@ -65,7 +65,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                         Projections.constructor(HomeCardDto.class,
                                 project.id, project.title,
                                 project.createdDateTime,
-                                project.startWithDate,
                                 project.recruitmentDate,
                                 project.projectStatus,
                                 project.endDate,
