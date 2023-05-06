@@ -255,7 +255,7 @@ public class ProjectService {
     public void checkProjectRecruitmentDate() {
         projectRepository.findAll()
                 .stream()
-                .filter(project -> (project.getRecruitmentDate().compareTo(LocalDateTime.now()) > 0) && project.getProjectStatus() != ProjectStatus.END)
+                .filter(project -> (project.getRecruitmentDate().compareTo(LocalDateTime.now()) < 0) && project.getProjectStatus() != ProjectStatus.END)
                 .forEach(project -> {
                     project.setProjectStatus(ProjectStatus.RUNNING);
                     project.setEndDate(LocalDateTime.now().plus(14, ChronoUnit.DAYS));

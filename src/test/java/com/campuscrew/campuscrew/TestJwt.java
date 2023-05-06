@@ -22,7 +22,7 @@ public class TestJwt {
     void test() {
 //        project.getRecruitmentDate().compareTo(LocalDateTime.now()) < 0)
         LocalDateTime now = LocalDateTime.now();
-        int i = now.compareTo(LocalDateTime.of(2023, 5, 11, 11, 20, 1));
+        int i = now.compareTo(LocalDateTime.of(2023, 5, 1, 11, 20, 1));
 
         System.out.println(i);
     }
