@@ -63,7 +63,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                 .orderBy(project.createdDateTime.desc())
                 .transform(groupBy(project.id).list(
                         Projections.constructor(HomeCardDto.class,
-                                project.id, project.title, project.createdDateTime,
+                                project.id, project.title,
+                                project.createdDateTime,
+                                project.startWithDate,
                                 project.recruitmentDate,
                                 project.projectStatus,
                                 project.endDate,

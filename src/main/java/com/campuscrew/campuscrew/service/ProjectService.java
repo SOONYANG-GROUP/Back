@@ -222,6 +222,7 @@ public class ProjectService {
         projectRepository.findById(id)
                 .ifPresent(project -> {
                     project.setProjectStatus(ProjectStatus.RUNNING);
+                    project.setStartWithDate(LocalDateTime.now());
                     project.setEndDate(LocalDateTime.now()
                             .plus(14, ChronoUnit.DAYS));
                 });
