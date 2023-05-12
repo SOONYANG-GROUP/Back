@@ -16,7 +16,7 @@ public class CorsFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
 //        "https://master--mellow-smakager-4139f2.netlify.app" < -- > http://localhost:3000
-        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Origin", "https://master--mellow-smakager-4139f2.netlify.app");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods","*");
         res.setHeader("Access-Control-Max-Age", "3600");
