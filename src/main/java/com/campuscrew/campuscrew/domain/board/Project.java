@@ -32,6 +32,7 @@ public class Project {
     private String title;
 
     @Column
+    @Lob
     private String description;
 
     private String openChatUrl;
