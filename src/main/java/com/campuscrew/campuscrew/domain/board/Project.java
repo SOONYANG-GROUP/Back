@@ -31,7 +31,7 @@ public class Project {
     @Column(nullable = false)
     private String title;
 
-    @Column
+    @Lob
     private String description;
 
     private String openChatUrl;

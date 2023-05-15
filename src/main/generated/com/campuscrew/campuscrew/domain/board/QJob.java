@@ -32,6 +32,10 @@ public class QJob extends EntityPathBase<Job> {
 
     public final DateTimePath<java.time.LocalDateTime> startJobDate = createDateTime("startJobDate", java.time.LocalDateTime.class);
 
+    public final EnumPath<JobState> state = createEnum("state", JobState.class);
+
+    public final ListPath<TimeLine, QTimeLine> timeLines = this.<TimeLine, QTimeLine>createList("timeLines", TimeLine.class, QTimeLine.class, PathInits.DIRECT2);
+
     public final DateTimePath<java.time.LocalDateTime> updateJobDate = createDateTime("updateJobDate", java.time.LocalDateTime.class);
 
     public QJob(String variable) {

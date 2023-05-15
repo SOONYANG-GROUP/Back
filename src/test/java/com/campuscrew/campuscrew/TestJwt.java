@@ -20,14 +20,11 @@ public class TestJwt {
 
     @Test
     void test() {
-        String str1 = "Hello";
-        String str2 = str1;
+//        project.getRecruitmentDate().compareTo(LocalDateTime.now()) < 0)
+        LocalDateTime now = LocalDateTime.now();
+        int i = now.compareTo(LocalDateTime.of(2023, 5, 1, 11, 20, 1));
 
-        str1 = str1 + "hh";
-
-        System.out.println(str1);
-        System.out.println(str2);
-
+        System.out.println(i);
     }
 
     @Test

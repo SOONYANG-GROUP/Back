@@ -222,6 +222,7 @@ public class ProjectService {
         projectRepository.findById(id)
                 .ifPresent(project -> {
                     project.setProjectStatus(ProjectStatus.RUNNING);
+                    project.setStartWithDate(LocalDateTime.now());
                     project.setEndDate(LocalDateTime.now()
                             .plus(14, ChronoUnit.DAYS));
                 });
@@ -294,6 +295,13 @@ public class ProjectService {
         jobRepository.save(job);
     }
 
+    public void addSummary(Long projectId, SimpleJobForm form) {
+        Project project = projectRepository.findById(projectId)
+                .orElse(null);
+        Job job = Job.createSimpleJob(project, form);
+        jobRepository.save(job);
+    }
+
     public void addJobTimeLine(Long jobId, Long projectId, String email, AddTimeLineForm form) {
         User user = userRepository.findByEmail(email)
                 .orElse(null);
@@ -306,12 +314,15 @@ public class ProjectService {
         timeLineRepository.save(timeLine);
     }
 
-
     public List<JobDto> getJobList(Long projectId) {
         return jobRepository.getJobList(projectId);
     }
 
     public List<TimeLineListTitleWithMemberNameDto> getJobTimeLines(Long jobId) {
         return timeLineRepository.getTimeLineListTitleWithName(jobId);
+    }
+
+    public void removeJob(Long jobId) {
+        jobRepository.deleteById(jobId);
     }
 }

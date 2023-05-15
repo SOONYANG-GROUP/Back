@@ -1,5 +1,6 @@
 package com.campuscrew.campuscrew.controller;
 
+import com.campuscrew.campuscrew.domain.board.JobState;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -22,6 +23,8 @@ public class JobDto {
     private String jobTitle;
 
     private String jobDescription;
+
+    private JobState state;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)

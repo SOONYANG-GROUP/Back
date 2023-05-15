@@ -22,8 +22,9 @@ public class JobRepositoryImpl implements JobRepositoryCustom{
 
     @Override
     public List<JobDto> getJobList(Long projectId) {
-        return queryFactory.select(Projections.constructor(JobDto.class, job.id, job.jobTitle,
-                        job.jobDescription,
+        return queryFactory.select(Projections.constructor(JobDto.class,
+                        job.id, job.jobTitle,
+                        job.jobDescription, job.state,
                         job.startJobDate, job.updateJobDate))
                 .from(job)
                 .where(job.project.id.eq(projectId))

@@ -163,12 +163,26 @@ public class ProjectController {
         return "ok";
     }
 
+    @PostMapping("/{projectId}/members/simplejobs/add")
+    public String addSimpleJob(@PathVariable Long projectId,
+                         @AuthenticationPrincipal UserDetails userDetails,
+                         @RequestBody SimpleJobForm form) {
+        projectService.addSummary(projectId, form);
+        return "ok";
+    }
 
     @PostMapping("/{projectId}/members/jobs/add")
     public String addJob(@PathVariable Long projectId,
                          @AuthenticationPrincipal UserDetails userDetails,
                          @RequestBody JobCreateForm jobCreateForm) {
         projectService.addJob(projectId, jobCreateForm);
+        return "ok";
+    }
+
+    @DeleteMapping("/{projectId}/members/jobs/{jobId}")
+    public String removeJob(@PathVariable Long jobId,
+                            @AuthenticationPrincipal UserDetails userDetails) {
+        projectService.removeJob(jobId);
         return "ok";
     }
 
@@ -180,6 +194,7 @@ public class ProjectController {
         projectService.addJobTimeLine(jobId, projectId, userDetails.getUsername(), form);
         return "ok";
     }
+
 
     @GetMapping("/{projectId}/members/jobs")
     public List<JobDto> getJobDto(@PathVariable Long projectId) {
