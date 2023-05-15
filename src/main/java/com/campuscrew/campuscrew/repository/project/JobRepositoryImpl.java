@@ -6,6 +6,7 @@ import com.campuscrew.campuscrew.domain.board.QParticipatedUsers;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 
