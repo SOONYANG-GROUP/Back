@@ -36,7 +36,7 @@ public class ProjectService {
     private final TimeLineRepository timeLineRepository;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
-    private final ParticipatedUsersRepository participatedUserRepository;
+    private final ParticipatedUsersRepository participatedUsersRepository;
     private final CommentRepository commentRepository;
     private final SubCommentRepository subCommentRepository;
     private final AlarmRepository alarmRepository;
@@ -52,7 +52,7 @@ public class ProjectService {
         projectRepository.save(project);
 
         ParticipatedUsers participatedUsers = ParticipatedUsers.makeParticipatedUserAsManager(findUser, project);
-        participatedUserRepository.save(participatedUsers);
+        participatedUsersRepository.save(participatedUsers);
 
 
         userRepository.findAll()
@@ -96,17 +96,17 @@ public class ProjectService {
     }
 
     public void rejectApply(Long projectId, Long memberId) {
-        ParticipatedUsers pu = participatedUserRepository
+        ParticipatedUsers pu = participatedUsersRepository
                 .findByUsersIdAndProjectId(memberId, projectId)
                 .orElse(null);
         // 1. 해당 participated 요청을 deny
-        participatedUserRepository.delete(pu);
+        participatedUsersRepository.delete(pu);
 
         // 1. 이후 해당 회원에게 로그로 알림
     }
 
     public void acceptApply(Long projectId, Long memberId) {
-        ParticipatedUsers participatedUsers = participatedUserRepository
+        ParticipatedUsers participatedUsers = participatedUsersRepository
                 .findByUsersIdAndProjectId(memberId, projectId)
                 .orElse(null);
         // 1. 이제 승인 되었으니, 해당 프로젝트의 참여 멤버가 됨
@@ -163,11 +163,11 @@ public class ProjectService {
         ParticipatedUsers participatedUsers = ParticipatedUsers
                 .makeParticipatedUserAsMReady(user, project, recruit1);
 
-        participatedUserRepository.save(participatedUsers);
+        participatedUsersRepository.save(participatedUsers);
     }
 
     private boolean isPresent(Long projectId, User user) {
-        Optional<ParticipatedUsers> byUsersIdAndProjectId = participatedUserRepository
+        Optional<ParticipatedUsers> byUsersIdAndProjectId = participatedUsersRepository
                 .findByUsersIdAndProjectId(user.getId(), projectId);
 
         ParticipatedUsers participatedUsers = byUsersIdAndProjectId.orElse(null);
@@ -183,7 +183,7 @@ public class ProjectService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Not login"));
 
-        ParticipatedUsers participatedUsers = participatedUserRepository
+        ParticipatedUsers participatedUsers = participatedUsersRepository
                 .findByUsersIdAndProjectId(user.getId(), projectId)
                 .orElse(null);
 
@@ -198,7 +198,7 @@ public class ProjectService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Not login"));
 
-        ParticipatedUsers participatedUsers = participatedUserRepository
+        ParticipatedUsers participatedUsers = participatedUsersRepository
                 .findByUsersIdAndProjectId(user.getId(), projectId)
                 .orElse(null);
 
@@ -214,10 +214,10 @@ public class ProjectService {
     // 2. ready 상태 회원들을 전부 삭제, 종료일을 기일로 부터 14일
 
     public void startProject(Long id) {
-        participatedUserRepository
+        participatedUsersRepository
                 .findParticipatedUsersByProjectIdAnAndStatus(id, READY)
                 .stream()
-                .forEach(participatedUserRepository::delete);
+                .forEach(participatedUsersRepository::delete);
 
         projectRepository.findById(id)
                 .ifPresent(project -> {
@@ -246,7 +246,7 @@ public class ProjectService {
     public void addTimeLine(Long projectId, AddTimeLineForm form, String email) {
         User findUser = userRepository.findByEmail(email)
                 .orElse(null);
-        participatedUserRepository.findByUsersIdAndProjectId(findUser.getId(), projectId)
+        participatedUsersRepository.findByUsersIdAndProjectId(findUser.getId(), projectId)
                 .ifPresent(user -> {
                     TimeLine timeLine = TimeLine.createTimeLine(form, user, null);
                     timeLineRepository.save(timeLine);
@@ -270,14 +270,14 @@ public class ProjectService {
         log.info("user Id = {}", user.getId());
         log.info("project Id = {}", projectId);
 
-        participatedUserRepository
+        participatedUsersRepository
                 .findByUsersIdAndProjectId(user.getId(), projectId)
                 .ifPresent(participatedUsers -> {
                     System.out.println(participatedUsers);
                     Recruit recruit = participatedUsers.getRecruit();
                     System.out.println(recruit);
                     recruit.cancelProject();
-                    participatedUserRepository.delete(participatedUsers);
+                    participatedUsersRepository.delete(participatedUsers);
                 });
     }
 
@@ -307,7 +307,7 @@ public class ProjectService {
                 .orElse(null);
         Job job = jobRepository.findById(jobId).orElse(null);
 
-        ParticipatedUsers participatedUsers = participatedUserRepository.findByUsersIdAndProjectId(user.getId(), projectId)
+        ParticipatedUsers participatedUsers = participatedUsersRepository.findByUsersIdAndProjectId(user.getId(), projectId)
                 .orElse(null);
         job.updateJobDate();
         TimeLine timeLine = TimeLine.createTimeLine(form, participatedUsers, job);

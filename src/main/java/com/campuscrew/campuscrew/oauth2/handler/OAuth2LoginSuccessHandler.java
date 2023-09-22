@@ -82,7 +82,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private String makeRedirectUri(String accessToken, String refreshToken, String redirectUrl) {
         log.info("redirect : refreshToken = {}", refreshToken);
-        return UriComponentsBuilder.fromUriString("https://localhost:3000/login")
+        return UriComponentsBuilder.fromUriString("https://master--mellow-smakager-4139f2.netlify.app/login")
                 .queryParam("accessToken", accessToken)
                 .queryParam("refreshToken", refreshToken)
                 .encode(StandardCharsets.UTF_8)

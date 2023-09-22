@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
-
 public interface ParticipatedUsersRepository extends JpaRepository<ParticipatedUsers, Long> {
 
     Optional<ParticipatedUsers> findByProjectId(Long projectId);

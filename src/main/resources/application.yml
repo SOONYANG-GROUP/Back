@@ -1,26 +1,26 @@
-
 spring:
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://campuscrew.ccibsmzxsm8j.us-east-1.rds.amazonaws.com:3306/test8?serverTimezone=Asia/Seoul
-    username: admin
-    password: ch359415
-  main:
-    allow-circular-references: true
-  jpa:
-    hibernate:
-      ddl-auto: create  #create update none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
+    url: jdbc:mysql://localhost:3306/test2?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
     properties:
       hibernate:
-        globally_quoted_identifiers: true
-        dialect: org.hibernate.dialect.MySQLDialect
-        format_sql: true
         default_batch_fetch_size: 100
   config:
     import: application-oauth.yml
+  jpa:
+    hibernate:
+      ddl-auto: create
+      database-platform: org.hibernate.dialect.MySQL8Dialect
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+    show-sql: true
+    generate-ddl: true
+
+
 
 jwt:
   secretKey: asdasdasdasdasdadadadadadadadadadadadafafafafasfasfasfasfafafafs
